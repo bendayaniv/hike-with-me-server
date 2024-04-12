@@ -34,7 +34,7 @@ After making a change -
 
 ## Merge new changes into local main from remote main
 1. Creating new branch (`git checkout -b [branch_name]`).
-2. [Create the change, commit and push.](##how-to-push-in-terminal)
+2. [Create the change, commit and push.](##How-to-Push-in-terminal)
 3. [Merge the changes.](##How-to-Merge-after-doing-changes-in-branch)
 4. Checkout to main - `git checkout main`.
 5. Pulling from origin main - `git pull origin main`.
