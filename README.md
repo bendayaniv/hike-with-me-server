@@ -17,3 +17,6 @@
 
 ## How to Pull from main
 `git pull` in terminal in the directory.
+
+## How to use git in VSCode
+https://www.youtube.com/watch?v=i_23KUAEtUM&t=69s&ab_channel=VisualStudioCode
