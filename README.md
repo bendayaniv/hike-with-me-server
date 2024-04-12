@@ -39,9 +39,9 @@ After making a change -
 * Clicking on the green Merge button when available.
 
 ## How to Merge new changes into local main from origin main
-* Creating new branch (`git checkout -b [branch_name]`).
-* [Create the change, commit and push.](#how-to-push-in-terminal)
-* [Merge the changes.](#how-to-merge-after-doing-changes-in-branch)
+* [Creating new branch](#creating-new-branch) and [move to him](#moving-to-another-branch).
+* [Create the change, commit and push](#how-to-push-in-terminal).
+* [Merge the changes](#how-to-merge-after-doing-changes-in-branch).
 * Checkout to main - `git checkout main`.
 * Pulling from origin main - `git pull origin main`.
 * In the Source Control tab in VSCode - clicking on the Synchronize blue button.
