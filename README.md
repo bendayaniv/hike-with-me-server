@@ -57,4 +57,4 @@ After making a change -
 * Deal with conflicts if any.
 
 ## Handle the README
-https://github.com/fefong/markdown_readme?tab=readme-ov-file#list
+https://github.com/fefong/markdown_readme
