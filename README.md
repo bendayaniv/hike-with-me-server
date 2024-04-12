@@ -17,6 +17,7 @@
 
 ## How to use git in VSCode
 https://www.youtube.com/watch?v=i_23KUAEtUM&t=69s&ab_channel=VisualStudioCode
+https://www.youtube.com/watch?v=z5jZ9lrSpqk&ab_channel=MaxonTech
 
 ## Creating new branch
 `git checkout -b [branch_name]`
