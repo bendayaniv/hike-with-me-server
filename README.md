@@ -56,3 +56,5 @@ After making a change -
   * If you do have changes before commit - first need to do `git stash`, then `git merge main`, and then `git stash pop`.
 * Deal with conflicts if any.
 
+## Handle the README
+https://github.com/fefong/markdown_readme?tab=readme-ov-file#list
