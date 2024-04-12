@@ -24,7 +24,7 @@ After making a change -
 2. `git add --all` - for adding all the changes to the commit (instead of `--all` - can specify the files you want).
 3. `git status` - need to see all the files with the changes that you want to push in green.
 4. `git commit -am "[the_commit_message]"` - creating the commit.
-5. `git push --set-upstream` - doing push.
+5. `git push --set-upstream origin [branch_name]` or `git push --set-upstream` and click on the available blue button in the Source Control tab - doing push.
 
 ## How to Merge after doing changes in branch
 1. Getting into the repo in GitHub.
