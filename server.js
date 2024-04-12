@@ -3,8 +3,7 @@ const app = express();
 const PORT = 3000;
 
 app.get("/", (req, res) => {
-  console.log("Request received!");
-  res.send("Hello from Express 1212!");
+  res.send("Hello from Express!!!");
 });
 
 app.listen(PORT, () => {
