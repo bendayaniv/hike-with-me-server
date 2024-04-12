@@ -1,3 +1,7 @@
+## Make sure you have on your computer
+1. Node.js
+2. npm
+
 ## How to clone:
 1. Create directory.
 2. Open the directory in VSCode.
@@ -11,5 +15,5 @@
 10. For checking - run the command `node server.js` and see if it returns `Express server running at http://localhost:3000/`
 
 
-## How to pull from main
+## How to Pull from main
 `git pull` in terminal in the directory.
