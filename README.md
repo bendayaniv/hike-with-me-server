@@ -9,3 +9,7 @@
 8. Go over the directory the was created (`cd hike-with-me-server`).
 9. Run `npm i`.
 10. For checking - run the command `node server.js` and see if it returns `Express server running at http://localhost:3000/`
+
+
+## How to pull from main
+`git pull` in terminal in the directory.
