@@ -16,7 +16,7 @@
 * For checking - run the command `node server.js` and see if it returns `Express server running at http://localhost:3000/`
 
 ## How to use git in VSCode
-https://www.youtube.com/watch?v=i_23KUAEtUM&t=69s&ab_channel=VisualStudioCode
+https://code.visualstudio.com/docs/sourcecontrol/overview
 https://www.youtube.com/watch?v=z5jZ9lrSpqk&ab_channel=MaxonTech
 
 ## Creating new branch
