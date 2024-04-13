@@ -56,7 +56,7 @@ After making a change -
 - Pulling from origin main - `git pull origin main`.
 - In the Source Control tab in VSCode - clicking on the Synchronize blue button.
 
-## Work Routine
+## Start Work Routine
 
 - Get to the main branch.
 - `git pull origin main`.
@@ -69,11 +69,16 @@ After making a change -
 
 ## How to activate the server
 
-In terminal - `node server.js` or `nodemon server.js` (if activated nodemon).
+In terminal - `node server.js` or [`nodemon server.js`](#how-to-activate-nodemon) (if activated nodemon).
 
 ## How to activate nodemon
 
 https://www.youtube.com/watch?v=ZIbAtxPq5_I&ab_channel=SherlockZz
+
+## How to undo commits
+
+`git reset HEAD~[number_of_commits] --soft` - for undoing the commits.
+`git reset HEAD~[number_of_commits] --hard` - for undoing the commits and the changes (deleting it all).
 
 ## Handle the README
 
