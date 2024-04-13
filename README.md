@@ -77,8 +77,8 @@ https://www.youtube.com/watch?v=ZIbAtxPq5_I&ab_channel=SherlockZz
 
 ## How to undo commits
 
-`git reset HEAD~[number_of_commits] --soft` - for undoing the commits.
-`git reset HEAD~[number_of_commits] --hard` - for undoing the commits and the changes (deleting it all).
+- `git reset HEAD~[number_of_commits] --soft` - for undoing the commits.
+- `git reset HEAD~[number_of_commits] --hard` - for undoing the commits and the changes (deleting it all).
 
 ## Handle the README
 
