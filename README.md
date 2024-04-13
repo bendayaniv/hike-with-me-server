@@ -38,7 +38,7 @@ After making a change -
 - `git add --all` - for adding all the changes to the commit (instead of `--all` - can specify the files you want).
 - `git status` - need to see all the files with the changes that you want to push in green.
 - `git commit -am "[the_commit_message]"` - creating the commit.
-- `git push --set-upstream origin [branch_name]` or `git push --set-upstream` and click on the available blue button in the Source Control tab - doing push.
+- `git push --set-upstream origin [branch_name]` or `git push --set-upstream` and click on the available blue button in the Source Control tab - doing push (after the first push in branch that is not main, you can simply do `git push` in the nexts pushes).
 
 ## How to Merge the changes in the branch to origin main
 
