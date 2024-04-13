@@ -19,8 +19,8 @@
 
 ## How to use git in VSCode
 
-https://code.visualstudio.com/docs/sourcecontrol/overview
-https://www.youtube.com/watch?v=z5jZ9lrSpqk&ab_channel=MaxonTech
+- https://code.visualstudio.com/docs/sourcecontrol/overview
+- https://www.youtube.com/watch?v=z5jZ9lrSpqk&ab_channel=MaxonTech
 
 ## Creating new branch
 
