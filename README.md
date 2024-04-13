@@ -15,7 +15,7 @@
 - Enter `git clone [the URL]`.
 - Go over the directory the was created (`cd hike-with-me-server`).
 - Run `npm i`.
-- For checking - run the command `node server.js` and see if it returns `Express server running at http://localhost:3000/`
+- For checking - [activate the server](#how-to-activate-the-server) and see if it returns `Express server running at http://localhost:3000/`
 
 ## How to use git in VSCode
 
@@ -66,6 +66,14 @@ After making a change -
   - If you do'nt have changes before commit - do `git merge main`.
   - If you do have changes before commit - first need to do `git stash`, then `git merge main`, and then `git stash pop`.
 - Deal with conflicts if any.
+
+## How to activate the server
+
+In terminal - `node server.js` or `nodemon server.js` (if activated nodemon).
+
+## How to activate nodemon
+
+https://www.youtube.com/watch?v=ZIbAtxPq5_I&ab_channel=SherlockZz
 
 ## Handle the README
 
