@@ -1,30 +1,29 @@
 const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
 
 const serviceAccount = require('./creds.json');
 
-initializeApp({
-  credential: cert(serviceAccount),
-});
+// Realtime Database
+const { getDatabase } = require('firebase-admin/database');
 
-const firestore = getFirestore();
-
-module.exports = { firestore };
-
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
 // const firebaseConfig = {
-//   apiKey: "AIzaSyBr1wztWdXPiVGA2OYG_4oQKezywnCxL3U",
-//   authDomain: "hike-with-me-1efdd.firebaseapp.com",
-//   projectId: "hike-with-me-1efdd",
-//   storageBucket: "hike-with-me-1efdd.appspot.com",
-//   messagingSenderId: "988854023201",
-//   appId: "1:988854023201:web:18140789c4edca8fa89f60"
+//   apiKey: 'AIzaSyBr1wztWdXPiVGA2OYG_4oQKezywnCxL3U',
+//   authDomain: 'hike-with-me-1efdd.firebaseapp.com',
+//   projectId: 'hike-with-me-1efdd',
+//   storageBucket: 'hike-with-me-1efdd.appspot.com',
+//   messagingSenderId: '988854023201',
+//   appId: '1:988854023201:web:18140789c4edca8fa89f60',
+//   databaseURL: 'https://hike-with-me-1efdd-default-rtdb.firebaseio.com/',
 // };
 
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
+const app = initializeApp({
+  credential: cert(serviceAccount),
+  databaseURL: 'https://hike-with-me-1efdd-default-rtdb.firebaseio.com/', // for Realtime Database
+});
+
+const database = getDatabase(app);
+
+// const database = getDatabase();
+
+module.exports = {
+  database,
+};

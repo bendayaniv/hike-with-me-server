@@ -2,72 +2,61 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const { firestore } = require('./firebase.js');
+const { database } = require('./firebase.js');
 
 app.use(express.json());
 
-const friends = {
-  james: 'friend',
-  larry: 'friend',
-  lucy: 'friend',
-  banana: 'enemy',
-};
-
 app.get('/friends', async (req, res) => {
-  const peopleRef = firestore.collection('people').doc('associates');
-  const doc = await peopleRef.get();
-  if (!doc.exists) {
-    return res.sendStatus(400);
-  }
-
-  res.status(200).send(doc.data());
+  //realtime database
+  database.ref('users/associates').on('value', (snapshot) => {
+    const data = snapshot.val();
+    res.status(200).send(data);
+  });
 });
 
-app.get('/friends/:name', (req, res) => {
+app.get('/friends/:name', async (req, res) => {
   const { name } = req.params;
   if (!name || !(name in friends)) {
     return res.sendStatus(404);
   }
-  res.status(200).send({ [name]: friends[name] });
+
+  //realtime database
+  const snapshot = await database.ref('users/associates/' + name).once('value');
+  const data = snapshot.val();
+  res.status(200).send(data);
 });
 
 app.post('/addfriend', async (req, res) => {
   const { name, status } = req.body;
-  const peopleRef = firestore.collection('people').doc('associates');
-  const res2 = await peopleRef.set(
-    {
-      [name]: status,
-    },
-    { merge: true },
-  );
+
+  //realtime database
+  await database.ref('users/associates/' + name).set({
+    status,
+  });
+
   // friends[name] = status
   res.status(200).send(friends);
 });
 
-app.patch('/changestatus', async (req, res) => {
+app.put('/changestatus', async (req, res) => {
   const { name, newStatus } = req.body;
-  const peopleRef = firestore.collection('people').doc('associates');
-  const res2 = await peopleRef.set(
-    {
-      [name]: newStatus,
-    },
-    { merge: true },
-  );
+
+  //realtime database
+  await database.ref('users/associates/' + name).set({
+    status: newStatus,
+  });
+
   // friends[name] = newStatus
   res.status(200).send(friends);
 });
 
 app.delete('/friends', async (req, res) => {
   const { name } = req.body;
-  const peopleRef = firestore.collection('people').doc('associates');
-  const res2 = await peopleRef.update({
-    [name]: FieldValue.delete(),
-  });
-  res.status(200).send(friends);
-});
 
-app.get('/', (req, res) => {
-  res.send('Hello from Express!');
+  //realtime database
+  await database.ref('users/associates/' + name).remove();
+
+  res.status(200).send(friends);
 });
 
 app.listen(PORT, () => {
