@@ -1,8 +1,8 @@
 ## Make sure you have on your computer
 
-- Node.js
-- npm
-- git
+- [Node.js](https://nodejs.org/en/download)
+- [git](https://git-scm.com/downloads)
+- [prettier](https://www.humankode.com/javascript/set-up-prettier-and-vs-code-to-format-your-code/)
 
 ## How to clone:
 
