@@ -1,4 +1,4 @@
-## Make sure you have on your computer
+## Make sure you have
 
 - [Node.js](https://nodejs.org/en/download)
 - [git](https://git-scm.com/downloads)
@@ -58,12 +58,12 @@ After making a change -
 
 ## Start Work Routine
 
-- Get to the main branch.
+- Go to the main branch.
 - `git pull origin main`.
 - `npm i`.
 - Go to your branch.
-- Here you have to situations:
-  - If you do'nt have changes before commit - do `git merge main`.
+- Here you have two situations:
+  - If you don't have changes before commit - do `git merge main`.
   - If you do have changes before commit - first need to do `git stash`, then `git merge main`, and then `git stash pop`.
 - Deal with conflicts if any.
 
