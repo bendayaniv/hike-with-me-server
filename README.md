@@ -49,23 +49,25 @@ After making a change -
 
 ## How to Merge new changes into local main from origin main
 
-- [Creating new branch](#creating-new-branch) and [move to him](#moving-to-another-branch).
-- [Create the change, commit and push](#how-to-push-in-terminal).
-- [Merge the changes](#how-to-merge-after-doing-changes-in-branch).
 - Checkout to main - `git checkout main`.
 - Pulling from origin main - `git pull origin main`.
 - In the Source Control tab in VSCode - clicking on the Synchronize blue button.
+- `npm i`.
+
+## How to merge main into existing branch
+
+- If you made changes on the branch - `git stash`.
+- [Merge new changes into local main](#how-to-merge-new-changes-into-local-main-from-origin-main).
+- [Go to your branch](#moving-to-another-branch).
+- `git merge main`.
+- If you had changes before the merge - `git stash pop`.
+- Deal with conflicts if any.
 
 ## Start Work Routine
 
-- Go to the main branch.
-- `git pull origin main`.
-- `npm i`.
-- Go to your branch.
-- Here you have two situations:
-  - If you don't have changes before commit - do `git merge main`.
-  - If you do have changes before commit - first need to do `git stash`, then `git merge main`, and then `git stash pop`.
-- Deal with conflicts if any.
+- Two situations:
+  - If you don't have existing branch - [merge new changes into your local main](#how-to-merge-new-changes-into-local-main-from-origin-main).
+  - If you have existing branch with changes - [merge main into existing branch](#how-to-merge-main-into-existing-branch).
 
 ## How to activate the server
 
