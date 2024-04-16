@@ -1,63 +1,85 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 3000;
+
+const userControllers = require('./controllers/user-controllers.js');
 
 const { database } = require('./firebase.js');
 
 app.use(express.json());
+app.use(cors());
 
-app.get('/friends', async (req, res) => {
-  //realtime database
-  database.ref('users/associates').on('value', (snapshot) => {
-    const data = snapshot.val();
-    res.status(200).send(data);
-  });
-});
+app.use('/users', userControllers);
 
-app.get('/friends/:name', async (req, res) => {
-  const { name } = req.params;
-  if (!name || !(name in friends)) {
-    return res.sendStatus(404);
-  }
+// app.post('/addUser', async (req, res) => {
+//   const { name, email, password } = req.body;
 
-  //realtime database
-  const snapshot = await database.ref('users/associates/' + name).once('value');
-  const data = snapshot.val();
-  res.status(200).send(data);
-});
+//   const user = {
+//     name,
+//     password,
+//     email,
+//   };
 
-app.post('/addfriend', async (req, res) => {
-  const { name, status } = req.body;
+//   const directory = (email + password).replace(/[.]/g, '');
+//   //realtime database
+//   await database.ref('users/' + directory).set(user);
 
-  //realtime database
-  await database.ref('users/associates/' + name).set({
-    status,
-  });
+//   res.status(200).send(user);
+// });
 
-  // friends[name] = status
-  res.status(200).send(friends);
-});
+// app.get('/friends', async (req, res) => {
+//   //realtime database
+//   database.ref('users/associates').on('value', (snapshot) => {
+//     const data = snapshot.val();
+//     res.status(200).send(data);
+//   });
+// });
 
-app.put('/changestatus', async (req, res) => {
-  const { name, newStatus } = req.body;
+// app.get('/friends/:name', async (req, res) => {
+//   const { name } = req.params;
+//   if (!name || !(name in friends)) {
+//     return res.sendStatus(404);
+//   }
 
-  //realtime database
-  await database.ref('users/associates/' + name).set({
-    status: newStatus,
-  });
+//   //realtime database
+//   const snapshot = await database.ref('users/associates/' + name).once('value');
+//   const data = snapshot.val();
+//   res.status(200).send(data);
+// });
 
-  // friends[name] = newStatus
-  res.status(200).send(friends);
-});
+// app.post('/addfriend', async (req, res) => {
+//   const { name, status } = req.body;
 
-app.delete('/friends', async (req, res) => {
-  const { name } = req.body;
+//   //realtime database
+//   await database.ref('users/associates/' + name).set({
+//     status,
+//   });
 
-  //realtime database
-  await database.ref('users/associates/' + name).remove();
+//   // friends[name] = status
+//   res.status(200).send(req.body);
+// });
 
-  res.status(200).send(friends);
-});
+// app.put('/changestatus', async (req, res) => {
+//   const { name, newStatus } = req.body;
+
+//   //realtime database
+//   await database.ref('users/associates/' + name).set({
+//     status: newStatus,
+//   });
+
+//   // friends[name] = newStatus
+//   res.status(200).send(req.body);
+// });
+
+// app.delete('/friends', async (req, res) => {
+//   const { name } = req.body;
+
+//   //realtime database
+//   await database.ref('users/associates/' + name).remove();
+
+//   res.status(200).send(req.body);
+// });
 
 app.listen(PORT, () => {
   console.log(`Express server running at http://localhost:${PORT}/`);
