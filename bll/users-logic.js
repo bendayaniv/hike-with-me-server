@@ -1,4 +1,4 @@
-const db = require('../firebase.js');
+const db = require('../dal/firebase.js');
 
 async function getAllUsers() {
   const snapshot = await db.database.ref('users').once('value');

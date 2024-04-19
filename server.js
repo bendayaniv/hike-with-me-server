@@ -5,7 +5,7 @@ const PORT = 3000;
 
 const userControllers = require('./controllers/user-controllers.js');
 
-const { database } = require('./firebase.js');
+const { database } = require('./dal/firebase.js');
 
 app.use(express.json());
 app.use(cors());
