@@ -11,7 +11,12 @@ router.get('/', async (req, res) => {
     //   res.status(200).send(data);
     // });
     const users = await usersLogic.getAllUsers();
-    res.status(200).send(users);
+    const dataArray = Object.values(users).map((item) => ({
+      name: item.name,
+      email: item.email,
+      password: item.password,
+    }));
+    res.status(200).send(dataArray);
   } catch (err) {
     res.status(500).json(err);
   }
