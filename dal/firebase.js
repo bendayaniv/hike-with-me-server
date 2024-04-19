@@ -1,6 +1,6 @@
 const { initializeApp, cert } = require('firebase-admin/app');
 
-const serviceAccount = require('./creds.json');
+const serviceAccount = require('../creds.json');
 
 // Realtime Database
 const { getDatabase } = require('firebase-admin/database');

@@ -1,5 +1,5 @@
 const express = require('express');
-const { database } = require('../firebase.js');
+const { database } = require('../dal/firebase.js');
 const usersLogic = require('../bll/users-logic.js');
 
 const router = express.Router();
