@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
     // });
     const users = await usersLogic.getAllUsers();
     const dataArray = Object.values(users).map((item) => ({
+      id: item.id,
       name: item.name,
       email: item.email,
       password: item.password,
@@ -39,6 +40,7 @@ router.post('/addUser', async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
 
   const user = {
+    id: (email + password).replace(/[.]/g, ''),
     name,
     password,
     email,
@@ -58,6 +60,7 @@ router.post('/addUser', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const user = req.body;
+  user.id = id;
 
   try {
     // await database.ref('users/' + id).update(user);

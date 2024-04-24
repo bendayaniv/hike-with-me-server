@@ -11,8 +11,7 @@ async function getUserById(id) {
 }
 
 async function addUser(user) {
-  const directory = (user.email + user.password).replace(/[.]/g, '');
-  await db.database.ref('users/' + directory).set(user);
+  await db.database.ref('users/' + user.id).set(user);
 }
 
 async function updateUser(id, user) {
