@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
       name: item.name,
       email: item.email,
       password: item.password,
+      phoneNumber: item.phoneNumber,
     }));
     res.status(200).send(dataArray);
   } catch (err) {
@@ -35,12 +36,13 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/addUser', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phoneNumber } = req.body;
 
   const user = {
     name,
     password,
     email,
+    phoneNumber,
   };
 
   try {
