@@ -1,6 +1,5 @@
 const express = require('express');
-const { database } = require('../dal/firebase.js');
-const recommendationLogic = require('../bll/recommendation-logic.js');
+const recommendationLogic = require('../bll/recommendations-logic.js');
 
 const router = express.Router();
 
