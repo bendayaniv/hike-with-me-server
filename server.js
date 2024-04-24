@@ -4,6 +4,7 @@ const app = express();
 const PORT = 3000;
 
 const userControllers = require('./controllers/user-controllers.js');
+const recommendationControllers = require('./controllers/recommendation-controllers.js');
 
 const { database } = require('./dal/firebase.js');
 
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/users', userControllers);
+app.use('/recommendations', recommendationControllers);
 
 // app.post('/addUser', async (req, res) => {
 //   const { name, email, password } = req.body;
