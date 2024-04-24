@@ -6,6 +6,7 @@ const PORT = 3000;
 const userControllers = require('./controllers/user-controllers.js');
 const recommendationControllers = require('./controllers/recommendation-controllers.js');
 const hazardControllers = require('./controllers/hazard-controller.js');
+const routeControllers = require('./controllers/route-controllers.js');
 
 const { database } = require('./dal/firebase.js');
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use('/users', userControllers);
 app.use('/recommendations', recommendationControllers);
 app.use('/hazards', hazardControllers);
+app.use('/routes', routeControllers);
 
 // app.post('/addUser', async (req, res) => {
 //   const { name, email, password } = req.body;
