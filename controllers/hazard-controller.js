@@ -19,7 +19,7 @@ router.get('/:route', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/addHazard', async (req, res) => {
   const hazard = req.body;
 
   try {
