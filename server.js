@@ -7,6 +7,7 @@ const userControllers = require('./controllers/user-controllers.js');
 const recommendationControllers = require('./controllers/recommendation-controllers.js');
 const hazardControllers = require('./controllers/hazard-controller.js');
 const routeControllers = require('./controllers/route-controllers.js');
+const tripControllers = require('./controllers/trip-controllers.js');
 
 const { database } = require('./dal/firebase.js');
 
@@ -17,6 +18,7 @@ app.use('/users', userControllers);
 app.use('/recommendations', recommendationControllers);
 app.use('/hazards', hazardControllers);
 app.use('/routes', routeControllers);
+app.use('/trips', tripControllers);
 
 // app.post('/addUser', async (req, res) => {
 //   const { name, email, password } = req.body;
