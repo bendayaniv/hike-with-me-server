@@ -7,7 +7,7 @@ async function getAllHazardsByRoute(route) {
 
 async function addHazard(hazard) {
   await db.database
-    .ref('hazards/' + hazard.route + '/' + hazard.id)
+    .ref('hazards/' + hazard.route.name + '/' + hazard.id)
     .set(hazard);
 }
 
