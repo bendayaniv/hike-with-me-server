@@ -6,11 +6,18 @@ async function getTripsByUser(id) {
 }
 
 async function createTrip(trip) {
-  await db.database.ref('trips/' + trip.user + '/' + trip.id).set(trip);
+  await db.database
+    .ref(
+      'trips/' +
+        (trip.user.email + trip.user.password).replace(/[.]/g, '') +
+        '/' +
+        trip.id,
+    )
+    .set(trip);
 }
 
-async function updateTrip(trip) {
-  await db.database.ref('trips/' + trip.user + '/' + trip.id).update(trip);
+async function updateTrip(trip, userId) {
+  await db.database.ref('trips/' + userId + '/' + trip.id).update(trip);
 }
 
 async function deleteTrip(userId, tripId) {

@@ -24,7 +24,19 @@ router.get('/:userId', async (req, res) => {
 });
 
 router.post('/createTrip', async (req, res) => {
-  const trip = req.body;
+  const { id, name, startDate, endDate, location, description, route, user } =
+    req.body;
+
+  const trip = {
+    id,
+    name,
+    startDate,
+    endDate,
+    location,
+    description,
+    route,
+    user,
+  };
 
   try {
     await tripsLogic.createTrip(trip);
@@ -34,12 +46,12 @@ router.post('/createTrip', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
+router.put('/:userId/:tripId', async (req, res) => {
+  const { userId, tripId } = req.params;
   const trip = req.body;
 
   try {
-    await tripsLogic.updateTrip(trip);
+    await tripsLogic.updateTrip(trip, userId);
     res.status(200).send(trip);
   } catch (err) {
     res.status(500).json(err);
@@ -51,6 +63,7 @@ router.delete('/:userId/:tripId', async (req, res) => {
 
   try {
     await tripsLogic.deleteTrip(userId, tripId);
+    res.status(200).send('Trip deleted');
   } catch (err) {
     res.status(500).json(err);
   }
