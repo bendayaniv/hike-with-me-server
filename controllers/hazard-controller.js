@@ -12,6 +12,7 @@ router.get('/:route', async (req, res) => {
       description: item.description,
       reporter: item.reporter,
       route: item.route,
+      date: item.date,
     }));
     res.status(200).send(dataArray);
   } catch (err) {
@@ -20,7 +21,17 @@ router.get('/:route', async (req, res) => {
 });
 
 router.post('/addHazard', async (req, res) => {
-  const hazard = req.body;
+  const { id, type, description, severity, reporter, route, date } = req.body;
+
+  const hazard = {
+    id,
+    type,
+    description,
+    severity,
+    reporter,
+    route,
+    date,
+  };
 
   try {
     await hazardsLogic.addHazard(hazard);
