@@ -3,15 +3,15 @@ const hazardsLogic = require('../bll/hazards-logic.js');
 
 const router = express.Router();
 
-router.get('/:route', async (req, res) => {
-  const { route } = req.params;
+router.get('/:routeName', async (req, res) => {
+  const { routeName } = req.params;
   try {
-    const hazards = await hazardsLogic.getAllHazardsByRoute(route);
+    const hazards = await hazardsLogic.getAllHazardsByRoute(routeName);
     const dataArray = Object.values(hazards).map((item) => ({
       id: item.id,
       description: item.description,
-      reporter: item.reporter,
-      route: item.route,
+      reporterName: item.reporterName,
+      routeName: item.routeName,
       date: item.date,
     }));
     res.status(200).send(dataArray);
@@ -21,15 +21,15 @@ router.get('/:route', async (req, res) => {
 });
 
 router.post('/addHazard', async (req, res) => {
-  const { id, type, description, severity, reporter, route, date } = req.body;
+  const { id, type, description, severity, reporterName, routeName, date } = req.body;
 
   const hazard = {
     id,
     type,
     description,
     severity,
-    reporter,
-    route,
+    reporterName,
+    routeName,
     date,
   };
 

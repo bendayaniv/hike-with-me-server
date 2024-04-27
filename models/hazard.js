@@ -1,11 +1,11 @@
 class Hazard {
-  constructor(id, type, description, severity, reporter, route, date) {
+  constructor(id, type, description, severity, reporterName, routeName, date) {
     this.id = id;
     this.type = type;
     this.description = description;
     this.severity = severity;
-    this.reporter = reporter;
-    this.route = route;
+    this.reporterName = reporterName;
+    this.routeName = routeName;
     this.date = date;
   }
 }
