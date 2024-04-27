@@ -3,15 +3,13 @@ class Recommendation {
     id,
     rate,
     description,
-    /*reporter*/ reporterName,
-    /*route*/ routeName,
+    reporterName,
+    routeName,
   ) {
     this.id = id;
     this.rate = rate;
     this.description = description;
-    // this.reporter = reporter;
     this.reporterName = reporterName;
-    // this.route = route;
     this.routeName = routeName;
   }
 }
