@@ -3,17 +3,17 @@ const recommendationLogic = require('../bll/recommendations-logic.js');
 
 const router = express.Router();
 
-router.get('/:route', async (req, res) => {
-  const { route } = req.params;
+router.get('/:routeName', async (req, res) => {
+  const { routeName } = req.params;
   try {
     const recommendation =
-      await recommendationLogic.getRecommendationsByRoute(route);
+      await recommendationLogic.getRecommendationsByRoute(routeName);
     const dataArray = Object.values(recommendation).map((item) => ({
       id: item.id,
       rate: item.rate,
       description: item.description,
-      reporter: item.reporter,
-      route: item.route,
+      reporterName: item.reporterName,
+      routeName: item.routeName,
     }));
     res.status(200).send(dataArray);
   } catch (err) {
@@ -22,14 +22,14 @@ router.get('/:route', async (req, res) => {
 });
 
 router.post('/addRecommendation', async (req, res) => {
-  const { id, rate, description, reporter, route } = req.body;
+  const { id, rate, description, reporterName, routeName } = req.body;
 
   const recommendation = {
     id,
     rate,
     description,
-    reporter,
-    route,
+    reporterName,
+    routeName,
   };
 
   try {

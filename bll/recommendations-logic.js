@@ -10,7 +10,7 @@ async function getRecommendationsByRoute(route) {
 async function addRecommendation(recommendation) {
   await db.database
     .ref(
-      'recommendations/' + recommendation.route.name + '/' + recommendation.id,
+      'recommendations/' + recommendation.routeName + '/' + recommendation.id,
     )
     .set(recommendation);
 }
