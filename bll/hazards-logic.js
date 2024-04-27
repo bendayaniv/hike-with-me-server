@@ -1,4 +1,4 @@
-const db = require('../dal/firebase.js');
+const db = require('../dal/realtimeDB.js');
 
 async function getAllHazardsByRoute(route) {
   const snapshot = await db.database.ref('hazards/' + route).once('value');

@@ -1,4 +1,4 @@
-const db = require('../dal/firebase.js');
+const db = require('../dal/realtimeDB.js');
 
 async function getAllUsers() {
   const snapshot = await db.database.ref('users').once('value');
@@ -14,8 +14,8 @@ async function addUser(user) {
   await db.database.ref('users/' + user.id).set(user);
 }
 
-async function updateUser(id, user) {
-  await db.database.ref('users/' + id).update(user);
+async function updateUser(user) {
+  await db.database.ref('users/' + user.id).update(user);
 }
 
 async function deleteUser(id) {
