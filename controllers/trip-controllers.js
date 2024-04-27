@@ -24,7 +24,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 router.post('/createTrip', async (req, res) => {
-  const { id, name, startDate, endDate, location, description, route, user } =
+  const { id, name, startDate, endDate, location, description, routeName, userId } =
     req.body;
 
   const trip = {
@@ -34,8 +34,8 @@ router.post('/createTrip', async (req, res) => {
     endDate,
     location,
     description,
-    route,
-    user,
+    routeName,
+    userId,
   };
 
   try {

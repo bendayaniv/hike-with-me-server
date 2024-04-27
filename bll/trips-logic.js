@@ -1,12 +1,12 @@
 const db = require('../dal/realtimeDB.js');
 
-async function getTripsByUser(id) {
-  const snapshot = await db.database.ref('trips/' + id).once('value');
+async function getTripsByUser(userId) {
+  const snapshot = await db.database.ref('trips/' + userId).once('value');
   return snapshot.val();
 }
 
 async function createTrip(trip) {
-  await db.database.ref('trips/' + trip.user.id + '/' + trip.id).set(trip);
+  await db.database.ref('trips/' + trip.userId + '/' + trip.id).set(trip);
 }
 
 async function updateTrip(trip, userId) {

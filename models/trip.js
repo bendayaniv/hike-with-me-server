@@ -6,8 +6,8 @@ class Trip {
     endDate,
     locations,
     description,
-    route,
-    user,
+    routeName,
+    userId,
   ) {
     this.id = id;
     this.name = name;
@@ -15,8 +15,8 @@ class Trip {
     this.endDate = endDate;
     this.locations = locations;
     this.description = description;
-    this.route = route;
-    this.user = user;
+    this.routeName = routeName;
+    this.userId = userId;
   }
 }
 
