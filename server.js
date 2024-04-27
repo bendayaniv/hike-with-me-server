@@ -9,7 +9,7 @@ const hazardControllers = require('./controllers/hazard-controller.js');
 const routeControllers = require('./controllers/route-controllers.js');
 const tripControllers = require('./controllers/trip-controllers.js');
 
-const { database } = require('./dal/firebase.js');
+const { database } = require('./dal/realtimeDB.js');
 
 app.use(express.json());
 app.use(cors());

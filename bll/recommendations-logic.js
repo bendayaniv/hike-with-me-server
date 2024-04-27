@@ -1,4 +1,4 @@
-const db = require('../dal/firebase.js');
+const db = require('../dal/realtimeDB.js');
 
 async function getRecommendationsByRoute(route) {
   const snapshot = await db.database

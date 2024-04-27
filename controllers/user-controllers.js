@@ -1,5 +1,4 @@
 const express = require('express');
-const { database } = require('../dal/firebase.js');
 const usersLogic = require('../bll/users-logic.js');
 
 const router = express.Router();
@@ -37,10 +36,10 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/addUser', async (req, res) => {
-  const { name, email, password, phoneNumber } = req.body;
+  const { id, name, email, password, phoneNumber } = req.body;
 
   const user = {
-    id: (email + password).replace(/[.]/g, ''),
+    id,
     name,
     password,
     email,
@@ -57,14 +56,12 @@ router.post('/addUser', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
+router.put('/', async (req, res) => {
   const user = req.body;
-  user.id = id;
 
   try {
     // await database.ref('users/' + id).update(user);
-    await usersLogic.updateUser(id, user);
+    await usersLogic.updateUser(user);
     res.status(200).send(user);
   } catch (err) {
     res.status(500).json(err);

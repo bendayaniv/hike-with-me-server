@@ -1,4 +1,4 @@
-const db = require('../dal/firebase.js');
+const db = require('../dal/realtimeDB.js');
 
 async function getTripsByUser(id) {
   const snapshot = await db.database.ref('trips/' + id).once('value');
@@ -6,14 +6,7 @@ async function getTripsByUser(id) {
 }
 
 async function createTrip(trip) {
-  await db.database
-    .ref(
-      'trips/' +
-        (trip.user.email + trip.user.password).replace(/[.]/g, '') +
-        '/' +
-        trip.id,
-    )
-    .set(trip);
+  await db.database.ref('trips/' + trip.user.id + '/' + trip.id).set(trip);
 }
 
 async function updateTrip(trip, userId) {
