@@ -14,8 +14,8 @@ router.get('/:userId', async (req, res) => {
       endDate: item.endDate,
       location: item.location,
       description: item.description,
-      route: item.route,
-      user: item.user,
+      routeName: item.routeName,
+      userId: item.userId,
     }));
     res.status(200).send(dataArray);
   } catch (err) {
@@ -24,8 +24,16 @@ router.get('/:userId', async (req, res) => {
 });
 
 router.post('/createTrip', async (req, res) => {
-  const { id, name, startDate, endDate, location, description, routeName, userId } =
-    req.body;
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    location,
+    description,
+    routeName,
+    userId,
+  } = req.body;
 
   const trip = {
     id,
@@ -46,12 +54,11 @@ router.post('/createTrip', async (req, res) => {
   }
 });
 
-router.put('/:userId/:tripId', async (req, res) => {
-  const { userId, tripId } = req.params;
+router.put('/', async (req, res) => {
   const trip = req.body;
 
   try {
-    await tripsLogic.updateTrip(trip, userId);
+    await tripsLogic.updateTrip(trip);
     res.status(200).send(trip);
   } catch (err) {
     res.status(500).json(err);
