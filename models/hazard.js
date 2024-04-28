@@ -1,12 +1,12 @@
 class Hazard {
-  constructor(id, type, description, severity, reporterName, routeName, date) {
+  constructor(id, type, description, severity, reporterName, routeName, location) {
     this.id = id;
     this.type = type;
     this.description = description;
     this.severity = severity;
     this.reporterName = reporterName;
     this.routeName = routeName;
-    this.date = date;
+    this.location = location;
   }
 
   // getters and setters
@@ -59,12 +59,12 @@ class Hazard {
     this.routeName = routeName;
   }
 
-  getDate() {
-    return this.date;
+  getLocation() {
+    return this.location;
   }
 
-  setDate(date) {
-    this.date = date;
+  setLocation(location) {
+    this.location = location;
   }
 
   // toString method
@@ -76,7 +76,7 @@ class Hazard {
     severity: ${this.severity}, 
     reporterName: ${this.reporterName},
     routeName: ${this.routeName},
-    date: ${this.date} }`;
+    location: ${this.location} }`;
   }
 }
 
