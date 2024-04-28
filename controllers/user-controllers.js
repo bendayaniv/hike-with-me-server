@@ -1,22 +1,23 @@
 const express = require('express');
 const usersLogic = require('../bll/users-logic.js');
+const User = require('../models/user.js');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    // database.ref('users').on('value', (snapshot) => {
-    //   const data = snapshot.val();
-    //   res.status(200).send(data);
-    // });
     const users = await usersLogic.getAllUsers();
-    const dataArray = Object.values(users).map((item) => ({
-      id: item.id,
-      name: item.name,
-      email: item.email,
-      password: item.password,
-      phoneNumber: item.phoneNumber,
-    }));
+    const dataArray = Object.values(users).map(
+      (item) =>
+        new User(
+          item.id,
+          item.name,
+          item.email,
+          item.password,
+          item.phoneNumber,
+        ),
+    );
+    console.log(dataArray);
     res.status(200).send(dataArray);
   } catch (err) {
     res.status(500).json(err);
@@ -26,8 +27,6 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    // const snapshot = await database.ref('users/' + id).once('value');
-    // const data = snapshot.val();
     const user = await usersLogic.getUserById(id);
     res.status(200).send(user);
   } catch (err) {
@@ -38,17 +37,9 @@ router.get('/:id', async (req, res) => {
 router.post('/addUser', async (req, res) => {
   const { id, name, email, password, phoneNumber } = req.body;
 
-  const user = {
-    id,
-    name,
-    password,
-    email,
-    phoneNumber,
-  };
+  const user = new User(id, name, email, password, phoneNumber);
 
   try {
-    // const directory = (email + password).replace(/[.]/g, '');
-    // await database.ref('users/' + directory).set(user);
     await usersLogic.addUser(user);
     res.status(200).send(user);
   } catch (err) {
@@ -57,10 +48,10 @@ router.post('/addUser', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-  const user = req.body;
+  const { id, name, email, password, phoneNumber } = req.body;
+  const user = new User(id, name, email, password, phoneNumber);
 
   try {
-    // await database.ref('users/' + id).update(user);
     await usersLogic.updateUser(user);
     res.status(200).send(user);
   } catch (err) {
@@ -72,7 +63,6 @@ router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    // await database.ref('users/' + id).remove();
     await usersLogic.deleteUser(id);
     res.status(200).send('User deleted');
   } catch (err) {
