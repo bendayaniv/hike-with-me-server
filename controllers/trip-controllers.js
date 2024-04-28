@@ -1,5 +1,6 @@
 const express = require('express');
 const tripsLogic = require('../bll/trips-logic.js');
+const Trip = require('../models/trip.js');
 
 const router = express.Router();
 
@@ -7,16 +8,19 @@ router.get('/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
     const trips = await tripsLogic.getTripsByUser(userId);
-    const dataArray = Object.values(trips).map((item) => ({
-      id: item.id,
-      name: item.name,
-      startDate: item.startDatea,
-      endDate: item.endDate,
-      location: item.location,
-      description: item.description,
-      routeName: item.routeName,
-      userId: item.userId,
-    }));
+    const dataArray = Object.values(trips).map(
+      (item) =>
+        new Trip(
+          item.id,
+          item.name,
+          item.startDate,
+          item.endDate,
+          item.location,
+          item.description,
+          item.routeName,
+          item.userId,
+        ),
+    );
     res.status(200).send(dataArray);
   } catch (err) {
     res.status(500).json(err);
@@ -35,7 +39,7 @@ router.post('/createTrip', async (req, res) => {
     userId,
   } = req.body;
 
-  const trip = {
+  const trip = new Trip(
     id,
     name,
     startDate,
@@ -44,7 +48,7 @@ router.post('/createTrip', async (req, res) => {
     description,
     routeName,
     userId,
-  };
+  );
 
   try {
     await tripsLogic.createTrip(trip);
@@ -55,7 +59,27 @@ router.post('/createTrip', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-  const trip = req.body;
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    location,
+    description,
+    routeName,
+    userId,
+  } = req.body;
+
+  const trip = new Trip(
+    id,
+    name,
+    startDate,
+    endDate,
+    location,
+    description,
+    routeName,
+    userId,
+  );
 
   try {
     await tripsLogic.updateTrip(trip);
