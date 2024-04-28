@@ -17,7 +17,7 @@ router.get('/:routeName', async (req, res) => {
           item.severity,
           item.reporterName,
           item.routeName,
-          item.date,
+          item.location,
         ),
     );
     res.status(200).send(dataArray);
@@ -27,7 +27,7 @@ router.get('/:routeName', async (req, res) => {
 });
 
 router.post('/addHazard', async (req, res) => {
-  const { id, type, description, severity, reporterName, routeName, date } =
+  const { id, type, description, severity, reporterName, routeName, location } =
     req.body;
 
   const hazard = new Hazard(
@@ -37,7 +37,7 @@ router.post('/addHazard', async (req, res) => {
     severity,
     reporterName,
     routeName,
-    date,
+    location,
   );
 
   try {
