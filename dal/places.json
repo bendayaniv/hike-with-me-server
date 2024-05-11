@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Bokek River",
+    "lat": 31.20171,
+    "long": 35.36327,
+    "length": "1.5 miles",
+    "difficulty": "Easy",
+    "description": "The Bokek River Trail is a 1.5 mile loop trail located near Bokek River, Washington that features a river and is good for all skill levels. The trail is primarily used for hiking, walking, and nature trips and is best used from April until October. Dogs are also able to use this trail but must be kept on leash.",
+    "image": "https://www.google.com/imgres?q=%D7%A0%D7%97%D7%9C%20%D7%91%D7%95%D7%A7%D7%A7&imgurl=https%3A%2F%2Fstatic.parks.org.il%2Fwp-content%2Fuploads%2F2019%2F03%2F5c9cacf7b7e04-e1553772192804.jpg&imgrefurl=https%3A%2F%2Fwww.parks.org.il%2Ftrip%2Fbokek-river%2F&docid=lhCqUkFTUdEtwM&tbnid=sdbRXAKtJytEDM&vet=12ahUKEwjcvLDPy4WGAxVF-gIHHZedCVQQM3oECBsQAA..i&w=1200&h=800&hcb=2&ved=2ahUKEwjcvLDPy4WGAxVF-gIHHZedCVQQM3oECBsQAA"
+  },
+  {
+    "name": "Ramon Crater",
+    "lat": 30.61289,
+    "long": 34.80308,
+    "length": "3.5 miles",
+    "difficulty": "Moderate",
+    "description": "The Ramon Crater Trail is a 3.5 mile loop trail located near Ramon Crater, Washington that offers scenic views and is rated as moderate. The trail is primarily used for hiking, walking, and nature trips and is best used from April until October.",
+    "image": "https://www.google.com/imgres?q=%D7%9E%D7%9B%D7%AA%D7%A9%20%D7%A8%D7%9E%D7%95%D7%9F&imgurl=https%3A%2F%2Fres.cloudinary.com%2Fatzuma%2Fimage%2Fupload%2Fc_thumb%2Cg_face%3Acenter%2Ch_450%2Cq_70%2Cw_800%2Fv1626244264%2Fatzuma%2Fqo8z5txv22hxuxz3b0fo.jpg&imgrefurl=https%3A%2F%2Fwww.atzuma.co.il%2Fsavemakhteshramon&docid=fwodooLdIWTAEM&tbnid=C-rMcqHLiGLvMM&vet=12ahUKEwiPlq-8y4WGAxWpywIHHTeALsoQM3oECCwQAA..i&w=800&h=450&hcb=2&ved=2ahUKEwiPlq-8y4WGAxWpywIHHTeALsoQM3oECCwQAA"
+  }
+]

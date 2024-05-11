@@ -8,6 +8,7 @@ const recommendationControllers = require('./controllers/recommendation-controll
 const hazardControllers = require('./controllers/hazard-controller.js');
 const routeControllers = require('./controllers/route-controllers.js');
 const tripControllers = require('./controllers/trip-controllers.js');
+const placesControllers = require('./controllers/place-controllers.js');
 
 app.use(express.json());
 app.use(cors());
@@ -17,6 +18,7 @@ app.use('/recommendations', recommendationControllers);
 app.use('/hazards', hazardControllers);
 app.use('/routes', routeControllers);
 app.use('/trips', tripControllers);
+app.use('/places', placesControllers);
 
 app.listen(PORT, () => {
   console.log(`Express server running at http://localhost:${PORT}/`);
