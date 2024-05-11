@@ -12,5 +12,4 @@ async function getRouteByName(name) {
 module.exports = {
   getAllRoutes,
   getRouteByName,
-  addRoute,
 };
