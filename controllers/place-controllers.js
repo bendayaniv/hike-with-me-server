@@ -11,12 +11,11 @@ router.get('/', async (req, res) => {
       (item) =>
         new Place(
           item.name,
-          item.lat,
-          item.long,
+          item.location,
           item.length,
           item.difiiculty,
           item.description,
-          item.image,
+          item.images,
         ),
     );
     res.status(200).send(dataArray);

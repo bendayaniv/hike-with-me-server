@@ -1,83 +1,73 @@
 class Place {
-    constructor(name, lat, long, length, difiiculty, description, image) {
-        this.name = name;
-        this.lat = lat;
-        this.long = long;
-        this.length = length;
-        this.difiiculty = difiiculty;
-        this.description = description;
-        this.image = image;
-    }
+  constructor(name, location, length, difiiculty, description, images) {
+    this.name = name;
+    this.location = location;
+    this.length = length;
+    this.difiiculty = difiiculty;
+    this.description = description;
+    this.images = images;
+  }
 
-    // getters and setters
+  // getters and setters
 
-    getName() {
-        return this.name;
-    }
+  getName() {
+    return this.name;
+  }
 
-    setName(name) {
-        this.name = name;
-    }
+  setName(name) {
+    this.name = name;
+  }
 
-    getLat() {
-        return this.lat;
-    }
+  getlocation() {
+    return this.location;
+  }
 
-    setLat(lat) {
-        this.lat = lat;
-    }
+  setlocation(lat) {
+    this.lat = location;
+  }
 
-    getLong() {
-        return this.long;
-    }
+  getLength() {
+    return this.length;
+  }
 
-    setLong(long) {
-        this.long = long;
-    }
+  setLength(length) {
+    this.length = length;
+  }
 
-    getLength() {
-        return this.length;
-    }
+  getDifiiculty() {
+    return this.difiiculty;
+  }
 
-    setLength(length) {
-        this.length = length;
-    }
+  setDifiiculty(difiiculty) {
+    this.difiiculty = difiiculty;
+  }
 
-    getDifiiculty() {
-        return this.difiiculty;
-    }
+  getDescription() {
+    return this.description;
+  }
 
-    setDifiiculty(difiiculty) {
-        this.difiiculty = difiiculty;
-    }
+  setDescription(description) {
+    this.description = description;
+  }
 
-    getDescription() {
-        return this.description;
-    }
+  getImages() {
+    return this.images;
+  }
 
-    setDescription(description) {
-        this.description = description;
-    }
+  setImages(images) {
+    this.images = images;
+  }
 
-    getImage() {
-        return this.image;
-    }
+  // other methods
 
-    setImage(image) {
-        this.image = image;
-    }
-
-    // other methods
-
-    toString() {
-        return `Place: { name: ${this.name}, 
-        lat: ${this.lat}, 
-        long: ${this.long}, 
+  toString() {
+    return `Place: { name: ${this.name}, 
+        location: ${this.location},  
         length: ${this.length}, 
         difiiculty: ${this.difiiculty}, 
         description: ${this.description},
-        image: ${this.image} }`;
-    }
+        images: ${this.images} }`;
+  }
 }
 
 module.exports = Place;
