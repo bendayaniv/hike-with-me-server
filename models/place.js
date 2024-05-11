@@ -1,9 +1,9 @@
 class Place {
-  constructor(name, location, length, difiiculty, description, images) {
+  constructor(name, location, length, difficulty, description, images) {
     this.name = name;
     this.location = location;
     this.length = length;
-    this.difiiculty = difiiculty;
+    this.difficulty = difficulty;
     this.description = description;
     this.images = images;
   }
@@ -34,12 +34,12 @@ class Place {
     this.length = length;
   }
 
-  getDifiiculty() {
-    return this.difiiculty;
+  getDifficulty() {
+    return this.difficulty;
   }
 
-  setDifiiculty(difiiculty) {
-    this.difiiculty = difiiculty;
+  setDifficulty(difiiculty) {
+    this.difiiculty = difficulty;
   }
 
   getDescription() {
@@ -64,7 +64,7 @@ class Place {
     return `Place: { name: ${this.name}, 
         location: ${this.location},  
         length: ${this.length}, 
-        difiiculty: ${this.difiiculty}, 
+        difficulty: ${this.difficulty}, 
         description: ${this.description},
         images: ${this.images} }`;
   }

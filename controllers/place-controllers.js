@@ -13,11 +13,12 @@ router.get('/', async (req, res) => {
           item.name,
           item.location,
           item.length,
-          item.difiiculty,
+          item.difficulty,
           item.description,
           item.images,
         ),
     );
+    console.log(dataArray);
     res.status(200).send(dataArray);
   } catch (err) {
     res.status(500).json(err);
