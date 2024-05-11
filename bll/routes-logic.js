@@ -1,17 +1,12 @@
-const db = require('../dal/realtimeDB.js');
+const routes = require('../dal/routes.json');
 
 async function getAllRoutes() {
-  const snapshot = await db.database.ref('routes').once('value');
-  return snapshot.val();
+  return routes;
 }
 
 async function getRouteByName(name) {
-  const snapshot = await db.database.ref('routes/' + name).once('value');
-  return snapshot.val();
-}
-
-async function addRoute(route) {
-  await db.database.ref('routes/' + route.name).set(route);
+  const route = routes.find((route) => route.name === name);
+  return route;
 }
 
 module.exports = {
