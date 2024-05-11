@@ -34,22 +34,4 @@ router.get('/:name', async (req, res) => {
   }
 });
 
-router.post('/addRoute', async (req, res) => {
-  const { id, name, description, difficultyLevel, length, location } = req.body;
-  const route = new Route(
-    id,
-    name,
-    description,
-    difficultyLevel,
-    length,
-    location,
-  );
-  try {
-    await routesLogic.addRoute(route);
-    res.status(200).send(route);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 module.exports = router;
