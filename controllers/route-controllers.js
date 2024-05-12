@@ -18,6 +18,9 @@ router.get('/', async (req, res) => {
           item.location,
         ),
     );
+
+    console.log(dataArray);
+
     res.status(200).send(dataArray);
   } catch (err) {
     res.status(500).json(err);
