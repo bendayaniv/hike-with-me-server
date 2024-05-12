@@ -6,8 +6,8 @@
     "difficultyLevel": "Low",
     "length": "1.5 miles",
     "location": {
-      "lat": 31.20171,
-      "long": 35.36327,
+      "latitude": 31.20171,
+      "longitude": 35.36327,
       "date": null
     }
   },
@@ -18,8 +18,8 @@
     "difficultyLevel": "Medium",
     "length": "3.5 miles",
     "location": {
-      "lat": 30.61289,
-      "long": 34.80308,
+      "latitude": 30.61289,
+      "longitude": 34.80308,
       "date": null
     }
   }
