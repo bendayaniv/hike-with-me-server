@@ -1,4 +1,4 @@
-const routes = require('../dal/routes.json');
+const routes = require('../dal/mockRoutes.json');
 
 async function getAllRoutes() {
   return routes;
