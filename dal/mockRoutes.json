@@ -22,5 +22,89 @@
       "longitude": 34.80308,
       "date": null
     }
+  },
+  {
+    "id": "3",
+    "name": "Nahal Darga",
+    "description": "Nahal Darga flows in the north of the Judean desert towards the Dead Sea. The high and steep cliffs on both sides testify to the magnitude of the water receding during the winter floods. There are two spectacular hiking sections in the stream: the first is a squared stream, with a squared cave full of history, which is suitable for well-meaning families. The second is Nahal Darja, one of the most difficult and dangerous routes in the country, but also one of the fun ones!",
+    "difficultyLevel": "Hard",
+    "length": "4.4 miles",
+    "location": {
+      "latitude": 31.59269186,
+      "longitude": 35.38782644,
+      "date": null
+    }
+  },
+  {
+    "id": "4",
+    "name": "Nahal Alexander National Park",
+    "description": "In the center of the country, in the heart of Emek Hafer, flows the Alexander River, along which runs one of the most charming routes in the country to the mouth of the river at the seashore. On the way you will meet the soft turtles that live in the stream, the ruins of Samara from which you will enjoy an amazing view, pastoral river vegetation and beautiful flowers in season. A must-see route for the whole family, every season of the year.",
+    "difficultyLevel": "Low",
+    "length": "1.9 miles",
+    "location": {
+      "latitude": 32.395618,
+      "longitude": 34.8660053,
+      "date": null
+    }
+  },
+  {
+    "id": "5",
+    "name": "Nahal Amud",
+    "description": "Nahal Amud is a stream that flows in the Upper Galilee, near the city of Safed. The stream is named after the pillar of the Amud Anan, which is located in the area. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
+    "difficultyLevel": "Low",
+    "length": "3.1 miles",
+    "location": {
+      "latitude": 32.9333,
+      "longitude": 35.4167,
+      "date": null
+    }
+  },
+  {
+    "id": "6",
+    "name": "Nahal Ayun",
+    "description": "Nahal Ayun is a stream that flows in the Upper Galilee, near the city of Kiryat Shmona. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
+    "difficultyLevel": "Low",
+    "length": "3.1 miles",
+    "location": {
+      "latitude": 33.2167,
+      "longitude": 35.6167,
+      "date": null
+    }
+  },
+  {
+    "id": "7",
+    "name": "Nahal Arugot",
+    "description": "Nahal Arugot is a stream that flows in the Judean Desert, near the city of Arad. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
+    "difficultyLevel": "Low",
+    "length": "3.1 miles",
+    "location": {
+      "latitude": 31.4167,
+      "longitude": 35.1,
+      "date": null
+    }
+  },
+  {
+    "id": "8",
+    "name": "Nahal Ayit",
+    "description": "Nahal Ayit is a stream that flows in the Upper Galilee, near the city of Kiryat Shmona. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
+    "difficultyLevel": "Low",
+    "length": "3.1 miles",
+    "location": {
+      "latitude": 33.2167,
+      "longitude": 35.6167,
+      "date": null
+    }
+  },
+  {
+    "id": "9",
+    "name": "Crocodile River",
+    "description": "The Crocodile River Trail is a 1.5 mile loop trail located near Crocodile River, Washington that features a river and is good for all skill levels. The trail is primarily used for hiking, walking, and nature trips and is best used from April until October. Dogs are also able to use this trail but must be kept on leash.",
+    "difficultyLevel": "Low",
+    "length": "1.5 miles",
+    "location": {
+      "latitude": 32.546247,
+      "longitude": 34.91615,
+      "date": null
+    }
   }
 ]
