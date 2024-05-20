@@ -1,20 +1,59 @@
-const db = require('../dal/realtimeDB.js');
+const firebase = require('../dal/firebase.js');
 
 async function getTripsByUser(userId) {
-  const snapshot = await db.database.ref('trips/' + userId).once('value');
+  const snapshot = await firebase.database.ref('trips/' + userId).once('value');
   return snapshot.val();
 }
 
 async function createTrip(trip) {
-  await db.database.ref('trips/' + trip.userId + '/' + trip.id).set(trip);
+  await firebase.database.ref('trips/' + trip.userId + '/' + trip.id).set(trip);
 }
 
 async function updateTrip(trip) {
-  await db.database.ref('trips/' + trip.userId + '/' + trip.id).update(trip);
+  await firebase.database
+    .ref('trips/' + trip.userId + '/' + trip.id)
+    .update(trip);
 }
 
 async function deleteTrip(userId, tripId) {
-  await db.database.ref('trips/' + userId + '/' + tripId).remove();
+  await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
+}
+
+async function uploadImages(files, userName, tripName) {
+  const bucket = firebase.storage.bucket();
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const blob = bucket.file(
+      userName + '/' + tripName + '/' + file.originalname,
+    );
+    const blobStream = blob.createWriteStream({
+      metadata: {
+        contentType: file.mimetype,
+      },
+    });
+
+    blobStream.on('error', (err) => {
+      console.error(err);
+    });
+
+    blobStream.on('finish', () => {
+      console.log('Image uploaded successfully');
+    });
+
+    blobStream.end(file.buffer);
+  }
+}
+
+async function downloadImages(userName, tripName) {
+  const bucket = firebase.storage.bucket();
+  const [files] = await bucket.getFiles({
+    prefix: userName + '/' + tripName,
+  });
+
+  console.log('Files:', files);
+
+  return files;
 }
 
 module.exports = {
@@ -22,4 +61,6 @@ module.exports = {
   createTrip,
   updateTrip,
   deleteTrip,
+  uploadImages,
+  downloadImages,
 };

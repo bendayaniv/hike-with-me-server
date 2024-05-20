@@ -1,6 +1,7 @@
 const express = require('express');
 const tripsLogic = require('../bll/trips-logic.js');
 const Trip = require('../models/trip.js');
+const { upload } = require('../dal/firebase.js');
 
 const router = express.Router();
 
@@ -99,5 +100,43 @@ router.delete('/:userId/:tripId', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.post('/uplaodImages', upload.array('image'), async (req, res) => {
+  try {
+    const files = req.files;
+
+    const { userName, tripName } = req.body;
+
+    await tripsLogic.uploadImages(files, userName, tripName);
+    res.status(200).send('Images uploaded');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/downloadImages', async (req, res) => {
+  console.log('downloadImages');
+  const { userName, tripName } = req.body;
+
+  console.log('userName:', userName);
+  console.log('tripName:', tripName);
+
+  try {
+    const files = await tripsLogic.downloadImages(userName, tripName);
+    res.status(200).send(files);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// const giveCurrentDataTime = () => {
+//   const today = new Date();
+//   const date =
+//     today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+//   const time =
+//     today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+//   const dateTime = date + ' ' + time;
+//   return dateTime;
+// };
 
 module.exports = router;

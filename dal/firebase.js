@@ -1,9 +1,17 @@
+const multer = require('multer');
+
 const { initializeApp, cert } = require('firebase-admin/app');
 
 const serviceAccount = require('../creds.json');
 
 // Realtime Database
 const { getDatabase } = require('firebase-admin/database');
+const {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadByteResumble,
+} = require('firebase-admin/storage');
 
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyBr1wztWdXPiVGA2OYG_4oQKezywnCxL3U',
@@ -18,12 +26,20 @@ const { getDatabase } = require('firebase-admin/database');
 const app = initializeApp({
   credential: cert(serviceAccount),
   databaseURL: 'https://hike-with-me-1efdd-default-rtdb.firebaseio.com/', // for Realtime Database
+  storageBucket: 'gs://hike-with-me-1efdd.appspot.com', // for Storage
 });
 
 const database = getDatabase(app);
+const storage = getStorage(app);
 
-// const database = getDatabase();
+// Set up the Firebase Storage bucket
+const bucket = storage.bucket();
+
+// Set up multer for handling file uploads
+const upload = multer({ storage: multer.memoryStorage() });
 
 module.exports = {
   database,
+  storage,
+  upload,
 };
