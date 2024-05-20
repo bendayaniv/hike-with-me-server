@@ -1,25 +1,25 @@
-const db = require('../dal/realtimeDB.js');
+const firebase = require('../dal/firebase.js');
 
 async function getAllUsers() {
-  const snapshot = await db.database.ref('users').once('value');
+  const snapshot = await firebase.database.ref('users').once('value');
   return snapshot.val();
 }
 
 async function getUserById(id) {
-  const snapshot = await db.database.ref('users/' + id).once('value');
+  const snapshot = await firebase.database.ref('users/' + id).once('value');
   return snapshot.val();
 }
 
 async function addUser(user) {
-  await db.database.ref('users/' + user.id).set(user);
+  await firebase.database.ref('users/' + user.id).set(user);
 }
 
 async function updateUser(user) {
-  await db.database.ref('users/' + user.id).update(user);
+  await firebase.database.ref('users/' + user.id).update(user);
 }
 
 async function deleteUser(id) {
-  await db.database.ref('users/' + id).remove();
+  await firebase.database.ref('users/' + id).remove();
 }
 
 module.exports = {

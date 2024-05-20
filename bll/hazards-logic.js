@@ -1,12 +1,14 @@
-const db = require('../dal/realtimeDB.js');
+const firebase = require('../dal/firebase.js');
 
 async function getAllHazardsByRoute(routeName) {
-  const snapshot = await db.database.ref('hazards/' + routeName).once('value');
+  const snapshot = await firebase.database
+    .ref('hazards/' + routeName)
+    .once('value');
   return snapshot.val();
 }
 
 async function addHazard(hazard) {
-  await db.database
+  await firebase.database
     .ref('hazards/' + hazard.routeName + '/' + hazard.id)
     .set(hazard);
 }

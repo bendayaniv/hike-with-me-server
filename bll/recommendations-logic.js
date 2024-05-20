@@ -1,14 +1,14 @@
-const db = require('../dal/realtimeDB.js');
+const firebase = require('../dal/firebase.js');
 
 async function getRecommendationsByRoute(route) {
-  const snapshot = await db.database
+  const snapshot = await firebase.database
     .ref('recommendations/' + route)
     .once('value');
   return snapshot.val();
 }
 
 async function addRecommendation(recommendation) {
-  await db.database
+  await firebase.database
     .ref(
       'recommendations/' + recommendation.routeName + '/' + recommendation.id,
     )

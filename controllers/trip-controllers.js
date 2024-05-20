@@ -1,6 +1,7 @@
 const express = require('express');
 const tripsLogic = require('../bll/trips-logic.js');
 const Trip = require('../models/trip.js');
+const { upload } = require('../dal/firebase.js');
 
 const router = express.Router();
 
@@ -95,6 +96,30 @@ router.delete('/:userId/:tripId', async (req, res) => {
   try {
     await tripsLogic.deleteTrip(userId, tripId);
     res.status(200).send('Trip deleted');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post('/uplaodImages', upload.array('image'), async (req, res) => {
+  try {
+    const files = req.files;
+
+    const { userName, tripName } = req.body;
+
+    await tripsLogic.uploadImages(files, userName, tripName);
+    res.status(200).send('Images uploaded');
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/:userName/:tripName', async (req, res) => {
+  const { userName, tripName } = req.params;
+
+  try {
+    const files = await tripsLogic.getAllUserImagesByTrip(userName, tripName);
+    res.status(200).send(files);
   } catch (err) {
     res.status(500).json(err);
   }
