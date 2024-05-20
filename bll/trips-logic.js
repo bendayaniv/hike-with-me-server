@@ -45,13 +45,11 @@ async function uploadImages(files, userName, tripName) {
   }
 }
 
-async function downloadImages(userName, tripName) {
+async function getAllUserImagesByTrip(userName, tripName) {
   const bucket = firebase.storage.bucket();
   const [files] = await bucket.getFiles({
     prefix: userName + '/' + tripName,
   });
-
-  console.log('Files:', files);
 
   return files;
 }
@@ -62,5 +60,5 @@ module.exports = {
   updateTrip,
   deleteTrip,
   uploadImages,
-  downloadImages,
+  getAllUserImagesByTrip,
 };
