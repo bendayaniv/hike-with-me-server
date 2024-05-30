@@ -85,3 +85,8 @@ https://www.youtube.com/watch?v=ZIbAtxPq5_I&ab_channel=SherlockZz
 ## Handle the README
 
 https://github.com/fefong/markdown_readme
+
+## .gitignore
+
+Last Update - 30/5/24, 19:55
+## ץעןאןעמםרק
