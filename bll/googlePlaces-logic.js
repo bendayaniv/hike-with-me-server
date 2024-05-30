@@ -6,8 +6,7 @@ const GOOGLE_PLACES_API_URL_NEAR_BY_SEARCH =
 const GOOGLE_PLACES_API_URL_FIND_PLACE_FROM_TEXT =
   'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
 
-const GOOGLE_PLACES_API_KEY =
-  /*process.env.GOOGLE_PLACES_API_KEY*/ 'AIzaSyDJNFUIJy2Bgxz2gfKSFxyvFCH99kaZ1R4';
+const GOOGLE_PLACES_API_KEY = process.env.API_KEY;
 
 async function getPlacesByLocation(location) {
   const response = await axios.get(GOOGLE_PLACES_API_URL_NEAR_BY_SEARCH, {
