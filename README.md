@@ -1,10 +1,29 @@
+# Content
+
+[Make sure you have](#make-sure-you-have)
+[How to clone](#how-to-clone)
+[How to use git in VSCode](#how-to-use-git-in-vscode)
+[Creating new branch](#creating-new-branch)
+[Moving to another branch](#moving-to-another-branch)
+[How to Push in terminal](#how-to-push-in-terminal)
+[How to Merge the changes in the branch to origin main](#how-to-merge-the-changes-in-the-branch-to-origin-main)
+[How to Merge new changes into local main from origin main](#how-to-merge-new-changes-into-local-main-from-origin-main)
+[How to Merge main into existing branch](#how-to-merge-main-into-existing-branch)
+[Start Work Routine](#start-work-routine)
+[How to activate the server](#how-to-activate-the-server)
+[How to activate nodemon](#how-to-activate-nodemon)
+[How to undo commits](#how-to-undo-commits)
+[Handle the README](#handle-the-readme)
+[.gitignore](#.gitignore)
+
+
 ## Make sure you have
 
 - [Node.js](https://nodejs.org/en/download)
 - [git](https://git-scm.com/downloads)
 - [prettier](https://www.humankode.com/javascript/set-up-prettier-and-vs-code-to-format-your-code/)
 
-## How to clone:
+## How to clone
 
 - Create directory.
 - Open the directory in VSCode.
@@ -54,7 +73,7 @@ After making a change -
 - In the Source Control tab in VSCode - clicking on the Synchronize blue button.
 - `npm i`.
 
-## How to merge main into existing branch
+## How to Merge main into existing branch
 
 - If you made changes on the branch - `git stash`.
 - [Merge new changes into local main](#how-to-merge-new-changes-into-local-main-from-origin-main).
@@ -89,4 +108,3 @@ https://github.com/fefong/markdown_readme
 ## .gitignore
 
 Last Update - 30/5/24, 19:55
-## ץעןאןעמםרק
