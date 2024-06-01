@@ -1,11 +1,20 @@
 class Route {
-  constructor(id, name, description, difficultyLevel, length, location) {
+  constructor(
+    id,
+    name,
+    description,
+    difficultyLevel,
+    length,
+    location,
+    imageUrl,
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.difficultyLevel = difficultyLevel;
     this.length = length;
     this.location = location;
+    this.imageUrl = imageUrl;
   }
 
   // getters and setters
@@ -58,6 +67,14 @@ class Route {
     this.location = location;
   }
 
+  getImage() {
+    return this.imageUrl;
+  }
+
+  setImage(imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
   // toString method
 
   toString() {
@@ -66,7 +83,9 @@ class Route {
     description: ${this.description}, 
     difficultyLevel: ${this.difficultyLevel}, 
     length: ${this.length}, 
-    location: ${this.location} }`;
+    location: ${this.location},
+    image: ${this.imageUrl}
+  }`;
   }
 }
 
