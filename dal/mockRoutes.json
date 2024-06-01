@@ -1,110 +1,56 @@
 [
   {
     "id": "1",
-    "name": "Bokek River",
-    "description": "The Bokek River Trail is a 1.5 mile loop trail located near Bokek River, Washington that features a river and is good for all skill levels. The trail is primarily used for hiking, walking, and nature trips and is best used from April until October. Dogs are also able to use this trail but must be kept on leash.",
-    "difficultyLevel": "Low",
-    "length": "1.5 miles",
-    "location": {
-      "latitude": 31.20171,
-      "longitude": 35.36327,
-      "date": null
-    }
+    "name": "Makhtesh Ramon",
+    "difficultyLevel": "Medium",
+    "length": "3.5 km"
   },
   {
     "id": "2",
-    "name": "Ramon Crater",
-    "description": "The Ramon Crater Trail is a 3.5 mile loop trail located near Ramon Crater, Washington that offers scenic views and is rated as moderate. The trail is primarily used for hiking, walking, and nature trips and is best used from April until October.",
+    "name": "Wadi Murabba'at",
     "difficultyLevel": "Medium",
-    "length": "3.5 miles",
-    "location": {
-      "latitude": 30.61289,
-      "longitude": 34.80308,
-      "date": null
-    }
+    "length": "4 km"
   },
   {
     "id": "3",
-    "name": "Nahal Darga",
-    "description": "Nahal Darga flows in the north of the Judean desert towards the Dead Sea. The high and steep cliffs on both sides testify to the magnitude of the water receding during the winter floods. There are two spectacular hiking sections in the stream: the first is a squared stream, with a squared cave full of history, which is suitable for well-meaning families. The second is Nahal Darja, one of the most difficult and dangerous routes in the country, but also one of the fun ones!",
-    "difficultyLevel": "Hard",
-    "length": "4.4 miles",
-    "location": {
-      "latitude": 31.59269186,
-      "longitude": 35.38782644,
-      "date": null
-    }
+    "name": "Nahal Alexander",
+    "difficultyLevel": "Low",
+    "length": "3 km"
   },
   {
     "id": "4",
-    "name": "Nahal Alexander National Park",
-    "description": "In the center of the country, in the heart of Emek Hafer, flows the Alexander River, along which runs one of the most charming routes in the country to the mouth of the river at the seashore. On the way you will meet the soft turtles that live in the stream, the ruins of Samara from which you will enjoy an amazing view, pastoral river vegetation and beautiful flowers in season. A must-see route for the whole family, every season of the year.",
+    "name": "Nahal Amud",
     "difficultyLevel": "Low",
-    "length": "1.9 miles",
-    "location": {
-      "latitude": 32.395618,
-      "longitude": 34.8660053,
-      "date": null
-    }
+    "length": "5 km"
   },
   {
     "id": "5",
-    "name": "Nahal Amud",
-    "description": "Nahal Amud is a stream that flows in the Upper Galilee, near the city of Safed. The stream is named after the pillar of the Amud Anan, which is located in the area. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
+    "name": "Nahal Ayun",
     "difficultyLevel": "Low",
-    "length": "3.1 miles",
-    "location": {
-      "latitude": 32.9333,
-      "longitude": 35.4167,
-      "date": null
-    }
+    "length": "3 km"
   },
   {
     "id": "6",
-    "name": "Nahal Ayun",
-    "description": "Nahal Ayun is a stream that flows in the Upper Galilee, near the city of Kiryat Shmona. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
+    "name": "Nahal Taninim",
     "difficultyLevel": "Low",
-    "length": "3.1 miles",
-    "location": {
-      "latitude": 33.2167,
-      "longitude": 35.6167,
-      "date": null
-    }
+    "length": "3 km"
   },
   {
     "id": "7",
-    "name": "Nahal Arugot",
-    "description": "Nahal Arugot is a stream that flows in the Judean Desert, near the city of Arad. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
-    "difficultyLevel": "Low",
-    "length": "3.1 miles",
-    "location": {
-      "latitude": 31.4167,
-      "longitude": 35.1,
-      "date": null
-    }
+    "name": "Wadi Qelt",
+    "difficultyLevel": "Medium",
+    "length": "5 km"
   },
   {
     "id": "8",
-    "name": "Nahal Ayit",
-    "description": "Nahal Ayit is a stream that flows in the Upper Galilee, near the city of Kiryat Shmona. The stream is one of the most beautiful in the country, with a variety of landscapes, waterfalls, pools and a variety of vegetation. The route is suitable for families and is one of the most popular routes in the country.",
-    "difficultyLevel": "Low",
-    "length": "3.1 miles",
-    "location": {
-      "latitude": 33.2167,
-      "longitude": 35.6167,
-      "date": null
-    }
+    "name": "Nahal Tavor",
+    "difficultyLevel": "Medium",
+    "length": "4 km"
   },
   {
     "id": "9",
-    "name": "Crocodile River",
-    "description": "The Crocodile River Trail is a 1.5 mile loop trail located near Crocodile River, Washington that features a river and is good for all skill levels. The trail is primarily used for hiking, walking, and nature trips and is best used from April until October. Dogs are also able to use this trail but must be kept on leash.",
+    "name": "Yarkon River",
     "difficultyLevel": "Low",
-    "length": "1.5 miles",
-    "location": {
-      "latitude": 32.546247,
-      "longitude": 34.91615,
-      "date": null
-    }
+    "length": "3 km"
   }
 ]
