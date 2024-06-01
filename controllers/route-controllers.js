@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
         item.difficultyLevel,
         item.length,
         fullLocation,
+        description.image,
       );
 
       dataArray.push(route);
