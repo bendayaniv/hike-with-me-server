@@ -16,7 +16,7 @@ router.get('/:userId', async (req, res) => {
           item._name,
           item._startDate,
           item._endDate,
-          item._point,
+          item._points,
           item._description,
           item._routeName,
           item._userId,
@@ -55,7 +55,6 @@ router.post('/createTrip', async (req, res) => {
     await tripsLogic.createTrip(trip);
     res.status(200).send(trip);
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
