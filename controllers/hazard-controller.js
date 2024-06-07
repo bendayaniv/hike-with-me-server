@@ -4,6 +4,33 @@ const Hazard = require('../models/hazard.js');
 
 const router = express.Router();
 
+// router.get('/', async (req, res) => {
+//   try {
+//     const hazards = await hazardsLogic.getAllHazards();
+
+//     const dataArray = Object.values(hazards)
+//       .map((item) =>
+//         Object.values(item).map(
+//           (hazard) =>
+//             new Hazard(
+//               hazard.id,
+//               hazard.type,
+//               hazard.description,
+//               hazard.severity,
+//               hazard.reporterName,
+//               hazard.routeName,
+//               hazard.location,
+//             ),
+//         ),
+//       )
+//       .flat();
+
+//     res.status(200).send(dataArray);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
 router.get('/:routeName', async (req, res) => {
   const { routeName } = req.params;
   try {
