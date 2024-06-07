@@ -2,7 +2,6 @@ const express = require('express');
 const tripsLogic = require('../bll/trips-logic.js');
 const Trip = require('../models/trip.js');
 const { upload } = require('../dal/firebase.js');
-const Point = require('../models/point.js');
 
 const router = express.Router();
 
@@ -17,7 +16,7 @@ router.get('/:userId', async (req, res) => {
           item._name,
           item._startDate,
           item._endDate,
-          item._point,
+          item._points,
           item._description,
           item._routeName,
           item._userId,
@@ -30,15 +29,23 @@ router.get('/:userId', async (req, res) => {
 });
 
 router.post('/createTrip', async (req, res) => {
-  const { id, name, startDate, endDate, point, description, tripName, userId } =
-    req.body;
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    points,
+    description,
+    tripName,
+    userId,
+  } = req.body;
 
   const trip = new Trip(
     id,
     name,
     startDate,
     endDate,
-    new Point(point.latitude, point.longitude, point.date, point.type),
+    points,
     description,
     tripName,
     userId,
@@ -53,15 +60,23 @@ router.post('/createTrip', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-  const { id, name, startDate, endDate, point, description, tripName, userId } =
-    req.body;
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    points,
+    description,
+    tripName,
+    userId,
+  } = req.body;
 
   const trip = new Trip(
     id,
     name,
     startDate,
     endDate,
-    point,
+    points,
     description,
     tripName,
     userId,
