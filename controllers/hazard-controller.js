@@ -38,13 +38,15 @@ router.get('/:routeName', async (req, res) => {
     const dataArray = Object.values(hazards).map(
       (item) =>
         new Hazard(
-          item.id,
-          item.type,
-          item.description,
-          item.severity,
-          item.reporterName,
-          item.routeName,
-          item.location,
+          item._latitude,
+          item._longitude,
+          item._date,
+          item._type,
+          item._id,
+          item._description,
+          item._severity,
+          item._reporterName,
+          item._routeName,
         ),
     );
     res.status(200).send(dataArray);
@@ -54,17 +56,28 @@ router.get('/:routeName', async (req, res) => {
 });
 
 router.post('/addHazard', async (req, res) => {
-  const { id, type, description, severity, reporterName, routeName, location } =
-    req.body;
-
-  const hazard = new Hazard(
-    id,
+  const {
+    latitude,
+    longitude,
+    date,
     type,
+    id,
     description,
     severity,
     reporterName,
     routeName,
-    location,
+  } = req.body;
+
+  const hazard = new Hazard(
+    latitude,
+    longitude,
+    date,
+    type,
+    id,
+    description,
+    severity,
+    reporterName,
+    routeName,
   );
 
   try {

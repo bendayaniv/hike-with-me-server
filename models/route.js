@@ -1,91 +1,80 @@
-class Route {
+const Point = require('./point');
+
+class Route extends Point {
   constructor(
+    latitude,
+    longitude,
+    date,
+    type,
     id,
     name,
     description,
-    difficultyLevel,
+    difficultLevel,
     length,
-    location,
     imageUrl,
   ) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.difficultyLevel = difficultyLevel;
-    this.length = length;
-    this.location = location;
-    this.imageUrl = imageUrl;
+    super(latitude, longitude, date, type);
+    this._id = id;
+    this._name = name;
+    this._description = description;
+    this._difficultLevel = difficultLevel;
+    this._length = length;
+    this._imageUrl = imageUrl;
   }
 
-  // getters and setters
-
   getId() {
-    return this.id;
+    return this._id;
   }
 
   setId(id) {
-    this.id = id;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  setName(name) {
-    this.name = name;
+    this._id = id;
   }
 
   getDescription() {
-    return this.description;
+    return this._description;
   }
 
   setDescription(description) {
-    this.description = description;
+    this._description = description;
   }
 
-  getDifficultyLevel() {
-    return this.difficultyLevel;
+  getDifficultLevel() {
+    return this._difficultLevel;
   }
 
-  setDifficultyLevel(difficultyLevel) {
-    this.difficultyLevel = difficultyLevel;
+  setDifficultLevel(difficultLevel) {
+    this._difficultLevel = difficultLevel;
   }
 
   getLength() {
-    return this.length;
+    return this._length;
   }
 
   setLength(length) {
-    this.length = length;
+    this._length = length;
   }
 
-  getLocation() {
-    return this.location;
+  getImageUrl() {
+    return this._imageUrl;
   }
 
-  setLocation(location) {
-    this.location = location;
-  }
-
-  getImage() {
-    return this.imageUrl;
-  }
-
-  setImage(imageUrl) {
-    this.imageUrl = imageUrl;
+  setImageUrl(imageUrl) {
+    this._imageUrl = imageUrl;
   }
 
   // toString method
 
   toString() {
-    return `Route: { id: ${this.id}, 
-    name: ${this.name}, 
-    description: ${this.description}, 
-    difficultyLevel: ${this.difficultyLevel}, 
-    length: ${this.length}, 
-    location: ${this.location},
-    image: ${this.imageUrl}
-  }`;
+    return `lat: ${this._latitude}, 
+    lng: ${this._longitude}, 
+    date: ${this._date}, 
+    type: ${this._type}, 
+    id: ${this._id}, 
+    name: ${this._name}, 
+    description: ${this._description}, 
+    difficultLevel: ${this._difficultLevel}, 
+    length: ${this._length}, 
+    imageUrl: ${this._imageUrl}`;
   }
 }
 

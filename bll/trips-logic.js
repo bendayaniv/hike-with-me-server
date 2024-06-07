@@ -6,12 +6,14 @@ async function getTripsByUser(userId) {
 }
 
 async function createTrip(trip) {
-  await firebase.database.ref('trips/' + trip.userId + '/' + trip.id).set(trip);
+  await firebase.database
+    .ref('trips/' + trip.getUserId() + '/' + trip.getId())
+    .set(trip);
 }
 
 async function updateTrip(trip) {
   await firebase.database
-    .ref('trips/' + trip.userId + '/' + trip.id)
+    .ref('trips/' + trip.getUserId() + '/' + trip.getId())
     .update(trip);
 }
 

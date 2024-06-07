@@ -14,7 +14,7 @@ async function getAllHazardsByRoute(routeName) {
 
 async function addHazard(hazard) {
   await firebase.database
-    .ref('hazards/' + hazard.routeName + '/' + hazard.id)
+    .ref('hazards/' + hazard.getRouteName() + '/' + hazard.getId())
     .set(hazard);
 }
 

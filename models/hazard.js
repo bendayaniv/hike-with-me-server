@@ -1,82 +1,79 @@
-class Hazard {
-  constructor(id, type, description, severity, reporterName, routeName, location) {
-    this.id = id;
-    this.type = type;
-    this.description = description;
-    this.severity = severity;
-    this.reporterName = reporterName;
-    this.routeName = routeName;
-    this.location = location;
+const Point = require('./point');
+
+class Hazard extends Point {
+  constructor(
+    latitude,
+    longitude,
+    date,
+    type,
+    id,
+    description,
+    severity,
+    reporterName,
+    routeName,
+  ) {
+    super(latitude, longitude, date, type);
+    this._id = id;
+    this._description = description;
+    this._severity = severity;
+    this._reporterName = reporterName;
+    this._routeName = routeName;
   }
 
   // getters and setters
 
   getId() {
-    return this.id;
+    return this._id;
   }
 
   setId(id) {
-    this.id = id;
-  }
-
-  getType() {
-    return this.type;
-  }
-
-  setType(type) {
-    this.type = type;
+    this._id = id;
   }
 
   getDescription() {
-    return this.description;
+    return this._description;
   }
 
   setDescription(description) {
-    this.description = description;
+    this._description = description;
   }
 
   getSeverity() {
-    return this.severity;
+    return this._severity;
   }
 
   setSeverity(severity) {
-    this.severity = severity;
+    this._severity = severity;
   }
 
   getReporterName() {
-    return this.reporterName;
+    return this._reporterName;
   }
 
   setReporterName(reporterName) {
-    this.reporterName = reporterName;
+    this._reporterName = reporterName;
   }
 
   getRouteName() {
-    return this.routeName;
+    return this._routeName;
   }
 
   setRouteName(routeName) {
-    this.routeName = routeName;
-  }
-
-  getLocation() {
-    return this.location;
-  }
-
-  setLocation(location) {
-    this.location = location;
+    this._routeName = routeName;
   }
 
   // toString method
 
   toString() {
-    return `Hazard: { id: ${this.id}, 
-    type: ${this.type}, 
-    description: ${this.description}, 
-    severity: ${this.severity}, 
-    reporterName: ${this.reporterName},
-    routeName: ${this.routeName},
-    location: ${this.location} }`;
+    return `lat: ${this._latitude}, 
+    lng: ${this._longitude}, 
+    date: ${this._date}, 
+    type: ${this._type}, 
+    id: ${this._id}, 
+    description: ${this._description}, 
+    severity: ${this._severity}, 
+    reporterName: ${this._reporterName}, 
+    routeName: ${this._routeName}`;
   }
 }
 

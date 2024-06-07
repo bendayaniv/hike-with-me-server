@@ -9,12 +9,7 @@ async function getAllRoutes() {
   return routes;
 }
 
-async function getRouteByName(name) {
-  const route = routes.find((route) => route.name === name);
-  return route;
-}
-
-async function getPlaceDescription(placeName) {
+async function getRouteDescription(placeName) {
   const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(placeName)}`;
 
   try {
@@ -43,7 +38,7 @@ async function getPlaceDescription(placeName) {
   }
 }
 
-async function getPlaceCoordinates(placeName) {
+async function getRouteCoordinates(placeName) {
   const url = `${GOOGLE_PLACES_API_URL_FIND_PLACE_FROM_TEXT}?input=${placeName}&inputtype=textquery&fields=geometry&key=${API_KEY}`;
 
   try {
@@ -65,7 +60,6 @@ async function getPlaceCoordinates(placeName) {
 
 module.exports = {
   getAllRoutes,
-  getRouteByName,
-  getPlaceDescription,
-  getPlaceCoordinates,
+  getRouteDescription,
+  getRouteCoordinates,
 };
