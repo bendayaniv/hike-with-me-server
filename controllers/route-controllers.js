@@ -1,7 +1,7 @@
 const express = require('express');
 const routesLogic = require('../bll/routes-logic.js');
 const Route = require('../models/route.js');
-const Location = require('../models/location.js');
+const { PointsType } = require('../dal/constans.js');
 
 const router = express.Router();
 
@@ -11,19 +11,22 @@ router.get('/', async (req, res) => {
 
     const dataArray = [];
     for (const item of routes) {
-      const description = await routesLogic.getPlaceDescription(item.name);
+      const description = await routesLogic.getRouteDescription(item.name);
 
-      const location = await routesLogic.getPlaceCoordinates(item.name);
+      const point = await routesLogic.getRouteCoordinates(item.name);
 
-      const fullLocation = new Location(location.lat, location.lng, null);
+      point.type = PointsType.ROUTE;
 
       const route = new Route(
+        point.lat,
+        point.lng,
+        point.date,
+        point.type,
         item.id,
         item.name,
         description.description,
         item.difficultyLevel,
         item.length,
-        fullLocation,
         description.image,
       );
 
@@ -36,11 +39,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:name', async (req, res) => {
-  const { name } = req.params;
+router.get('/allNames/:userPhoneNumber/:userEmail', async (req, res) => {
   try {
-    const route = await routesLogic.getRouteByName(name);
-    res.status(200).send(route);
+    const routes = await routesLogic.getAllRoutes();
+    const names = routes.map((route) => route.name);
+    res.status(200).send(names);
   } catch (err) {
     res.status(500).json(err);
   }

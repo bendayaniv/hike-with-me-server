@@ -1,78 +1,73 @@
-class Route {
+const Point = require('./point');
+
+class Route extends Point {
   constructor(
+    latitude,
+    longitude,
+    date,
+    type,
     id,
     name,
     description,
-    difficultyLevel,
+    difficultLevel,
     length,
-    location,
     imageUrl,
   ) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.difficultyLevel = difficultyLevel;
-    this.length = length;
-    this.location = location;
-    this.imageUrl = imageUrl;
+    super(latitude, longitude, date, type);
+    this._id = id;
+    this._name = name;
+    this._description = description;
+    this._difficultLevel = difficultLevel;
+    this._length = length;
+    this._imageUrl = imageUrl;
   }
 
-  // getters and setters
-
-  getId() {
-    return this.id;
+  get id() {
+    return this._id;
   }
 
-  setId(id) {
-    this.id = id;
+  set id(value) {
+    this._id = value;
   }
 
-  getName() {
-    return this.name;
+  get name() {
+    return this._name;
   }
 
-  setName(name) {
-    this.name = name;
+  set name(value) {
+    this._name = value;
   }
 
-  getDescription() {
-    return this.description;
+  get description() {
+    return this._description;
   }
 
-  setDescription(description) {
-    this.description = description;
+  set description(value) {
+    this._description = value;
   }
 
-  getDifficultyLevel() {
-    return this.difficultyLevel;
+  get difficultLevel() {
+    return this._difficultLevel;
   }
 
-  setDifficultyLevel(difficultyLevel) {
-    this.difficultyLevel = difficultyLevel;
+  set difficultLevel(value) {
+    this._difficultLevel = value;
   }
 
-  getLength() {
-    return this.length;
+  get length() {
+    return this._length;
   }
 
-  setLength(length) {
-    this.length = length;
+  set length(value) {
+    this._length = value;
   }
 
-  getLocation() {
-    return this.location;
+  get imageUrl() {
+    return this._imageUrl;
   }
 
-  setLocation(location) {
-    this.location = location;
-  }
-
-  getImage() {
-    return this.imageUrl;
-  }
-
-  setImage(imageUrl) {
-    this.imageUrl = imageUrl;
+  set imageUrl(value) {
+    this._imageUrl = value;
   }
 
   // toString method
