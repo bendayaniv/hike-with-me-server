@@ -1,8 +1,5 @@
 class Point {
   constructor(latitude, longitude, date, type) {
-    if (new.target === Point) {
-      throw new Error('Cannot instantiate abstract class Point directly');
-    }
     this.latitude = latitude;
     this.longitude = longitude;
     this.date = date;

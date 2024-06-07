@@ -2,6 +2,7 @@ const express = require('express');
 const tripsLogic = require('../bll/trips-logic.js');
 const Trip = require('../models/trip.js');
 const { upload } = require('../dal/firebase.js');
+const Point = require('../models/point.js');
 
 const router = express.Router();
 
@@ -12,14 +13,14 @@ router.get('/:userId', async (req, res) => {
     const dataArray = Object.values(trips).map(
       (item) =>
         new Trip(
-          item.id,
-          item.name,
-          item.startDate,
-          item.endDate,
-          item.locations,
-          item.description,
-          item.routeName,
-          item.userId,
+          item._id,
+          item._name,
+          item._startDate,
+          item._endDate,
+          item._point,
+          item._description,
+          item._routeName,
+          item._userId,
         ),
     );
     res.status(200).send(dataArray);
@@ -29,25 +30,17 @@ router.get('/:userId', async (req, res) => {
 });
 
 router.post('/createTrip', async (req, res) => {
-  const {
-    id,
-    name,
-    startDate,
-    endDate,
-    locations,
-    description,
-    routeName,
-    userId,
-  } = req.body;
+  const { id, name, startDate, endDate, point, description, tripName, userId } =
+    req.body;
 
   const trip = new Trip(
     id,
     name,
     startDate,
     endDate,
-    locations,
+    new Point(point.latitude, point.longitude, point.date, point.type),
     description,
-    routeName,
+    tripName,
     userId,
   );
 
@@ -60,25 +53,17 @@ router.post('/createTrip', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-  const {
-    id,
-    name,
-    startDate,
-    endDate,
-    locations,
-    description,
-    routeName,
-    userId,
-  } = req.body;
+  const { id, name, startDate, endDate, point, description, tripName, userId } =
+    req.body;
 
   const trip = new Trip(
     id,
     name,
     startDate,
     endDate,
-    locations,
+    point,
     description,
-    routeName,
+    tripName,
     userId,
   );
 
