@@ -15,6 +15,8 @@ router.get('/', async (req, res) => {
 
       const point = await routesLogic.getRouteCoordinates(item.name);
 
+      point.date = null;
+
       point.type = PointsType.ROUTE;
 
       const route = new Route(

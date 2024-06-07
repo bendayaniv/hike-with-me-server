@@ -22,65 +22,59 @@ class Route extends Point {
     this._imageUrl = imageUrl;
   }
 
-  get id() {
+  getId() {
     return this._id;
   }
 
-  set id(value) {
-    this._id = value;
+  setId(id) {
+    this._id = id;
   }
 
-  get name() {
-    return this._name;
-  }
-
-  set name(value) {
-    this._name = value;
-  }
-
-  get description() {
+  getDescription() {
     return this._description;
   }
 
-  set description(value) {
-    this._description = value;
+  setDescription(description) {
+    this._description = description;
   }
 
-  get difficultLevel() {
+  getDifficultLevel() {
     return this._difficultLevel;
   }
 
-  set difficultLevel(value) {
-    this._difficultLevel = value;
+  setDifficultLevel(difficultLevel) {
+    this._difficultLevel = difficultLevel;
   }
 
-  get length() {
+  getLength() {
     return this._length;
   }
 
-  set length(value) {
-    this._length = value;
+  setLength(length) {
+    this._length = length;
   }
 
-  get imageUrl() {
+  getImageUrl() {
     return this._imageUrl;
   }
 
-  set imageUrl(value) {
-    this._imageUrl = value;
+  setImageUrl(imageUrl) {
+    this._imageUrl = imageUrl;
   }
 
   // toString method
 
   toString() {
-    return `Route: { id: ${this.id}, 
-    name: ${this.name}, 
-    description: ${this.description}, 
-    difficultyLevel: ${this.difficultyLevel}, 
-    length: ${this.length}, 
-    location: ${this.location},
-    image: ${this.imageUrl}
-  }`;
+    return `lat: ${this._latitude}, 
+    lng: ${this._longitude}, 
+    date: ${this._date}, 
+    type: ${this._type}, 
+    id: ${this._id}, 
+    name: ${this._name}, 
+    description: ${this._description}, 
+    difficultLevel: ${this._difficultLevel}, 
+    length: ${this._length}, 
+    imageUrl: ${this._imageUrl}`;
   }
 }
 
