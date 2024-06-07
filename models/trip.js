@@ -4,7 +4,7 @@ class Trip {
     name,
     startDate,
     endDate,
-    point,
+    points,
     description,
     tripName,
     userId,
@@ -13,7 +13,7 @@ class Trip {
     this._name = name;
     this._startDate = startDate;
     this._endDate = endDate;
-    this._point = point;
+    this._points = points;
     this._description = description;
     this._tripName = tripName;
     this._userId = userId;
@@ -54,11 +54,11 @@ class Trip {
   }
 
   getPoint() {
-    return this._point;
+    return this._points;
   }
 
   setPoint(point) {
-    this._point = point;
+    this._points = point;
   }
 
   getDescription() {
@@ -92,7 +92,7 @@ class Trip {
     name: ${this._name}, 
     startDate: ${this._startDate}, 
     endDate: ${this._endDate}, 
-    point: ${this._point}, 
+    points: ${this._points}, 
     description: ${this._description},
     routeName: ${this._tripName},
     userId: ${this._userId} }`;
