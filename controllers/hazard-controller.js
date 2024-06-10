@@ -4,6 +4,15 @@ const Hazard = require('../models/hazard.js');
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+  try {
+    const hazards = hazardsLogic.getAllHazards();
+    res.status(200).send(hazards);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get('/:routeName', async (req, res) => {
   const { routeName } = req.params;
   try {

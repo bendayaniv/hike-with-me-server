@@ -1,5 +1,10 @@
 const firebase = require('../dal/firebase.js');
 
+async function getAllHazards() {
+  const snapshot = await firebase.database.ref('hazards').once('value');
+  return snapshot.val();
+}
+
 async function getAllHazardsByRoute(routeName) {
   const snapshot = await firebase.database
     .ref('hazards/' + routeName)
@@ -14,6 +19,7 @@ async function addHazard(hazard) {
 }
 
 module.exports = {
+  getAllHazards,
   getAllHazardsByRoute,
   addHazard,
 };
