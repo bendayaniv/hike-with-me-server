@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/allNames/:userPhoneNumber/:userEmail', async (req, res) => {
+router.get('/allNames', async (req, res) => {
   try {
     const routes = await routesLogic.getAllRoutes();
     const names = routes.map((route) => route.name);
