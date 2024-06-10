@@ -5,18 +5,27 @@ const User = require('../models/user.js');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  const { userId } = req.body;
   try {
     const users = await usersLogic.getAllUsers();
-    const dataArray = Object.values(users).map(
-      (item) =>
-        new User(
-          item.id,
-          item.name,
-          item.email,
-          item.password,
-          item.phoneNumber,
-        ),
-    );
+
+    const dataArray = Object.values(users)
+      .map(
+        (item) =>
+          new User(
+            item.id,
+            item.name,
+            item.email,
+            item.password,
+            item.phoneNumber,
+            item.hometown,
+            item.active,
+            item.location,
+          ),
+      )
+      .flat()
+      .filter((user) => user.id !== userId && user.id !== null);
+
     console.log(dataArray);
     res.status(200).send(dataArray);
   } catch (err) {
@@ -35,9 +44,32 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/addUser', async (req, res) => {
-  const { id, name, email, password, phoneNumber } = req.body;
+  const { id, name, email, password, phoneNumber, hometown, active, location } =
+    req.body;
 
-  const user = new User(id, name, email, password, phoneNumber);
+  if (
+    !id ||
+    !name ||
+    !email ||
+    !password ||
+    !phoneNumber ||
+    !hometown ||
+    !location
+  ) {
+    res.status(400).send('All fields are required');
+    return;
+  }
+
+  const user = new User(
+    id,
+    name,
+    email,
+    password,
+    phoneNumber,
+    hometown,
+    active,
+    location,
+  );
 
   try {
     await usersLogic.addUser(user);
@@ -48,8 +80,18 @@ router.post('/addUser', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-  const { id, name, email, password, phoneNumber } = req.body;
-  const user = new User(id, name, email, password, phoneNumber);
+  const { id, name, email, password, phoneNumber, hometown, active, location } =
+    req.body;
+  const user = new User(
+    id,
+    name,
+    email,
+    password,
+    phoneNumber,
+    hometown,
+    active,
+    location,
+  );
 
   try {
     await usersLogic.updateUser(user);
