@@ -1,10 +1,22 @@
 class User {
-  constructor(id, name, email, password, phoneNumner) {
+  constructor(
+    id,
+    name,
+    email,
+    password,
+    phoneNumber,
+    hometown,
+    active,
+    location,
+  ) {
     this.id = id;
     this.name = name;
     this.password = password;
     this.email = email;
-    this.phoneNumner = phoneNumner;
+    this.phoneNumber = phoneNumber;
+    this.hometown = hometown;
+    this.active = active;
+    this.location = location;
   }
 
   // getters and setters
@@ -42,11 +54,35 @@ class User {
   }
 
   getPhoneNumner() {
-    return this.phoneNumner;
+    return this.phoneNumber;
   }
 
   setPhoneNumner(phoneNumner) {
-    this.phoneNumner = phoneNumner;
+    this.phoneNumber = phoneNumner;
+  }
+
+  getHometown() {
+    return this.hometown;
+  }
+
+  setHometown(hometown) {
+    this.hometown = hometown;
+  }
+
+  getActive() {
+    return this.active;
+  }
+
+  setActive(active) {
+    this.active = active;
+  }
+
+  getLocation() {
+    return this.location;
+  }
+
+  setLocation(location) {
+    this.location = location;
   }
 
   // toString method
@@ -56,7 +92,10 @@ class User {
     name: ${this.name}, 
     password: ${this.password}, 
     email: ${this.email}, 
-    phoneNumner: ${this.phoneNumner} }`;
+    phoneNumber: ${this.phoneNumber},
+    hometown: ${this.hometown},
+    active: ${this.active},
+    location: ${this.location}}`;
   }
 }
 
