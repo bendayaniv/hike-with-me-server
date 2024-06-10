@@ -75,4 +75,47 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.get('/:userPhoneNumber/:userEmail', async (req, res) => {
+  const { location1, location2 } = req.body;
+
+  if (
+    !location1.latitude ||
+    !location1.longitude ||
+    !location2.latitude ||
+    !location2.longitude
+  ) {
+    return res
+      .status(400)
+      .send('Missing required query parameters: lat1, lon1, lat2, lon2');
+  }
+
+  const coords1 = {
+    lat: parseFloat(location1.latitude),
+    lon: parseFloat(location1.longitude),
+  };
+  const coords2 = {
+    lat: parseFloat(location2.latitude),
+    lon: parseFloat(location2.longitude),
+  };
+
+  // Check if parsing was successful
+  if (
+    isNaN(coords1.lat) ||
+    isNaN(coords1.lon) ||
+    isNaN(coords2.lat) ||
+    isNaN(coords2.lon)
+  ) {
+    return res.status(400).send('Invalid latitude or longitude values.');
+  }
+
+  try {
+    const distance = await usersLogic.haversineDistance(coords1, coords2);
+
+    console.log(distance);
+    res.status(200).send(distance.toFixed(2));
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
