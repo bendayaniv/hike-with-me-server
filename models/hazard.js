@@ -2,18 +2,18 @@ const Point = require('./point');
 
 class Hazard extends Point {
   constructor(
-    latitude,
-    longitude,
-    date,
+    location,
     type,
     id,
+    hazardType,
     description,
     severity,
     reporterName,
     routeName,
   ) {
-    super(latitude, longitude, date, type);
+    super(location, type);
     this._id = id;
+    this._hazardType = hazardType;
     this._description = description;
     this._severity = severity;
     this._reporterName = reporterName;
@@ -28,6 +28,14 @@ class Hazard extends Point {
 
   setId(id) {
     this._id = id;
+  }
+
+  getHazardType() {
+    return this._hazardType;
+  }
+
+  setHazardType(hazardType) {
+    this._hazardType = hazardType;
   }
 
   getDescription() {
@@ -70,6 +78,7 @@ class Hazard extends Point {
     date: ${this._date}, 
     type: ${this._type}, 
     id: ${this._id}, 
+    hazardType: ${this._hazardType},
     description: ${this._description}, 
     severity: ${this._severity}, 
     reporterName: ${this._reporterName}, 

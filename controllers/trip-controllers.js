@@ -12,14 +12,14 @@ router.get('/:userId', async (req, res) => {
     const dataArray = Object.values(trips).map(
       (item) =>
         new Trip(
-          item._id,
-          item._name,
-          item._startDate,
-          item._endDate,
-          item._points,
-          item._description,
-          item._routeName,
-          item._userId,
+          item.id,
+          item.name,
+          item.startDate,
+          item.endDate,
+          item.locations,
+          item.description,
+          item.routesNames,
+          item.userId,
         ),
     );
     res.status(200).send(dataArray);
@@ -34,9 +34,9 @@ router.post('/createTrip', async (req, res) => {
     name,
     startDate,
     endDate,
-    points,
+    locations,
     description,
-    tripName,
+    routesNames,
     userId,
   } = req.body;
 
@@ -45,9 +45,9 @@ router.post('/createTrip', async (req, res) => {
     name,
     startDate,
     endDate,
-    points,
+    locations,
     description,
-    tripName,
+    routesNames,
     userId,
   );
 
@@ -65,9 +65,9 @@ router.put('/', async (req, res) => {
     name,
     startDate,
     endDate,
-    points,
+    locations,
     description,
-    tripName,
+    routesNames,
     userId,
   } = req.body;
 
@@ -76,9 +76,9 @@ router.put('/', async (req, res) => {
     name,
     startDate,
     endDate,
-    points,
+    locations,
     description,
-    tripName,
+    routesNames,
     userId,
   );
 

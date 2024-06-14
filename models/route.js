@@ -2,9 +2,7 @@ const Point = require('./point');
 
 class Route extends Point {
   constructor(
-    latitude,
-    longitude,
-    date,
+    location,
     type,
     id,
     name,
@@ -13,7 +11,7 @@ class Route extends Point {
     length,
     imageUrl,
   ) {
-    super(latitude, longitude, date, type);
+    super(location, type);
     this._id = id;
     this._name = name;
     this._description = description;
@@ -65,9 +63,7 @@ class Route extends Point {
   // toString method
 
   toString() {
-    return `lat: ${this._latitude}, 
-    lng: ${this._longitude}, 
-    date: ${this._date}, 
+    return `location: ${this._location},
     type: ${this._type}, 
     id: ${this._id}, 
     name: ${this._name}, 

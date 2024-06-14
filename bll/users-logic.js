@@ -22,7 +22,7 @@ async function deleteUser(id) {
   await firebase.database.ref('users/' + id).remove();
 }
 
-async function haversineDistance(coords1, coords2) {
+function haversineDistance(coords1, coords2) {
   const R = 6371; // Radius of Earth in kilometers
   const lat1 = coords1.lat;
   const lon1 = coords1.lon;
