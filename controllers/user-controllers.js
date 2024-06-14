@@ -47,6 +47,11 @@ router.post('/addUser', async (req, res) => {
   const { id, name, email, password, phoneNumber, hometown, active, location } =
     req.body;
 
+  if (!id || !name || !email || !password || !phoneNumber || !hometown) {
+    res.status(400).send('All fields are required');
+    return;
+  }
+
   if (
     !id ||
     !name ||
