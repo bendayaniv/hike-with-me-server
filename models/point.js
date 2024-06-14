@@ -1,33 +1,19 @@
+const Location = require('./location');
+
 class Point {
-  constructor(latitude, longitude, date, type) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.date = date;
-    this.type = type;
+  constructor(location, type) {
+    this._location = new Location(location.lat, location.lng, location.date);
+    this._type = type;
   }
 
-  get latitude() {
-    return this._latitude;
+  // getters and setters
+
+  get location() {
+    return this._location;
   }
 
-  set latitude(value) {
-    this._latitude = value;
-  }
-
-  get longitude() {
-    return this._longitude;
-  }
-
-  set longitude(value) {
-    this._longitude = value;
-  }
-
-  get date() {
-    return this._date;
-  }
-
-  set date(value) {
-    this._date = value;
+  set location(value) {
+    this._location = value;
   }
 
   get type() {
@@ -40,7 +26,7 @@ class Point {
 
   // toString method
   toString() {
-    return `lat: ${this.latitude}, lng: ${this.longitude}, date: ${this.date}, type: ${this.type}`;
+    return `location: ${this.location}, type: ${this.type}`;
   }
 }
 

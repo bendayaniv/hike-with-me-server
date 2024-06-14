@@ -10,20 +10,17 @@ router.get('/', async (req, res) => {
     const routes = await routesLogic.getAllRoutes();
 
     const dataArray = [];
+
     for (const item of routes) {
       const description = await routesLogic.getRouteDescription(item.name);
 
-      const point = await routesLogic.getRouteCoordinates(item.name);
+      const location = await routesLogic.getRouteCoordinates(item.name);
 
-      point.date = null;
-
-      point.type = PointsType.ROUTE;
+      location.date = null;
 
       const route = new Route(
-        point.lat,
-        point.lng,
-        point.date,
-        point.type,
+        location,
+        PointsType.ROUTE,
         item.id,
         item.name,
         description.description,
@@ -34,6 +31,19 @@ router.get('/', async (req, res) => {
 
       dataArray.push(route);
     }
+
+    // const trip = new Trip(
+    //   1,
+    //   'trip1',
+    //   '2021-07-01',
+    //   '2021-07-10',
+    //   [dataArray[0]._location],
+    //   'trip description',
+    //   ['route1', 'route2'],
+    //   1,
+    // );
+
+    // console.log(trip);
 
     res.status(200).send(dataArray);
   } catch (err) {

@@ -4,98 +4,98 @@ class Trip {
     name,
     startDate,
     endDate,
-    points,
+    locations,
     description,
-    tripName,
+    routesNames,
     userId,
   ) {
-    this._id = id;
-    this._name = name;
-    this._startDate = startDate;
-    this._endDate = endDate;
-    this._points = points;
-    this._description = description;
-    this._tripName = tripName;
-    this._userId = userId;
+    this.id = id;
+    this.name = name;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.locations = locations;
+    this.description = description;
+    this.routesNames = routesNames;
+    this.userId = userId;
   }
 
   // getters and setters
 
   getId() {
-    return this._id;
+    return this.id;
   }
 
   setId(id) {
-    this._id = id;
+    this.id = id;
   }
 
   getName() {
-    return this._name;
+    return this.name;
   }
 
   setName(name) {
-    this._name = name;
+    this.name = name;
   }
 
   getStartDate() {
-    return this._startDate;
+    return this.startDate;
   }
 
   setStartDate(startDate) {
-    this._startDate = startDate;
+    this.startDate = startDate;
   }
 
   getEndDate() {
-    return this._endDate;
+    return this.endDate;
   }
 
   setEndDate(endDate) {
-    this._endDate = endDate;
+    this.endDate = endDate;
   }
 
-  getPoint() {
-    return this._points;
+  getLocations() {
+    return this.locations;
   }
 
-  setPoint(point) {
-    this._points = point;
+  setLocations(locations) {
+    this.locations = locations;
   }
 
   getDescription() {
-    return this._description;
+    return this.description;
   }
 
   setDescription(description) {
-    this._description = description;
+    this.description = description;
   }
 
-  getRouteName() {
-    return this._tripName;
+  getRoutesNames() {
+    return this.routesNames;
   }
 
-  setRouteName(routeName) {
-    this._tripName = routeName;
+  setRoutesNames(routeName) {
+    this.routesNames = routeName;
   }
 
   getUserId() {
-    return this._userId;
+    return this.userId;
   }
 
   setUserId(userId) {
-    this._userId = userId;
+    this.userId = userId;
   }
 
   // toString method
 
   toString() {
-    return `Trip: { id: ${this._id}, 
-    name: ${this._name}, 
-    startDate: ${this._startDate}, 
-    endDate: ${this._endDate}, 
-    points: ${this._points}, 
-    description: ${this._description},
-    routeName: ${this._tripName},
-    userId: ${this._userId} }`;
+    return `Trip: { id: ${this.id}, 
+    name: ${this.name}, 
+    startDate: ${this.startDate}, 
+    endDate: ${this.endDate}, 
+    locations: ${this.locations}, 
+    description: ${this.description},
+    routesNames: ${this.routesNames},
+    userId: ${this.userId} }`;
   }
 }
 
