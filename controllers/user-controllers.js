@@ -47,7 +47,9 @@ router.get('/getAllActiveUsers/:userId', async (req, res) => {
           lon: parseFloat(user.getLocation().longitude),
         };
 
-        const distance = usersLogic.haversineDistance(coords1, coords2);
+        const distance = usersLogic
+          .haversineDistance(coords1, coords2)
+          .toFixed(2);
 
         acc.push({ user, distance });
       }
@@ -75,20 +77,7 @@ router.post('/addUser', async (req, res) => {
   const { id, name, email, password, phoneNumber, hometown, active, location } =
     req.body;
 
-  if (!id || !name || !email || !password || !phoneNumber || !hometown) {
-    res.status(400).send('All fields are required');
-    return;
-  }
-
-  if (
-    !id ||
-    !name ||
-    !email ||
-    !password ||
-    !phoneNumber ||
-    !hometown ||
-    !location
-  ) {
+  if (!name || !email || !password || !phoneNumber || !hometown) {
     res.status(400).send('All fields are required');
     return;
   }
@@ -145,44 +134,48 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/:userPhoneNumber/:userEmail', async (req, res) => {
-  const { location1, location2 } = req.body;
+router.get('/validateUser', async (req, res) => {
+  const { email, password, phoneNumber } = req.body;
 
-  if (
-    !location1.latitude ||
-    !location1.longitude ||
-    !location2.latitude ||
-    !location2.longitude
-  ) {
-    return res
-      .status(400)
-      .send('Missing required query parameters: lat1, lon1, lat2, lon2');
+  if (!email || !password || !phoneNumber) {
+    res.status(400).send('All fields are required');
+    return;
   }
 
-  const coords1 = {
-    lat: parseFloat(location1.latitude),
-    lon: parseFloat(location1.longitude),
-  };
-  const coords2 = {
-    lat: parseFloat(location2.latitude),
-    lon: parseFloat(location2.longitude),
-  };
-
-  // Check if parsing was successful
-  if (
-    isNaN(coords1.lat) ||
-    isNaN(coords1.lon) ||
-    isNaN(coords2.lat) ||
-    isNaN(coords2.lon)
-  ) {
-    return res.status(400).send('Invalid latitude or longitude values.');
-  }
+  const emailValidation = usersLogic.checkingEmail(email);
+  const passwordValidation = usersLogic.checkingPassword(password);
+  const phoneNumberValidation = usersLogic.checkingPhoneNumber(phoneNumber);
 
   try {
-    const distance = await usersLogic.haversineDistance(coords1, coords2);
+    if (!emailValidation) {
+      return res.status(400).send('Invalid email');
+    }
 
-    console.log(distance);
-    res.status(200).send(distance.toFixed(2));
+    if (!passwordValidation) {
+      return res.status(400).send('Invalid password');
+    }
+
+    if (!phoneNumberValidation) {
+      return res.status(400).send('Invalid phone number');
+    }
+
+    const allUsers = await usersLogic.getAllUsers();
+
+    const user = Object.values(allUsers).find(
+      (item) =>
+        (item.email === email && item.password === password) ||
+        item.phoneNumber === phoneNumber,
+    );
+
+    if (user) {
+      return res
+        .status(400)
+        .send(
+          'User already exist with this email and password, or phone number',
+        );
+    }
+
+    res.status(200).send('User validated successfully');
   } catch (err) {
     res.status(500).json(err);
   }

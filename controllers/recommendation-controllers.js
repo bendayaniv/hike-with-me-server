@@ -25,22 +25,6 @@ router.get('/:routeName', async (req, res) => {
   }
 });
 
-router.post('/addRecommendation', async (req, res) => {
-  const { id, rate, description, reporterName, routeName } = req.body;
-
-  const recommendation = new Recommendation(
-    id,
-    rate,
-    description,
-    reporterName,
-    routeName,
-  );
-  try {
-    await recommendationLogic.addRecommendation(recommendation);
-    res.status(200).send(recommendation);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+router.post('/addRecommendation', recommendationLogic.createReccomendation);
 
 module.exports = router;
