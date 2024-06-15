@@ -1,8 +1,8 @@
 const firebase = require('./firebase.js');
 
-async function getRecommendationsByRoute(route) {
+async function getRecommendationsByRouteFromDB(routeName) {
   const snapshot = await firebase.database
-    .ref('recommendations/' + route)
+    .ref('recommendations/' + routeName)
     .once('value');
   return snapshot.val();
 }
@@ -16,6 +16,6 @@ async function addRecommendation(recommendation) {
 }
 
 module.exports = {
-  getRecommendationsByRoute,
+  getRecommendationsByRouteFromDB,
   addRecommendation,
 };

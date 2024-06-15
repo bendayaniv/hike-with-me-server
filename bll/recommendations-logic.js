@@ -1,20 +1,36 @@
-const firebase = require('../dal/firebase.js');
-const fireBaseReccomendation = require('../dal/reccomendation.js');
+const {
+  getRecommendationsByRouteFromDB,
+  addRecommendation,
+} = require('../dal/reccomendation.js');
 const Recommendation = require('../models/recommendation.js');
 
-async function getRecommendationsByRoute(route) {
-  const snapshot = await firebase.database
-    .ref('recommendations/' + route)
-    .once('value');
-  return snapshot.val();
-}
+async function getRecommendationsByRoute(req, res) {
+  const { routeName } = req.params;
+  try {
+    const recommendations = await getRecommendationsByRouteFromDB(routeName);
 
-async function addRecommendation(recommendation) {
-  await firebase.database
-    .ref(
-      'recommendations/' + recommendation.routeName + '/' + recommendation.id,
-    )
-    .set(recommendation);
+    if (!recommendations) {
+      res.status(404);
+      res.send('No recommendations found');
+      return;
+    }
+
+    const dataArray = Object.values(recommendations).map(
+      (item) =>
+        new Recommendation(
+          item.id,
+          item.rate,
+          item.description,
+          item.reporterName,
+          item.routeName,
+        ),
+    );
+    res.status(200);
+    res.send(dataArray);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
 }
 
 async function createReccomendation(req, res) {
@@ -47,7 +63,7 @@ async function createReccomendation(req, res) {
   );
 
   try {
-    await fireBaseReccomendation.addRecommendation(recommendation);
+    await addRecommendation(recommendation);
     res.status(200);
     res.send(recommendation);
   } catch (err) {
@@ -58,6 +74,5 @@ async function createReccomendation(req, res) {
 
 module.exports = {
   getRecommendationsByRoute,
-  addRecommendation,
   createReccomendation,
 };

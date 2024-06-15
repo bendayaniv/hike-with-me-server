@@ -1,14 +1,9 @@
-const { createReccomendation } = require('../../bll/recommendations-logic.js');
+const {
+  createReccomendation,
+  getRecommendationsByRoute,
+} = require('../../bll/recommendations-logic.js');
 const reccomendationDB = require('../../dal/reccomendation.js');
 const Recommendation = require('../../models/recommendation.js');
-
-const fake_reccomendation = new Recommendation(
-  1,
-  1,
-  'fake_description',
-  'fake_reporterName',
-  'fake_routeName',
-);
 
 jest.mock('../../dal/reccomendation.js');
 
@@ -17,14 +12,79 @@ const response = {
   send: jest.fn((x) => x),
 };
 
-describe('createReccomendation', () => {
-  // should restart the mock after each test
+describe('getRecommendationsByRoute', () => {
+  const fakeReccomensationsList = [
+    new Recommendation(
+      1,
+      1,
+      'fake_description',
+      'fake_reporterName',
+      'fake_routeName',
+    ),
+    new Recommendation(
+      2,
+      2,
+      'fake_description',
+      'fake_reporterName',
+      'fake_routeName',
+    ),
+  ];
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  // should restart the fake reccomendation after each test
+  it('should send status code of 404 when no recommendations found', async () => {
+    reccomendationDB.getRecommendationsByRouteFromDB.mockResolvedValueOnce(
+      null,
+    );
+
+    const request = {
+      params: {
+        routeName: 'fake_routeName',
+      },
+    };
+
+    await getRecommendationsByRoute(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('No recommendations found');
+  });
+
+  it('should send status code of 200 when recommendations found', async () => {
+    reccomendationDB.getRecommendationsByRouteFromDB.mockResolvedValueOnce(
+      fakeReccomensationsList,
+    );
+
+    const request = {
+      params: {
+        routeName: 'fake_routeName',
+      },
+    };
+
+    await getRecommendationsByRoute(request, response);
+
+    console.log(response.send.mock.calls[0][0]);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fakeReccomensationsList);
+  });
+});
+
+describe('createReccomendation', () => {
+  const fake_reccomendation = new Recommendation(
+    1,
+    1,
+    'fake_description',
+    'fake_reporterName',
+    'fake_routeName',
+  );
+
+  // should restart the mock and restart the fake_reccomendation after each test
   beforeEach(() => {
+    jest.clearAllMocks();
     fake_reccomendation.id = 1;
     fake_reccomendation.rate = 1;
     fake_reccomendation.description = 'fake_description';
@@ -103,5 +163,6 @@ describe('createReccomendation', () => {
     expect(reccomendationDB.addRecommendation).toHaveBeenCalledWith(
       reccomendation,
     );
+    expect(response.status).toHaveBeenCalledWith(200);
   });
 });
