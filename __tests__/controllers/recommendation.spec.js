@@ -1,11 +1,16 @@
 const {
-  createReccomendation,
   getRecommendationsByRoute,
+  createRecommendation,
 } = require('../../bll/recommendations-logic.js');
-const reccomendationDB = require('../../dal/reccomendation.js');
+
+const {
+  getRecommendationsByRouteFromDB,
+  addRecommendation,
+} = require('../../dal/recommendation.js');
+
 const Recommendation = require('../../models/recommendation.js');
 
-jest.mock('../../dal/reccomendation.js');
+jest.mock('../../dal/recommendation.js');
 
 const response = {
   status: jest.fn((x) => x),
@@ -13,7 +18,7 @@ const response = {
 };
 
 describe('getRecommendationsByRoute', () => {
-  const fakeReccomensationsList = [
+  const fakeRecommensationsList = [
     new Recommendation(
       1,
       1,
@@ -35,9 +40,7 @@ describe('getRecommendationsByRoute', () => {
   });
 
   it('should send status code of 404 when no recommendations found', async () => {
-    reccomendationDB.getRecommendationsByRouteFromDB.mockResolvedValueOnce(
-      null,
-    );
+    getRecommendationsByRouteFromDB.mockResolvedValueOnce(null);
 
     const request = {
       params: {
@@ -53,8 +56,8 @@ describe('getRecommendationsByRoute', () => {
   });
 
   it('should send status code of 200 when recommendations found', async () => {
-    reccomendationDB.getRecommendationsByRouteFromDB.mockResolvedValueOnce(
-      fakeReccomensationsList,
+    getRecommendationsByRouteFromDB.mockResolvedValueOnce(
+      fakeRecommensationsList,
     );
 
     const request = {
@@ -65,16 +68,14 @@ describe('getRecommendationsByRoute', () => {
 
     await getRecommendationsByRoute(request, response);
 
-    console.log(response.send.mock.calls[0][0]);
-
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith(fakeReccomensationsList);
+    expect(response.send).toHaveBeenCalledWith(fakeRecommensationsList);
   });
 });
 
-describe('createReccomendation', () => {
-  const fake_reccomendation = new Recommendation(
+describe('createRecommendation', () => {
+  const fake_recommendation = new Recommendation(
     1,
     1,
     'fake_description',
@@ -82,23 +83,23 @@ describe('createReccomendation', () => {
     'fake_routeName',
   );
 
-  // should restart the mock and restart the fake_reccomendation after each test
+  // should restart the mock and restart the fake_recommendation after each test
   beforeEach(() => {
     jest.clearAllMocks();
-    fake_reccomendation.id = 1;
-    fake_reccomendation.rate = 1;
-    fake_reccomendation.description = 'fake_description';
-    fake_reccomendation.reporterName = 'fake_reporterName';
-    fake_reccomendation.routeName = 'fake_routeName';
+    fake_recommendation.id = 1;
+    fake_recommendation.rate = 1;
+    fake_recommendation.description = 'fake_description';
+    fake_recommendation.reporterName = 'fake_reporterName';
+    fake_recommendation.routeName = 'fake_routeName';
   });
 
   it('should send status code of 400 when not providing rate', async () => {
-    fake_reccomendation.rate = null;
+    fake_recommendation.rate = null;
     const request = {
-      body: fake_reccomendation,
+      body: fake_recommendation,
     };
 
-    await createReccomendation(request, response);
+    await createRecommendation(request, response);
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
@@ -106,12 +107,12 @@ describe('createReccomendation', () => {
   });
 
   it('should send status code of 400 when rate is not a number', async () => {
-    fake_reccomendation.rate = 'not_a_number';
+    fake_recommendation.rate = 'not_a_number';
     const request = {
-      body: fake_reccomendation,
+      body: fake_recommendation,
     };
 
-    await createReccomendation(request, response);
+    await createRecommendation(request, response);
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
@@ -119,11 +120,11 @@ describe('createReccomendation', () => {
   });
 
   it('should send status code of 400 when not providing description', async () => {
-    fake_reccomendation.description = null;
+    fake_recommendation.description = null;
     const request = {
-      body: fake_reccomendation,
+      body: fake_recommendation,
     };
-    await createReccomendation(request, response);
+    await createRecommendation(request, response);
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
@@ -131,38 +132,27 @@ describe('createReccomendation', () => {
   });
 
   it('should send status code of 400 when not providing routeName', async () => {
-    fake_reccomendation.routeName = null;
+    fake_recommendation.routeName = null;
     const request = {
-      body: fake_reccomendation,
+      body: fake_recommendation,
     };
-    await createReccomendation(request, response);
+    await createRecommendation(request, response);
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide routeName');
   });
 
-  it('should send status code of 200 when creating new reccomendation', async () => {
-    reccomendationDB.addRecommendation.mockResolvedValueOnce(
-      fake_reccomendation,
-    );
-
-    const reccomendation = new Recommendation(
-      1,
-      5,
-      'description',
-      'reporterName',
-      'routeName',
-    );
+  it('should send status code of 200 when creating new recommendation', async () => {
+    addRecommendation.mockResolvedValueOnce(true);
 
     const request = {
-      body: reccomendation,
+      body: fake_recommendation,
     };
-    await createReccomendation(request, response);
+    await createRecommendation(request, response);
 
-    expect(reccomendationDB.addRecommendation).toHaveBeenCalledWith(
-      reccomendation,
-    );
+    expect(addRecommendation).toHaveBeenCalledWith(fake_recommendation);
     expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
   });
 });

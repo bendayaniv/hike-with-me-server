@@ -1,7 +1,7 @@
 const {
   getRecommendationsByRouteFromDB,
   addRecommendation,
-} = require('../dal/reccomendation.js');
+} = require('../dal/recommendation.js');
 const Recommendation = require('../models/recommendation.js');
 
 async function getRecommendationsByRoute(req, res) {
@@ -33,7 +33,7 @@ async function getRecommendationsByRoute(req, res) {
   }
 }
 
-async function createReccomendation(req, res) {
+async function createRecommendation(req, res) {
   const { id, rate, description, reporterName, routeName } = req.body;
 
   if (!rate || isNaN(rate)) {
@@ -74,5 +74,5 @@ async function createReccomendation(req, res) {
 
 module.exports = {
   getRecommendationsByRoute,
-  createReccomendation,
+  createRecommendation,
 };

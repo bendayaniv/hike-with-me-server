@@ -51,10 +51,12 @@ router.get('/getAllActiveUsers/:userId', async (req, res) => {
           .haversineDistance(coords1, coords2)
           .toFixed(2);
 
-        acc.push({ user, distance });
+        acc.push({ user: user, distance: distance });
       }
       return acc;
     }, []);
+
+    dataArray.sort((a, b) => a.distance - b.distance);
 
     console.log(dataArray);
     res.status(200).send(dataArray);
@@ -77,7 +79,7 @@ router.post('/addUser', async (req, res) => {
   const { id, name, email, password, phoneNumber, hometown, active, location } =
     req.body;
 
-  if (!name || !email || !password || !phoneNumber || !hometown) {
+  if (!name || !email || !password || !phoneNumber) {
     res.status(400).send('All fields are required');
     return;
   }
@@ -135,9 +137,9 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.get('/validateUser', async (req, res) => {
-  const { email, password, phoneNumber } = req.body;
+  const { name, email, password, phoneNumber } = req.body;
 
-  if (!email || !password || !phoneNumber) {
+  if (!name || !email || !password || !phoneNumber) {
     res.status(400).send('All fields are required');
     return;
   }
@@ -148,31 +150,35 @@ router.get('/validateUser', async (req, res) => {
 
   try {
     if (!emailValidation) {
-      return res.status(400).send('Invalid email');
+      res.status(400);
+      res.send('Invalid email');
+      return;
     }
 
     if (!passwordValidation) {
-      return res.status(400).send('Invalid password');
+      res.status(400);
+      res.send('Invalid password');
+      return;
     }
 
     if (!phoneNumberValidation) {
-      return res.status(400).send('Invalid phone number');
+      res.status(400);
+      res.send('Invalid phone number');
+      return;
     }
 
     const allUsers = await usersLogic.getAllUsers();
 
     const user = Object.values(allUsers).find(
-      (item) =>
-        (item.email === email && item.password === password) ||
-        item.phoneNumber === phoneNumber,
+      (item) => item.email === email || item.phoneNumber === phoneNumber,
     );
 
     if (user) {
-      return res
-        .status(400)
-        .send(
-          'User already exist with this email and password, or phone number',
-        );
+      res.status(400);
+      res.send(
+        'User already exist with this email and password, or phone number',
+      );
+      return;
     }
 
     res.status(200).send('User validated successfully');
