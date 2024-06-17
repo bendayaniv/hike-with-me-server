@@ -1,3 +1,4 @@
+const { get } = require('mongoose');
 const {
   getAllRoutes,
   getAllRotuesNames,
@@ -5,8 +6,8 @@ const {
 
 const {
   getAllRoutesDB,
-  getRouteCoordinatesDB,
   getRouteDescriptionDB,
+  getRouteCoordinatesDB,
 } = require('../../dal/route.js');
 
 const Route = require('../../models/route.js');
@@ -18,32 +19,65 @@ const response = {
   send: jest.fn((x) => x),
 };
 
-describe('getAllRoutes', () => {});
+const fakeRoutesList = [
+  new Route(
+    { latitude: 1, longitude: 1, date: null },
+    'Route',
+    '1',
+    'Makhtesh Ramon',
+    'fake_description',
+    'Medium',
+    '3.5 km',
+    'fake_image',
+  ),
+  new Route(
+    { latitude: 1, longitude: 1, date: null },
+    'Route',
+    '2',
+    "Wadi Murabba'at",
+    'fake_description',
+    'Medium',
+    '4 km',
+    'fake_image',
+  ),
+];
+
+describe('getAllRoutes', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should send status code of 404 when no routes found', async () => {
+    getAllRoutesDB.mockResolvedValueOnce(null);
+
+    await getAllRoutes(null, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('No routes found');
+  });
+
+  it('should send status code of 200 when routes found', async () => {
+    getAllRoutesDB.mockResolvedValueOnce(fakeRoutesList);
+    getRouteDescriptionDB.mockResolvedValue({
+      description: 'fake_description',
+      image: 'fake_image',
+    });
+    getRouteCoordinatesDB.mockResolvedValue({
+      latitude: 1,
+      longitude: 1,
+      date: null,
+    });
+
+    await getAllRoutes(null, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fakeRoutesList);
+  });
+});
 
 describe('getAllRotuesNames', () => {
-  const fakeRoutesList = [
-    new Route(
-      { lat: 1, lng: 1 },
-      'fake_pointsType',
-      1,
-      'fake_name',
-      'fake_description',
-      'fake_difficultyLevel',
-      'fake_length',
-      'fake_image',
-    ),
-    new Route(
-      { lat: 2, lng: 2 },
-      'fake_pointsType',
-      2,
-      'fake_name',
-      'fake_description',
-      'fake_difficultyLevel',
-      'fake_length',
-      'fake_image',
-    ),
-  ];
-
   const fakeRoutesListNames = fakeRoutesList.map((route) => route.name);
 
   beforeEach(() => {

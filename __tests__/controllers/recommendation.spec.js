@@ -18,7 +18,7 @@ const response = {
 };
 
 describe('getRecommendationsByRoute', () => {
-  const fakeRecommensationsList = [
+  const fakeRecommendationsList = [
     new Recommendation(
       1,
       1,
@@ -57,7 +57,7 @@ describe('getRecommendationsByRoute', () => {
 
   it('should send status code of 200 when recommendations found', async () => {
     getRecommendationsByRouteFromDB.mockResolvedValueOnce(
-      fakeRecommensationsList,
+      fakeRecommendationsList,
     );
 
     const request = {
@@ -70,7 +70,7 @@ describe('getRecommendationsByRoute', () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith(fakeRecommensationsList);
+    expect(response.send).toHaveBeenCalledWith(fakeRecommendationsList);
   });
 });
 

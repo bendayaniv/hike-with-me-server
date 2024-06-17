@@ -2,11 +2,7 @@ const Location = require('./location');
 
 class Point {
   constructor(location, type) {
-    this._location = new Location(
-      location.latitude,
-      location.longitude,
-      location.date,
-    );
+    this._location = new Location(location.lat, location.lng, location.date);
     this._type = type;
   }
 

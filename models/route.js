@@ -7,7 +7,7 @@ class Route extends Point {
     id,
     name,
     description,
-    difficultLevel,
+    difficultyLevel,
     length,
     imageUrl,
   ) {
@@ -15,7 +15,7 @@ class Route extends Point {
     this._id = id;
     this._name = name;
     this._description = description;
-    this._difficultLevel = difficultLevel;
+    this._difficultyLevel = difficultyLevel;
     this._length = length;
     this._imageUrl = imageUrl;
   }
@@ -37,11 +37,11 @@ class Route extends Point {
   }
 
   getDifficultLevel() {
-    return this._difficultLevel;
+    return this._difficultyLevel;
   }
 
   setDifficultLevel(difficultLevel) {
-    this._difficultLevel = difficultLevel;
+    this._difficultyLevel = difficultLevel;
   }
 
   getLength() {
@@ -68,7 +68,7 @@ class Route extends Point {
     id: ${this._id}, 
     name: ${this._name}, 
     description: ${this._description}, 
-    difficultLevel: ${this._difficultLevel}, 
+    difficultLevel: ${this._difficultyLevel}, 
     length: ${this._length}, 
     imageUrl: ${this._imageUrl}`;
   }

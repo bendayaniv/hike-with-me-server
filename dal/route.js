@@ -14,6 +14,7 @@ async function getRouteDescriptionDB(placeName) {
 
   try {
     const response = await fetch(apiUrl);
+
     const data = await response.json();
 
     if (response.ok) {

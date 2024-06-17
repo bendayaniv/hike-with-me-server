@@ -1,4 +1,3 @@
-const routesLogic = require('../bll/routes-logic.js');
 const {
   getAllRoutesDB,
   getRouteDescriptionDB,
@@ -20,20 +19,32 @@ async function getAllRoutes(req, res) {
     const dataArray = [];
 
     for (const item of routes) {
-      const description = await getRouteDescriptionDB(item.name);
+      const description = await getRouteDescriptionDB(item._name);
 
-      const location = await getRouteCoordinatesDB(item.name);
+      if (!description) {
+        res.status(404);
+        res.send('No description found');
+        continue;
+      }
+
+      const location = await getRouteCoordinatesDB(item._name);
+
+      if (!location) {
+        res.status(404);
+        res.send('No location found');
+        continue;
+      }
 
       location.date = null;
 
       const route = new Route(
         location,
         PointsType.ROUTE,
-        item.id,
-        item.name,
+        item._id,
+        item._name,
         description.description,
-        item.difficultyLevel,
-        item.length,
+        item._difficultyLevel,
+        item._length,
         description.image,
       );
 
@@ -44,7 +55,7 @@ async function getAllRoutes(req, res) {
     res.send(dataArray);
   } catch (err) {
     res.status(500);
-    res.json(err);
+    res.send(err);
   }
 }
 
