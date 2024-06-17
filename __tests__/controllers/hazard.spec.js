@@ -20,6 +20,67 @@ const response = {
   send: jest.fn((x) => x),
 };
 
+describe.only('getAllHazardsByRoute', () => {
+  const fakeHazardsList = [
+    new Hazard(
+      new Location(1, 1, 'fake_date'),
+      'fake_type',
+      'fake_id',
+      'fake_hazardType',
+      'fake_description',
+      'fake_severity',
+      'fake_reporterName',
+      'fake_routeName',
+    ),
+    new Hazard(
+      new Location(2, 2, 'fake_date'),
+      'fake_type',
+      'fake_id',
+      'fake_hazardType',
+      'fake_description',
+      'fake_severity',
+      'fake_reporterName',
+      'fake_routeName',
+    ),
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should send status code of 404 when no hazards found', async () => {
+    getAllHazardsByRouteDB.mockResolvedValueOnce(null);
+
+    const request = {
+      params: {
+        routeName: 'fake_routeName',
+      },
+    };
+
+    await getAllHazardsByRoute(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('No hazards found');
+  });
+
+  it('should send status code of 200 when hazards found', async () => {
+    getAllHazardsByRouteDB.mockResolvedValueOnce(fakeHazardsList);
+
+    const request = {
+      params: {
+        routeName: 'fake_routeName',
+      },
+    };
+
+    await getAllHazardsByRoute(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fakeHazardsList);
+  });
+});
+
 describe('addHazard', () => {
   const fake_hazard = new Hazard(
     new Location(1, 1, 'fake_date'),

@@ -19,6 +19,13 @@ async function getAllHazardsByRoute(req, res) {
   const { routeName } = req.params;
   try {
     const hazards = await getAllHazardsByRouteDB(routeName);
+
+    if (!hazards) {
+      res.status(404);
+      res.send('No hazards found');
+      return;
+    }
+
     const dataArray = Object.values(hazards).map(
       (item) =>
         new Hazard(
@@ -33,9 +40,11 @@ async function getAllHazardsByRoute(req, res) {
         ),
     );
 
-    res.status(200).send(dataArray);
+    res.status(200);
+    res.send(dataArray);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500);
+    res.json(err);
   }
 }
 
