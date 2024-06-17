@@ -10,7 +10,7 @@ async function getAllHazards(req, res) {
   try {
     const hazards = await getAllHazardsDB();
 
-    if (!hazards) {
+    if (!hazards || hazards.length === 0) {
       res.status(404);
       res.send('No hazards found');
       return;

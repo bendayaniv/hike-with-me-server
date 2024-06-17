@@ -144,7 +144,7 @@ describe('createRecommendation', () => {
   });
 
   it('should send status code of 200 when creating new recommendation', async () => {
-    addRecommendation.mockResolvedValueOnce(true);
+    addRecommendation.mockResolvedValueOnce(fake_recommendation);
 
     const request = {
       body: fake_recommendation,

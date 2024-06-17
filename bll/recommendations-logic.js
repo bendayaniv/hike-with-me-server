@@ -9,7 +9,7 @@ async function getRecommendationsByRoute(req, res) {
   try {
     const recommendations = await getRecommendationsByRouteFromDB(routeName);
 
-    if (!recommendations) {
+    if (!recommendations || recommendations.length === 0) {
       res.status(404);
       res.send('No recommendations found');
       return;

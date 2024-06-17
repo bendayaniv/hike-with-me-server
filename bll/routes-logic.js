@@ -1,65 +1,73 @@
-const routes = require('../dal/mockRoutes.json');
+const routesLogic = require('../bll/routes-logic.js');
+const {
+  getAllRoutesDB,
+  getRouteDescriptionDB,
+  getRouteCoordinatesDB,
+} = require('../dal/route.js');
+const Route = require('../models/route.js');
+const { PointsType } = require('../dal/constans.js');
 
-const GOOGLE_PLACES_API_URL_FIND_PLACE_FROM_TEXT =
-  'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
-
-const API_KEY = process.env.API_KEY;
-
-async function getAllRoutes() {
-  return routes;
-}
-
-async function getRouteDescription(placeName) {
-  const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(placeName)}`;
-
+async function getAllRoutes(req, res) {
   try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+    const routes = await getAllRoutesDB();
 
-    if (response.ok) {
-      const description = {
-        title: data.title,
-        thumbnailImage: data.thumbnail ? data.thumbnail.source : null,
-        image: data.originalimage ? data.originalimage.source : null,
-        description: data.extract ? data.extract : 'Description not available',
-      };
-      return description;
-    } else {
-      console.log(
-        'Name: ',
-        placeName,
-        ', Failed to retrieve place description.',
-      );
-      return null;
+    if (!routes || routes.length === 0) {
+      res.status(404);
+      res.send('No routes found');
+      return;
     }
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return null;
+
+    const dataArray = [];
+
+    for (const item of routes) {
+      const description = await getRouteDescriptionDB(item.name);
+
+      const location = await getRouteCoordinatesDB(item.name);
+
+      location.date = null;
+
+      const route = new Route(
+        location,
+        PointsType.ROUTE,
+        item.id,
+        item.name,
+        description.description,
+        item.difficultyLevel,
+        item.length,
+        description.image,
+      );
+
+      dataArray.push(route);
+    }
+
+    res.status(200);
+    res.send(dataArray);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
   }
 }
 
-async function getRouteCoordinates(placeName) {
-  const url = `${GOOGLE_PLACES_API_URL_FIND_PLACE_FROM_TEXT}?input=${placeName}&inputtype=textquery&fields=geometry&key=${API_KEY}`;
-
+async function getAllRotuesNames(req, res) {
   try {
-    const response = await fetch(url);
-    const data = await response.json();
+    const routes = await getAllRoutesDB();
 
-    if (data.status === 'OK') {
-      const location = data.candidates[0].geometry.location;
-      return location;
-    } else {
-      console.log('Failed to retrieve coordinates.');
-      return null;
+    if (!routes || routes.length === 0) {
+      res.status(404);
+      res.send('No routes found');
+      return;
     }
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return null;
+
+    const names = routes.map((route) => route.name);
+    res.status(200);
+    res.send(names);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
   }
 }
 
 module.exports = {
   getAllRoutes,
-  getRouteDescription,
-  getRouteCoordinates,
+  getAllRotuesNames,
 };

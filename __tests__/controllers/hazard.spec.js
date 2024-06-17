@@ -20,7 +20,7 @@ const response = {
   send: jest.fn((x) => x),
 };
 
-describe.only('getAllHazards', () => {
+describe('getAllHazards', () => {
   const fakeHazardsList = [
     new Hazard(
       new Location(1, 1, 'fake_date'),
@@ -209,7 +209,7 @@ describe('addHazard', () => {
   });
 
   it('should send status code of 200 when creating new hazard', async () => {
-    addHazardDB.mockResolvedValueOnce(true);
+    addHazardDB.mockResolvedValueOnce(fake_hazard);
 
     const request = {
       body: fake_hazard,
