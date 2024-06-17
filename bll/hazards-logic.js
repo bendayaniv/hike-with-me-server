@@ -9,9 +9,18 @@ const Hazard = require('../models/hazard.js');
 async function getAllHazards(req, res) {
   try {
     const hazards = await getAllHazardsDB();
-    res.status(200).send(hazards);
+
+    if (!hazards) {
+      res.status(404);
+      res.send('No hazards found');
+      return;
+    }
+
+    res.status(200);
+    res.send(hazards);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500);
+    res.json(err);
   }
 }
 
@@ -65,8 +74,6 @@ async function addHazard(req, res) {
     res.send('Please provide latitude and longitude');
     return;
   }
-
-  // console.log(hazardType);
 
   if (!_hazardType) {
     res.status(400);
