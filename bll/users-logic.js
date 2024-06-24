@@ -1,74 +1,102 @@
-const firebase = require('../dal/firebase.js');
-
-async function getAllUsers() {
-  const snapshot = await firebase.database.ref('users').once('value');
-  return snapshot.val();
-}
-
-async function getUserById(id) {
-  const snapshot = await firebase.database.ref('users/' + id).once('value');
-  return snapshot.val();
-}
-
-async function addUser(user) {
-  await firebase.database.ref('users/' + user.id).set(user);
-}
-
-async function updateUser(user) {
-  await firebase.database.ref('users/' + user.id).update(user);
-}
-
-async function deleteUser(id) {
-  await firebase.database.ref('users/' + id).remove();
-}
-
-function haversineDistance(coords1, coords2) {
-  const R = 6371; // Radius of Earth in kilometers
-  const lat1 = coords1.lat;
-  const lon1 = coords1.lon;
-  const lat2 = coords2.lat;
-  const lon2 = coords2.lon;
-
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLon = ((lon2 - lon1) * Math.PI) / 180;
-
-  const sinDLat = Math.sin(dLat / 2);
-  const sinDLon = Math.sin(dLon / 2);
-  const cosLat1 = Math.cos((lat1 * Math.PI) / 180);
-  const cosLat2 = Math.cos((lat2 * Math.PI) / 180);
-
-  const a = sinDLat * sinDLat + cosLat1 * cosLat2 * sinDLon * sinDLon;
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
-
-  return distance;
-}
-
-function checkingEmail(email) {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return emailRegex.test(email);
-}
-
-function checkingPassword(password) {
-  //   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  //   return passwordRegex.test(password);
-  return password.length >= 6;
-}
-
-function checkingPhoneNumber(phoneNumber) {
-  const phoneRegex = /^\d{10}$/;
-  return phoneRegex.test(phoneNumber);
-}
-
-module.exports = {
-  getAllUsers,
-  getUserById,
-  addUser,
-  updateUser,
-  deleteUser,
+const {
+  getAllUsersDB,
+  getUserByIdDB,
+  addUserDB,
+  updateUserDB,
+  deleteUserDB,
   haversineDistance,
   checkingEmail,
   checkingPassword,
   checkingPhoneNumber,
+} = require('../dal/user.js');
+const User = require('../models/user.js');
+
+async function getAllActiveUsers(req, res) {
+  const { userId } = req.params;
+
+  if (!userId) {
+    res.status(400);
+    res.send('Please provide userId');
+    return;
+  }
+
+  try {
+    const users = await getAllUsersDB();
+
+    if (!users || users.length === 0) {
+      res.status(404);
+      res.send('No users found');
+      return;
+    }
+
+    const usersArray = Object.values(users).map(
+      (item) =>
+        new User(
+          item.id,
+          item.name,
+          item.email,
+          item.password,
+          item.phoneNumber,
+          item.hometown,
+          item.active,
+          item.location,
+        ),
+    );
+
+    const currentUser = await getUserByIdDB(userId);
+
+    if (!currentUser) {
+      res.status(404);
+      res.send('No user found');
+      return;
+    }
+
+    const coords1 = {
+      lat: parseFloat(currentUser.location.latitude),
+      lon: parseFloat(currentUser.location.longitude),
+    };
+
+    const dataArray = usersArray.reduce((acc, item) => {
+      const user = new User(
+        item.id,
+        item.name,
+        item.email,
+        item.password,
+        item.phoneNumber,
+        item.hometown,
+        item.active,
+        item.location,
+      );
+      if (user.id !== userId && user.active === true) {
+        const coords2 = {
+          lat: parseFloat(user.getLocation().latitude),
+          lon: parseFloat(user.getLocation().longitude),
+        };
+
+        const distance = haversineDistance(coords1, coords2);
+
+        acc.push({ user: user, distance: distance });
+      }
+      return acc;
+    }, []);
+
+    if (!dataArray || dataArray.length === 0) {
+      res.status(404);
+      res.send('No active users found');
+      return;
+    }
+
+    dataArray.sort((a, b) => a.distance - b.distance);
+
+    res.status(200);
+    res.send(dataArray);
+  } catch (err) {
+    res.status(500);
+    console.log('err: ', err);
+    res.send(err);
+  }
+}
+
+module.exports = {
+  getAllActiveUsers,
 };

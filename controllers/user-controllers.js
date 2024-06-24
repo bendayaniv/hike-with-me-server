@@ -1,69 +1,10 @@
 const express = require('express');
-const usersLogic = require('../bll/users-logic.js');
+const { getAllActiveUsers } = require('../bll/users-logic.js');
 const User = require('../models/user.js');
 
 const router = express.Router();
 
-router.get('/getAllActiveUsers/:userId', async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const users = await usersLogic.getAllUsers();
-
-    const usersArray = Object.values(users).map(
-      (item) =>
-        new User(
-          item.id,
-          item.name,
-          item.email,
-          item.password,
-          item.phoneNumber,
-          item.hometown,
-          item.active,
-          item.location,
-        ),
-    );
-
-    const currentUser = await usersLogic.getUserById(userId);
-
-    const coords1 = {
-      lat: parseFloat(currentUser.location.latitude),
-      lon: parseFloat(currentUser.location.longitude),
-    };
-
-    const dataArray = usersArray.reduce((acc, item) => {
-      const user = new User(
-        item.id,
-        item.name,
-        item.email,
-        item.password,
-        item.phoneNumber,
-        item.hometown,
-        item.active,
-        item.location,
-      );
-      if (user.id !== userId && user.active === true) {
-        const coords2 = {
-          lat: parseFloat(user.getLocation().latitude),
-          lon: parseFloat(user.getLocation().longitude),
-        };
-
-        const distance = usersLogic
-          .haversineDistance(coords1, coords2)
-          .toFixed(2);
-
-        acc.push({ user: user, distance: distance });
-      }
-      return acc;
-    }, []);
-
-    dataArray.sort((a, b) => a.distance - b.distance);
-
-    console.log(dataArray);
-    res.status(200).send(dataArray);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+router.get('/getAllActiveUsers/:userId', getAllActiveUsers);
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;

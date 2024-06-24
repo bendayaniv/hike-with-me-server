@@ -43,7 +43,8 @@ async function getTripsByUser(req, res) {
     res.status(200);
     res.send(dataArray);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500);
+    res.send(err);
   }
 }
 
