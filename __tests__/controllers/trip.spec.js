@@ -1,4 +1,9 @@
-const { getTripsByUser } = require('../../bll/trips-logic.js');
+const {
+  getTripsByUser,
+  createTrip,
+  updateTrip,
+  deleteTrip,
+} = require('../../bll/trips-logic.js');
 
 const {
   getTripsByUserDB,
@@ -94,5 +99,242 @@ describe('getTripsByUser', () => {
     expect(response.send).toHaveBeenCalledWith(
       fakeTripsList.filter((trip) => trip.userId === fakeUserId),
     );
+  });
+});
+
+describe('createTrip', () => {
+  const fake_trip = new Trip(
+    '1',
+    'fake_name',
+    'fake_startDate',
+    'fake_endDate',
+    'fake_locations',
+    'fake_description',
+    'fake_routesNames',
+    'fake_userId1',
+  );
+
+  // should restart the mock and restart the fake_trip after each test
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fake_trip.id = '1';
+    fake_trip.name = 'fake_name';
+    fake_trip.startDate = 'fake_startDate';
+    fake_trip.endDate = 'fake_endDate';
+    fake_trip.locations = 'fake_locations';
+    fake_trip.description = 'fake_description';
+    fake_trip.routesNames = 'fake_routesNames';
+    fake_trip.userId = 'fake_userId1';
+  });
+
+  it('should send status code of 400 when no name provided', async () => {
+    fake_trip.name = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide name');
+  });
+
+  it('should send status code of 400 when no startDate provided', async () => {
+    fake_trip.startDate = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide startDate');
+  });
+
+  it('should send status code of 400 when no endDate provided', async () => {
+    fake_trip.endDate = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide endDate');
+  });
+
+  it('should send status code of 400 when no description provided', async () => {
+    fake_trip.description = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide description');
+  });
+
+  it('should send status code of 200 when creating new trip', async () => {
+    createTripDB.mockResolvedValueOnce(fake_trip);
+
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fake_trip);
+  });
+});
+
+describe('updateTrip', () => {
+  const fake_trip = new Trip(
+    '1',
+    'fake_name',
+    'fake_startDate',
+    'fake_endDate',
+    'fake_locations',
+    'fake_description',
+    'fake_routesNames',
+    'fake_userId1',
+  );
+
+  // should restart the mock and restart the fake_trip after each test
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fake_trip.id = '1';
+    fake_trip.name = 'fake_name';
+    fake_trip.startDate = 'fake_startDate';
+    fake_trip.endDate = 'fake_endDate';
+    fake_trip.locations = 'fake_locations';
+    fake_trip.description = 'fake_description';
+    fake_trip.routesNames = 'fake_routesNames';
+    fake_trip.userId = 'fake_userId1';
+  });
+
+  it('should send status code of 400 when no name provided', async () => {
+    fake_trip.name = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide name');
+  });
+
+  it('should send status code of 400 when no startDate provided', async () => {
+    fake_trip.startDate = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide startDate');
+  });
+
+  it('should send status code of 400 when no endDate provided', async () => {
+    fake_trip.endDate = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide endDate');
+  });
+
+  it('should send status code of 400 when no description provided', async () => {
+    fake_trip.description = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide description');
+  });
+
+  it('should send status code of 200 when updating trip', async () => {
+    updateTripDB.mockResolvedValueOnce(fake_trip);
+
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fake_trip);
+  });
+});
+
+describe.only('deleteTrip', () => {
+  const fake_information = {
+    userId: 'fake_userId',
+    tripId: 'fake_tripId',
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fake_information.userId = 'fake_userId';
+    fake_information.tripId = 'fake_tripId';
+  });
+
+  it('should send status code of 400 when no userId provided', async () => {
+    fake_information.userId = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await deleteTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
+  });
+
+  it('should send status code of 400 when no tripId provided', async () => {
+    fake_information.tripId = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await deleteTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide tripId');
+  });
+
+  it('should send status code of 200 when deleting trip', async () => {
+    deleteTripDB.mockResolvedValueOnce('Trip deleted');
+
+    const request = {
+      params: fake_information,
+    };
+
+    await deleteTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Trip deleted');
   });
 });
