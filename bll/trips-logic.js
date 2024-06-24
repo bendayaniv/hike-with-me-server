@@ -1,66 +1,79 @@
-const firebase = require('../dal/firebase.js');
+const {
+  getTripsByUserDB,
+  createTripDB,
+  updateTripDB,
+  deleteTripDB,
+  uploadImagesDB,
+  getAllUserImagesByTripDB,
+} = require('../dal/trip.js');
+const Trip = require('../models/trip.js');
+const { upload } = require('../dal/firebase.js');
 
-async function getTripsByUser(userId) {
-  const snapshot = await firebase.database.ref('trips/' + userId).once('value');
-  return snapshot.val();
-}
+async function getTripsByUser(req, res) {
+  const { userId } = req.params;
+  try {
+    const trips = await getTripsByUserDB(userId);
 
-async function createTrip(trip) {
-  await firebase.database
-    .ref('trips/' + trip.getUserId() + '/' + trip.getId())
-    .set(trip);
-}
+    if (!trips || trips.length === 0) {
+      res.status(404);
+      res.send('No trips found');
+      return;
+    }
 
-async function updateTrip(trip) {
-  await firebase.database
-    .ref('trips/' + trip.getUserId() + '/' + trip.getId())
-    .update(trip);
-}
-
-async function deleteTrip(userId, tripId) {
-  await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
-}
-
-async function uploadImages(files, userName, tripName) {
-  const bucket = firebase.storage.bucket();
-
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const blob = bucket.file(
-      userName + '/' + tripName + '/' + file.originalname,
+    const dataArray = Object.values(trips).map(
+      (item) =>
+        new Trip(
+          item.id,
+          item.name,
+          item.startDate,
+          item.endDate,
+          item.locations,
+          item.description,
+          item.routesNames,
+          item.userId,
+        ),
     );
-    const blobStream = blob.createWriteStream({
-      metadata: {
-        contentType: file.mimetype,
-      },
-    });
-
-    blobStream.on('error', (err) => {
-      console.error(err);
-    });
-
-    blobStream.on('finish', () => {
-      console.log('Image uploaded successfully');
-    });
-
-    blobStream.end(file.buffer);
+    res.status(200);
+    res.send(dataArray);
+  } catch (err) {
+    res.status(500).json(err);
   }
 }
 
-async function getAllUserImagesByTrip(userName, tripName) {
-  const bucket = firebase.storage.bucket();
-  const [files] = await bucket.getFiles({
-    prefix: userName + '/' + tripName,
-  });
+async function createTrip(req, res) {
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    locations,
+    description,
+    routesNames,
+    userId,
+  } = req.body;
 
-  return files;
+  const trip = new Trip(
+    id,
+    name,
+    startDate,
+    endDate,
+    locations,
+    description,
+    routesNames,
+    userId,
+  );
+
+  try {
+    await createTripDB(trip);
+    res.status(200);
+    res.send(trip);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
 }
 
 module.exports = {
   getTripsByUser,
   createTrip,
-  updateTrip,
-  deleteTrip,
-  uploadImages,
-  getAllUserImagesByTrip,
 };

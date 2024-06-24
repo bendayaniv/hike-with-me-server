@@ -24,16 +24,25 @@ describe('getRecommendationsByRoute', () => {
       1,
       'fake_description',
       'fake_reporterName',
-      'fake_routeName',
+      'fake_routeName1',
     ),
     new Recommendation(
       2,
       2,
       'fake_description',
       'fake_reporterName',
-      'fake_routeName',
+      'fake_routeName1',
+    ),
+    new Recommendation(
+      3,
+      3,
+      'fake_description',
+      'fake_reporterName',
+      'fake_routeName2',
     ),
   ];
+
+  const fakeRouteName = 'fake_routeName1';
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -44,7 +53,7 @@ describe('getRecommendationsByRoute', () => {
 
     const request = {
       params: {
-        routeName: 'fake_routeName',
+        routeName: fakeRouteName,
       },
     };
 
@@ -57,12 +66,14 @@ describe('getRecommendationsByRoute', () => {
 
   it('should send status code of 200 when recommendations found', async () => {
     getRecommendationsByRouteFromDB.mockResolvedValueOnce(
-      fakeRecommendationsList,
+      fakeRecommendationsList.filter(
+        (recommendation) => recommendation.routeName === fakeRouteName,
+      ),
     );
 
     const request = {
       params: {
-        routeName: 'fake_routeName',
+        routeName: fakeRouteName,
       },
     };
 
@@ -70,7 +81,11 @@ describe('getRecommendationsByRoute', () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith(fakeRecommendationsList);
+    expect(response.send).toHaveBeenCalledWith(
+      fakeRecommendationsList.filter(
+        (recommendation) => recommendation.routeName === fakeRouteName,
+      ),
+    );
   });
 });
 
