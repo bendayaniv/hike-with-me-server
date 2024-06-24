@@ -97,6 +97,32 @@ async function getAllActiveUsers(req, res) {
   }
 }
 
+async function getUserById(req, res) {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(400);
+    res.send('Please provide userId');
+    return;
+  }
+
+  try {
+    const user = await getUserByIdDB(id);
+
+    if (!user) {
+      res.status(404);
+      res.send('User not found');
+      return;
+    }
+
+    res.status(200);
+    res.send(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   getAllActiveUsers,
+  getUserById,
 };

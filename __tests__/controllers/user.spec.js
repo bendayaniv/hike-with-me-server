@@ -1,4 +1,4 @@
-const { getAllActiveUsers } = require('../../bll/users-logic.js');
+const { getAllActiveUsers, getUserById } = require('../../bll/users-logic.js');
 
 const {
   getAllUsersDB,
@@ -95,7 +95,6 @@ describe('getAllActiveUsers', () => {
     expect(response.send).toHaveBeenCalledWith('No user found');
   });
 
-  // checking if there is active users
   it('should send code 404 if no active users found', async () => {
     fakeUsersList[1].active = false;
     getAllUsersDB.mockResolvedValueOnce(fakeUsersList);
@@ -110,8 +109,7 @@ describe('getAllActiveUsers', () => {
     expect(response.send).toHaveBeenCalledWith('No active users found');
   });
 
-  //should send status code of 200 when users found
-  it.only('should send status code of 200 when users found', async () => {
+  it('should send status code of 200 when users found', async () => {
     getAllUsersDB.mockResolvedValueOnce(fakeUsersList);
     getUserByIdDB.mockResolvedValueOnce(fakeUsersList[0]);
     const mockHaversineDistance = jest.fn().mockReturnValue(fakeDistance);
@@ -124,5 +122,57 @@ describe('getAllActiveUsers', () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith([fakeActiveUsersList]);
+  });
+});
+
+describe.only('getUserById', () => {
+  const fakeUserId = '1';
+  const fakeUser = new User(
+    '1',
+    'John Doe',
+    'email',
+    'password',
+    '1234567890',
+    'Hometown',
+    true,
+    { latitude: 37.4219983, longitude: -122.084 },
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should send code 400 if no userId provided', async () => {
+    const request = { params: {} };
+
+    await getUserById(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
+  });
+
+  it('should send code 404 if no user found', async () => {
+    getUserByIdDB.mockResolvedValueOnce(null);
+
+    const request = { params: { id: fakeUserId } };
+
+    await getUserById(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('User not found');
+  });
+
+  it('should send status code of 200 when user found', async () => {
+    getUserByIdDB.mockResolvedValueOnce(fakeUser);
+
+    const request = { params: { id: fakeUserId } };
+
+    await getUserById(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fakeUser);
   });
 });

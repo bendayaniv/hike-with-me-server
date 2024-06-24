@@ -1,20 +1,12 @@
 const express = require('express');
-const { getAllActiveUsers } = require('../bll/users-logic.js');
+const { getAllActiveUsers, getUserById } = require('../bll/users-logic.js');
 const User = require('../models/user.js');
 
 const router = express.Router();
 
 router.get('/getAllActiveUsers/:userId', getAllActiveUsers);
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await usersLogic.getUserById(id);
-    res.status(200).send(user);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+router.get('/:id', getUserById);
 
 router.post('/addUser', async (req, res) => {
   const { id, name, email, password, phoneNumber, hometown, active, location } =
