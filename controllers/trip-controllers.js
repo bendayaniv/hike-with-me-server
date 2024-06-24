@@ -7,6 +7,7 @@ const {
   deleteTrip,
   uploadImages,
   getAllUserImagesByTrip,
+  removeImageFromTrip,
 } = require('../bll/trips-logic.js');
 
 const { upload } = require('../dal/firebase.js');
@@ -24,5 +25,7 @@ router.delete('/:userId/:tripId', deleteTrip);
 router.post('/uploadImages', upload.array('image'), uploadImages);
 
 router.get('/:userName/:tripName', getAllUserImagesByTrip);
+
+router.delete('/:userName/:tripName/:imageName', removeImageFromTrip);
 
 module.exports = router;

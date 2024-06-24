@@ -56,6 +56,19 @@ async function getAllUserImagesByTripDB(userName, tripName) {
   return files;
 }
 
+async function removeImageFromTripDB(userName, tripName, imageName) {
+  const bucket = firebase.storage.bucket();
+  const file = bucket.file(userName + '/' + tripName + '/' + imageName);
+
+  try {
+    await file.delete();
+    return 'Image deleted successfully';
+  } catch (err) {
+    console.error(err.message);
+    return 'Image does not exist';
+  }
+}
+
 module.exports = {
   getTripsByUserDB,
   createTripDB,
@@ -63,4 +76,5 @@ module.exports = {
   deleteTripDB,
   uploadImagesDB,
   getAllUserImagesByTripDB,
+  removeImageFromTripDB,
 };

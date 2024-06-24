@@ -5,6 +5,7 @@ const {
   deleteTripDB,
   uploadImagesDB,
   getAllUserImagesByTripDB,
+  removeImageFromTripDB,
 } = require('../dal/trip.js');
 const Trip = require('../models/trip.js');
 
@@ -259,6 +260,46 @@ async function getAllUserImagesByTrip(req, res) {
   }
 }
 
+async function removeImageFromTrip(req, res) {
+  const { userName, tripName, imageName } = req.params;
+
+  console.log(userName, tripName, imageName);
+
+  if (!userName) {
+    res.status(400);
+    res.send('Please provide userName');
+    return;
+  }
+
+  if (!tripName) {
+    res.status(400);
+    res.send('Please provide tripName');
+    return;
+  }
+
+  if (!imageName) {
+    res.status(400);
+    res.send('Please provide imageName');
+    return;
+  }
+
+  try {
+    const answer = await removeImageFromTripDB(userName, tripName, imageName);
+
+    if (answer === 'Image does not exist') {
+      res.status(404);
+      res.send(answer);
+      return;
+    }
+
+    res.status(200);
+    res.send(answer);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
+}
+
 module.exports = {
   getTripsByUser,
   createTrip,
@@ -266,4 +307,5 @@ module.exports = {
   deleteTrip,
   uploadImages,
   getAllUserImagesByTrip,
+  removeImageFromTrip,
 };

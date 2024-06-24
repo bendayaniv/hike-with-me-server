@@ -5,6 +5,7 @@ const {
   deleteTrip,
   uploadImages,
   getAllUserImagesByTrip,
+  removeImageFromTrip,
 } = require('../../bll/trips-logic.js');
 
 const {
@@ -14,6 +15,7 @@ const {
   deleteTripDB,
   uploadImagesDB,
   getAllUserImagesByTripDB,
+  removeImageFromTripDB,
 } = require('../../dal/trip.js');
 
 const Trip = require('../../models/trip.js');
@@ -493,5 +495,87 @@ describe('getAllUserImagesByTrip', () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith(fake_files);
+  });
+});
+
+describe('removeImageFromTrip', () => {
+  const fake_information = {
+    userName: 'fake_userName',
+    tripName: 'fake_tripName',
+    imageName: 'fake_imageName',
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fake_information.userName = 'fake_userName';
+    fake_information.tripName = 'fake_tripName';
+    fake_information.imageName = 'fake_imageName';
+  });
+
+  it('should send status code of 400 when no userName provided', async () => {
+    fake_information.userName = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await removeImageFromTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userName');
+  });
+
+  it('should send status code of 400 when no tripName provided', async () => {
+    fake_information.tripName = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await removeImageFromTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide tripName');
+  });
+
+  it('should send status code of 400 when no imageName provided', async () => {
+    fake_information.imageName = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await removeImageFromTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide imageName');
+  });
+
+  it("should send status code of 404 when image doesn't exist", async () => {
+    removeImageFromTripDB.mockResolvedValueOnce('Image does not exist');
+
+    const request = {
+      params: fake_information,
+    };
+
+    await removeImageFromTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Image does not exist');
+  });
+
+  it('should send status code of 200 when image removed', async () => {
+    removeImageFromTripDB.mockResolvedValueOnce('Image removed');
+
+    const request = {
+      params: fake_information,
+    };
+
+    await removeImageFromTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Image removed');
   });
 });
