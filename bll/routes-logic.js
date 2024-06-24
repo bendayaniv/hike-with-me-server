@@ -70,6 +70,13 @@ async function getAllRotuesNames(req, res) {
     }
 
     const names = routes.map((route) => route.name);
+
+    if (!names || names.length === 0) {
+      res.status(404);
+      res.send('No names found');
+      return;
+    }
+
     res.status(200);
     res.send(names);
   } catch (err) {

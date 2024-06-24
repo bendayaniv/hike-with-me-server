@@ -67,6 +67,20 @@ describe('getTripsByUser', () => {
     jest.clearAllMocks();
   });
 
+  it('should send status code of 400 when no userId provided', async () => {
+    const request = {
+      params: {
+        userId: null,
+      },
+    };
+
+    await getTripsByUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
+  });
+
   it('should send status code of 404 when no trips found', async () => {
     getTripsByUserDB.mockResolvedValueOnce(null);
 
@@ -131,6 +145,19 @@ describe('createTrip', () => {
     fake_trip.userId = 'fake_userId1';
   });
 
+  it('should send status code of 400 when no id provided', async () => {
+    fake_trip.id = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide id');
+  });
+
   it('should send status code of 400 when no name provided', async () => {
     fake_trip.name = null;
     const request = {
@@ -181,6 +208,19 @@ describe('createTrip', () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide description');
+  });
+
+  it('should send status code of 400 when no userId provided', async () => {
+    fake_trip.userId = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await createTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
 
   it('should send status code of 200 when creating new trip', async () => {
@@ -223,6 +263,19 @@ describe('updateTrip', () => {
     fake_trip.userId = 'fake_userId1';
   });
 
+  it('should send status code of 400 when no id provided', async () => {
+    fake_trip.id = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide id');
+  });
+
   it('should send status code of 400 when no name provided', async () => {
     fake_trip.name = null;
     const request = {
@@ -273,6 +326,19 @@ describe('updateTrip', () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide description');
+  });
+
+  it('should send status code of 400 when no userId provided', async () => {
+    fake_trip.userId = null;
+    const request = {
+      body: fake_trip,
+    };
+
+    await updateTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
 
   it('should send status code of 200 when updating trip', async () => {

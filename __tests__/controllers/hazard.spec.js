@@ -97,6 +97,20 @@ describe('getAllHazardsByRoute', () => {
     jest.clearAllMocks();
   });
 
+  it('should send status code of 400 when no routeName provided', async () => {
+    const request = {
+      params: {
+        routeName: null,
+      },
+    };
+
+    await getAllHazardsByRoute(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide route name');
+  });
+
   it('should send status code of 404 when no hazards found', async () => {
     getAllHazardsByRouteDB.mockResolvedValueOnce(null);
 
@@ -182,6 +196,19 @@ describe('addHazard', () => {
     expect(response.send).toHaveBeenCalledWith('Please provide hazard type');
   });
 
+  it('should send status code of 400 when no id provided', async () => {
+    fake_hazard._id = null;
+    const request = {
+      body: fake_hazard,
+    };
+
+    await addHazard(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide id');
+  });
+
   it('should send status code of 400 when no description provided', async () => {
     fake_hazard._description = null;
     const request = {
@@ -206,6 +233,32 @@ describe('addHazard', () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide severity');
+  });
+
+  it('should send status code of 400 when no reporterName provided', async () => {
+    fake_hazard._reporterName = null;
+    const request = {
+      body: fake_hazard,
+    };
+
+    await addHazard(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide reporter name');
+  });
+
+  it('should send status code of 400 when no routeName provided', async () => {
+    fake_hazard._routeName = null;
+    const request = {
+      body: fake_hazard,
+    };
+
+    await addHazard(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide route name');
   });
 
   it('should send status code of 200 when creating new hazard', async () => {

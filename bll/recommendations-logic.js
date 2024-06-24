@@ -6,6 +6,13 @@ const Recommendation = require('../models/recommendation.js');
 
 async function getRecommendationsByRoute(req, res) {
   const { routeName } = req.params;
+
+  if (!routeName) {
+    res.status(400);
+    res.send('Please provide route name');
+    return;
+  }
+
   try {
     const recommendations = await getRecommendationsByRouteFromDB(routeName);
 
@@ -36,6 +43,12 @@ async function getRecommendationsByRoute(req, res) {
 async function createRecommendation(req, res) {
   const { id, rate, description, reporterName, routeName } = req.body;
 
+  if (!id) {
+    res.status(400);
+    res.send('Please provide id');
+    return;
+  }
+
   if (!rate || isNaN(rate)) {
     res.status(400);
     res.send('Please provide rate');
@@ -45,6 +58,12 @@ async function createRecommendation(req, res) {
   if (!description) {
     res.status(400);
     res.send('Please provide description');
+    return;
+  }
+
+  if (!reporterName) {
+    res.status(400);
+    res.send('Please provide reporterName');
     return;
   }
 

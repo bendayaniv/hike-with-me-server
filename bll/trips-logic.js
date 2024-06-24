@@ -11,6 +11,13 @@ const Trip = require('../models/trip.js');
 
 async function getTripsByUser(req, res) {
   const { userId } = req.params;
+
+  if (!userId) {
+    res.status(400);
+    res.send('Please provide userId');
+    return;
+  }
+
   try {
     const trips = await getTripsByUserDB(userId);
 
@@ -52,6 +59,12 @@ async function createTrip(req, res) {
     userId,
   } = req.body;
 
+  if (!id) {
+    res.status(400);
+    res.send('Please provide id');
+    return;
+  }
+
   if (!name) {
     res.status(400);
     res.send('Please provide name');
@@ -82,6 +95,12 @@ async function createTrip(req, res) {
 
   if (!routesNames) {
     routesNames = [];
+  }
+
+  if (!userId) {
+    res.status(400);
+    res.send('Please provide userId');
+    return;
   }
 
   const trip = new Trip(
@@ -117,6 +136,12 @@ async function updateTrip(req, res) {
     userId,
   } = req.body;
 
+  if (!id) {
+    res.status(400);
+    res.send('Please provide id');
+    return;
+  }
+
   if (!name) {
     res.status(400);
     res.send('Please provide name');
@@ -147,6 +172,12 @@ async function updateTrip(req, res) {
 
   if (!routesNames) {
     routesNames = [];
+  }
+
+  if (!userId) {
+    res.status(400);
+    res.send('Please provide userId');
+    return;
   }
 
   const trip = new Trip(

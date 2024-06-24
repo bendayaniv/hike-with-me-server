@@ -26,6 +26,13 @@ async function getAllHazards(req, res) {
 
 async function getAllHazardsByRoute(req, res) {
   const { routeName } = req.params;
+
+  if (!routeName) {
+    res.status(400);
+    res.send('Please provide route name');
+    return;
+  }
+
   try {
     const hazards = await getAllHazardsByRouteDB(routeName);
 
@@ -81,6 +88,12 @@ async function addHazard(req, res) {
     return;
   }
 
+  if (!_id) {
+    res.status(400);
+    res.send('Please provide id');
+    return;
+  }
+
   if (!_description) {
     res.status(400);
     res.send('Please provide description');
@@ -90,6 +103,18 @@ async function addHazard(req, res) {
   if (!_severity) {
     res.status(400);
     res.send('Please provide severity');
+    return;
+  }
+
+  if (!_reporterName) {
+    res.status(400);
+    res.send('Please provide reporter name');
+    return;
+  }
+
+  if (!_routeName) {
+    res.status(400);
+    res.send('Please provide route name');
     return;
   }
 

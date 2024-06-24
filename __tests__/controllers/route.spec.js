@@ -94,6 +94,16 @@ describe('getAllRotuesNames', () => {
     expect(response.send).toHaveBeenCalledWith('No routes found');
   });
 
+  it('should send status code of 404 when no namse found', async () => {
+    getAllRoutesDB.mockResolvedValueOnce([]);
+
+    await getAllRotuesNames(null, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('No routes found');
+  });
+
   it('should send status code of 200 when routes found', async () => {
     getAllRoutesDB.mockResolvedValueOnce(fakeRoutesList);
 

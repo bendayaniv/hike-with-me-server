@@ -48,6 +48,20 @@ describe('getRecommendationsByRoute', () => {
     jest.clearAllMocks();
   });
 
+  it('should send status code of 400 when not providing routeName', async () => {
+    const request = {
+      params: {
+        routeName: null,
+      },
+    };
+
+    await getRecommendationsByRoute(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide route name');
+  });
+
   it('should send status code of 404 when no recommendations found', async () => {
     getRecommendationsByRouteFromDB.mockResolvedValueOnce(null);
 
@@ -108,6 +122,19 @@ describe('createRecommendation', () => {
     fake_recommendation.routeName = 'fake_routeName';
   });
 
+  it('should send status code of 400 when not providing id', async () => {
+    fake_recommendation.id = null;
+    const request = {
+      body: fake_recommendation,
+    };
+
+    await createRecommendation(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide id');
+  });
+
   it('should send status code of 400 when not providing rate', async () => {
     fake_recommendation.rate = null;
     const request = {
@@ -144,6 +171,19 @@ describe('createRecommendation', () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide description');
+  });
+
+  it('should send status code of 400 when not providing reporterName', async () => {
+    fake_recommendation.reporterName = null;
+    const request = {
+      body: fake_recommendation,
+    };
+
+    await createRecommendation(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide reporterName');
   });
 
   it('should send status code of 400 when not providing routeName', async () => {
