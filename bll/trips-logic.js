@@ -227,10 +227,43 @@ async function uploadImages(req, res) {
   }
 }
 
+async function getAllUserImagesByTrip(req, res) {
+  const { userName, tripName } = req.params;
+
+  if (!userName) {
+    res.status(400);
+    res.send('Please provide userName');
+    return;
+  }
+
+  if (!tripName) {
+    res.status(400);
+    res.send('Please provide tripName');
+    return;
+  }
+
+  try {
+    const files = await getAllUserImagesByTripDB(userName, tripName);
+
+    if (!files || files.length === 0) {
+      res.status(404);
+      res.send('No images found');
+      return;
+    }
+
+    res.status(200);
+    res.send(files);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
+}
+
 module.exports = {
   getTripsByUser,
   createTrip,
   updateTrip,
   deleteTrip,
   uploadImages,
+  getAllUserImagesByTrip,
 };

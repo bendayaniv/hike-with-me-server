@@ -4,6 +4,7 @@ const {
   updateTrip,
   deleteTrip,
   uploadImages,
+  getAllUserImagesByTrip,
 } = require('../../bll/trips-logic.js');
 
 const {
@@ -340,7 +341,7 @@ describe('deleteTrip', () => {
   });
 });
 
-describe.only('uploadImages', () => {
+describe('uploadImages', () => {
   const fake_information = {
     userName: 'fake_userName',
     tripName: 'fake_tripName',
@@ -415,5 +416,82 @@ describe.only('uploadImages', () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Images uploaded');
+  });
+});
+
+describe('getAllUserImagesByTrip', () => {
+  const fake_information = {
+    userName: 'fake_userName',
+    tripName: 'fake_tripName',
+  };
+  const fake_files = [
+    {
+      originalname: 'fake_originalname1',
+      tripName: 'fake_tripName1',
+    },
+    {
+      originalname: 'fake_originalname2',
+      tripName: 'fake_tripName2',
+    },
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fake_information.userName = 'fake_userName';
+    fake_information.tripName = 'fake_tripName';
+  });
+
+  it('should send status code of 400 when no userName provided', async () => {
+    fake_information.userName = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await getAllUserImagesByTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userName');
+  });
+
+  it('should send status code of 400 when no tripName provided', async () => {
+    fake_information.tripName = null;
+    const request = {
+      params: fake_information,
+    };
+
+    await getAllUserImagesByTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide tripName');
+  });
+
+  it('should send status code of 404 when no images found', async () => {
+    getAllUserImagesByTripDB.mockResolvedValueOnce(null);
+
+    const request = {
+      params: fake_information,
+    };
+
+    await getAllUserImagesByTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('No images found');
+  });
+
+  it('should send status code of 200 when images found', async () => {
+    getAllUserImagesByTripDB.mockResolvedValueOnce(fake_files);
+
+    const request = {
+      params: fake_information,
+    };
+
+    await getAllUserImagesByTrip(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fake_files);
   });
 });

@@ -5,7 +5,8 @@ const {
   createTrip,
   updateTrip,
   deleteTrip,
-  uploadImages
+  uploadImages,
+  getAllUserImagesByTrip,
 } = require('../bll/trips-logic.js');
 
 const { upload } = require('../dal/firebase.js');
@@ -22,15 +23,6 @@ router.delete('/:userId/:tripId', deleteTrip);
 
 router.post('/uploadImages', upload.array('image'), uploadImages);
 
-router.get('/:userName/:tripName', async (req, res) => {
-  const { userName, tripName } = req.params;
-
-  try {
-    const files = await getAllUserImagesByTrip(userName, tripName);
-    res.status(200).send(files);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+router.get('/:userName/:tripName', getAllUserImagesByTrip);
 
 module.exports = router;
