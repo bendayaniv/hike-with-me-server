@@ -7,7 +7,6 @@ const {
   getAllUserImagesByTripDB,
 } = require('../dal/trip.js');
 const Trip = require('../models/trip.js');
-const { upload } = require('../dal/firebase.js');
 
 async function getTripsByUser(req, res) {
   const { userId } = req.params;
@@ -195,9 +194,43 @@ async function deleteTrip(req, res) {
   }
 }
 
+async function uploadImages(req, res) {
+  try {
+    const files = req.files;
+
+    if (!files || files.length === 0) {
+      res.status(400);
+      res.send('Please provide images');
+      return;
+    }
+
+    const { userName, tripName } = req.body;
+
+    if (!userName) {
+      res.status(400);
+      res.send('Please provide userName');
+      return;
+    }
+
+    if (!tripName) {
+      res.status(400);
+      res.send('Please provide tripName');
+      return;
+    }
+
+    await uploadImagesDB(files, userName, tripName);
+    res.status(200);
+    res.send('Images uploaded');
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
+}
+
 module.exports = {
   getTripsByUser,
   createTrip,
   updateTrip,
   deleteTrip,
+  uploadImages,
 };

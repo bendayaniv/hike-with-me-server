@@ -3,6 +3,7 @@ const {
   createTrip,
   updateTrip,
   deleteTrip,
+  uploadImages,
 } = require('../../bll/trips-logic.js');
 
 const {
@@ -286,7 +287,7 @@ describe('updateTrip', () => {
   });
 });
 
-describe.only('deleteTrip', () => {
+describe('deleteTrip', () => {
   const fake_information = {
     userId: 'fake_userId',
     tripId: 'fake_tripId',
@@ -336,5 +337,83 @@ describe.only('deleteTrip', () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Trip deleted');
+  });
+});
+
+describe.only('uploadImages', () => {
+  const fake_information = {
+    userName: 'fake_userName',
+    tripName: 'fake_tripName',
+  };
+  const fake_files = [
+    {
+      originalname: 'fake_originalname1',
+      location: 'fake_location1',
+    },
+    {
+      originalname: 'fake_originalname2',
+      location: 'fake_location2',
+    },
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fake_information.userName = 'fake_userName';
+    fake_information.tripName = 'fake_tripName';
+  });
+
+  it('should send status code of 400 when no images provided', async () => {
+    const request = {
+      files: null,
+    };
+
+    await uploadImages(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide images');
+  });
+
+  it('should send status code of 400 when no userName provided', async () => {
+    fake_information.userName = null;
+    const request = {
+      files: fake_files,
+      body: fake_information,
+    };
+
+    await uploadImages(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userName');
+  });
+
+  it('should send status code of 400 when no tripName provided', async () => {
+    fake_information.tripName = null;
+    const request = {
+      files: fake_files,
+      body: fake_information,
+    };
+
+    await uploadImages(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide tripName');
+  });
+
+  it('should send status code of 200 when uploading images', async () => {
+    uploadImagesDB.mockResolvedValueOnce(fake_files);
+
+    const request = {
+      files: fake_files,
+      body: fake_information,
+    };
+
+    await uploadImages(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Images uploaded');
   });
 });
