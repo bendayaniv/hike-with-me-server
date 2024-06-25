@@ -11,11 +11,11 @@
 - [How to Merge main into existing branch](#how-to-merge-main-into-existing-branch)
 - [Start Work Routine](#start-work-routine)
 - [How to activate the server](#how-to-activate-the-server)
+- [Tests](#tests)
 - [How to activate nodemon](#how-to-activate-nodemon)
 - [How to undo commits](#how-to-undo-commits)
 - [Handle the README](#handle-the-readme)
 - [.gitignore](#.gitignore)
-
 
 ## Make sure you have
 
@@ -91,6 +91,11 @@ After making a change -
 ## How to activate the server
 
 In terminal - `node server.js` or [`nodemon server.js`](#how-to-activate-nodemon) (if activated nodemon).
+
+## Tests
+
+In terminal, in the main root - `npm test`.
+If you want to run a specific test script - `npm test -- [test_script]`. example - `npm test -- user.spec.js`.
 
 ## How to activate nodemon
 
