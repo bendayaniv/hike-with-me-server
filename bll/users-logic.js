@@ -5,15 +5,15 @@ const {
   updateUserDB,
   deleteUserDB,
   haversineDistance,
+} = require('../dal/user.js');
+
+const User = require('../models/user.js');
+
+const {
   checkingEmail,
   checkingPassword,
   checkingPhoneNumber,
-} = require('../dal/user.js');
-const User = require('../models/user.js');
-
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-const phoneRegex = /^\d{10}$/;
+} = require('../utils/user.js');
 
 async function getAllActiveUsers(req, res) {
   const { userId } = req.params;
@@ -148,7 +148,7 @@ async function addUser(req, res) {
     return;
   }
 
-  if (!emailRegex.test(email)) {
+  if (!checkingEmail(email)) {
     res.status(401);
     res.send('Please provide correct email');
     return;
@@ -160,7 +160,7 @@ async function addUser(req, res) {
     return;
   }
 
-  if (!(password.length >= 6)) {
+  if (!checkingPassword(password)) {
     res.status(401);
     res.send('Please provide correct password');
     return;
@@ -184,7 +184,7 @@ async function addUser(req, res) {
     return;
   }
 
-  if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
+  if (!checkingPhoneNumber(phoneNumber) || phoneNumber.length !== 10) {
     res.status(401);
     res.send('Please provide correct phoneNumber');
     return;
@@ -243,9 +243,7 @@ async function updateUser(req, res) {
     return;
   }
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  if (!emailRegex.test(email)) {
+  if (!checkingEmail(email)) {
     res.status(401);
     res.send('Please provide correct email');
     return;
@@ -257,7 +255,7 @@ async function updateUser(req, res) {
     return;
   }
 
-  if (!(password.length >= 6)) {
+  if (!checkingPassword(password)) {
     res.status(401);
     res.send('Please provide correct password');
     return;
@@ -269,7 +267,7 @@ async function updateUser(req, res) {
     return;
   }
 
-  if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
+  if (!checkingPhoneNumber(phoneNumber) || phoneNumber.length !== 10) {
     res.status(401);
     res.send('Please provide correct phoneNumber');
     return;
