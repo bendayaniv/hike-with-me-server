@@ -64,12 +64,12 @@ describe('getAllActiveUsers', () => {
     fakeUsersList[1].active = true;
   });
 
-  it('should send code 400 if no userId provided', async () => {
+  it('should send code 401 if no userId provided', async () => {
     const request = { params: {} };
 
     await getAllActiveUsers(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
@@ -146,12 +146,12 @@ describe('getUserById', () => {
     jest.clearAllMocks();
   });
 
-  it('should send code 400 if no userId provided', async () => {
+  it('should send code 401 if no userId provided', async () => {
     const request = { params: {} };
 
     await getUserById(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
@@ -205,71 +205,71 @@ describe('addUser', () => {
     fakeUser.location = { latitude: 37.4219983, longitude: -122.084 };
   });
 
-  it('should send code 400 if no id provided', async () => {
+  it('should send code 401 if no id provided', async () => {
     fakeUser.id = null;
     const request = { body: fakeUser };
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide id');
   });
 
-  it('should send code 400 if no name provided', async () => {
+  it('should send code 401 if no name provided', async () => {
     fakeUser.name = null;
     const request = { body: fakeUser };
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide name');
   });
 
-  it('should send code 400 if no email provided', async () => {
+  it('should send code 401 if no email provided', async () => {
     fakeUser.email = null;
     const request = { body: fakeUser };
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide email');
   });
 
-  it('should send code 400 if email is not valid', async () => {
+  it('should send code 401 if email is not valid', async () => {
     fakeUser.email = 'email';
 
     const request = { body: fakeUser };
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide correct email');
   });
 
-  it('should send code 400 if no password provided', async () => {
+  it('should send code 401 if no password provided', async () => {
     fakeUser.password = null;
 
     const request = { body: fakeUser };
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide password');
   });
 
-  it('should send code 400 if password is not valid', async () => {
+  it('should send code 401 if password is not valid', async () => {
     fakeUser.password = 'pa';
 
     const request = { body: fakeUser };
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith(
       'Please provide correct password',
@@ -290,7 +290,7 @@ describe('addUser', () => {
     );
   });
 
-  it('should send code 400 if no phoneNumber provided', async () => {
+  it('should send code 401 if no phoneNumber provided', async () => {
     fakeUser.phoneNumber = null;
     getAllUsersDB.mockResolvedValueOnce([]);
 
@@ -298,12 +298,12 @@ describe('addUser', () => {
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide phoneNumber');
   });
 
-  it('should send code 400 if phoneNumber is not valid', async () => {
+  it('should send code 401 if phoneNumber is not valid', async () => {
     fakeUser.phoneNumber = '123';
     getAllUsersDB.mockResolvedValueOnce([]);
 
@@ -311,14 +311,14 @@ describe('addUser', () => {
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith(
       'Please provide correct phoneNumber',
     );
   });
 
-  it('should send code 400 if no hometown provided', async () => {
+  it('should send code 401 if no hometown provided', async () => {
     fakeUser.hometown = null;
     getAllUsersDB.mockResolvedValueOnce([]);
 
@@ -326,7 +326,7 @@ describe('addUser', () => {
 
     await addUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide hometown');
   });
@@ -369,111 +369,111 @@ describe('updateUser', () => {
     fakeUser.location = { latitude: 37.4219983, longitude: -122.084 };
   });
 
-  it('should send code 400 if no id provided', async () => {
+  it('should send code 401 if no id provided', async () => {
     fakeUser.id = null;
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide id');
   });
 
-  it('should send code 400 if no name provided', async () => {
+  it('should send code 401 if no name provided', async () => {
     fakeUser.name = null;
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide name');
   });
 
-  it('should send code 400 if no email provided', async () => {
+  it('should send code 401 if no email provided', async () => {
     fakeUser.email = null;
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide email');
   });
 
-  it('should send code 400 if email is not valid', async () => {
+  it('should send code 401 if email is not valid', async () => {
     fakeUser.email = 'email';
 
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide correct email');
   });
 
-  it('should send code 400 if no password provided', async () => {
+  it('should send code 401 if no password provided', async () => {
     fakeUser.password = null;
 
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide password');
   });
 
-  it('should send code 400 if password is not valid', async () => {
+  it('should send code 401 if password is not valid', async () => {
     fakeUser.password = 'pa';
 
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith(
       'Please provide correct password',
     );
   });
 
-  it('should send code 400 if no phoneNumber provided', async () => {
+  it('should send code 401 if no phoneNumber provided', async () => {
     fakeUser.phoneNumber = null;
 
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide phoneNumber');
   });
 
-  it('should send code 400 if phoneNumber is not valid', async () => {
+  it('should send code 401 if phoneNumber is not valid', async () => {
     fakeUser.phoneNumber = '123';
 
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith(
       'Please provide correct phoneNumber',
     );
   });
 
-  it('should send code 400 if no hometown provided', async () => {
+  it('should send code 401 if no hometown provided', async () => {
     fakeUser.hometown = null;
 
     const request = { body: fakeUser };
 
     await updateUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide hometown');
   });
@@ -498,12 +498,12 @@ describe('deleteUser', () => {
     jest.clearAllMocks();
   });
 
-  it('should send code 400 if no userId provided', async () => {
+  it('should send code 401 if no userId provided', async () => {
     const request = { params: {} };
 
     await deleteUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });

@@ -19,7 +19,7 @@ async function getAllActiveUsers(req, res) {
   const { userId } = req.params;
 
   if (!userId) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
@@ -105,7 +105,7 @@ async function getUserById(req, res) {
   const { id } = req.params;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
@@ -131,37 +131,37 @@ async function addUser(req, res) {
     req.body;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide id');
     return;
   }
 
   if (!name) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide name');
     return;
   }
 
   if (!email) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide email');
     return;
   }
 
   if (!emailRegex.test(email)) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide correct email');
     return;
   }
 
   if (!password) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide password');
     return;
   }
 
   if (!(password.length >= 6)) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide correct password');
     return;
   }
@@ -179,19 +179,19 @@ async function addUser(req, res) {
   }
 
   if (!phoneNumber) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide phoneNumber');
     return;
   }
 
   if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide correct phoneNumber');
     return;
   }
 
   if (!hometown) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide hometown');
     return;
   }
@@ -226,19 +226,19 @@ async function updateUser(req, res) {
     req.body;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide id');
     return;
   }
 
   if (!name) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide name');
     return;
   }
 
   if (!email) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide email');
     return;
   }
@@ -246,37 +246,37 @@ async function updateUser(req, res) {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!emailRegex.test(email)) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide correct email');
     return;
   }
 
   if (!password) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide password');
     return;
   }
 
   if (!(password.length >= 6)) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide correct password');
     return;
   }
 
   if (!phoneNumber) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide phoneNumber');
     return;
   }
 
   if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide correct phoneNumber');
     return;
   }
 
   if (!hometown) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide hometown');
     return;
   }
@@ -308,7 +308,7 @@ async function deleteUser(req, res) {
   const { id } = req.params;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
