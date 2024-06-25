@@ -122,7 +122,7 @@ describe('createRecommendation', () => {
     fake_recommendation.routeName = 'fake_routeName';
   });
 
-  it('should send status code of 400 when not providing id', async () => {
+  it('should send status code of 401 when not providing id', async () => {
     fake_recommendation.id = null;
     const request = {
       body: fake_recommendation,
@@ -130,12 +130,12 @@ describe('createRecommendation', () => {
 
     await createRecommendation(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide id');
   });
 
-  it('should send status code of 400 when not providing rate', async () => {
+  it('should send status code of 401 when not providing rate', async () => {
     fake_recommendation.rate = null;
     const request = {
       body: fake_recommendation,
@@ -143,12 +143,12 @@ describe('createRecommendation', () => {
 
     await createRecommendation(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide rate');
   });
 
-  it('should send status code of 400 when rate is not a number', async () => {
+  it('should send status code of 401 when rate is not a number', async () => {
     fake_recommendation.rate = 'not_a_number';
     const request = {
       body: fake_recommendation,
@@ -156,24 +156,24 @@ describe('createRecommendation', () => {
 
     await createRecommendation(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide rate');
   });
 
-  it('should send status code of 400 when not providing description', async () => {
+  it('should send status code of 401 when not providing description', async () => {
     fake_recommendation.description = null;
     const request = {
       body: fake_recommendation,
     };
     await createRecommendation(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide description');
   });
 
-  it('should send status code of 400 when not providing reporterName', async () => {
+  it('should send status code of 401 when not providing reporterName', async () => {
     fake_recommendation.reporterName = null;
     const request = {
       body: fake_recommendation,
@@ -181,19 +181,19 @@ describe('createRecommendation', () => {
 
     await createRecommendation(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide reporterName');
   });
 
-  it('should send status code of 400 when not providing routeName', async () => {
+  it('should send status code of 401 when not providing routeName', async () => {
     fake_recommendation.routeName = null;
     const request = {
       body: fake_recommendation,
     };
     await createRecommendation(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide routeName');
   });

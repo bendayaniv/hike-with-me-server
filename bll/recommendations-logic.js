@@ -44,31 +44,31 @@ async function createRecommendation(req, res) {
   const { id, rate, description, reporterName, routeName } = req.body;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide id');
     return;
   }
 
   if (!rate || isNaN(rate)) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide rate');
     return;
   }
 
   if (!description) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide description');
     return;
   }
 
   if (!reporterName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide reporterName');
     return;
   }
 
   if (!routeName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide routeName');
     return;
   }
