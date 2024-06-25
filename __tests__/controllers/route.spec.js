@@ -1,4 +1,3 @@
-const { get } = require('mongoose');
 const {
   getAllRoutes,
   getAllRotuesNames,
