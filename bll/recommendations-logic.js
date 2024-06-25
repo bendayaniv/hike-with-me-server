@@ -1,21 +1,97 @@
-const firebase = require('../dal/firebase.js');
+const {
+  getRecommendationsByRouteFromDB,
+  addRecommendation,
+} = require('../dal/recommendation.js');
+const Recommendation = require('../models/recommendation.js');
 
-async function getRecommendationsByRoute(route) {
-  const snapshot = await firebase.database
-    .ref('recommendations/' + route)
-    .once('value');
-  return snapshot.val();
+async function getRecommendationsByRoute(req, res) {
+  const { routeName } = req.params;
+
+  if (!routeName) {
+    res.status(400);
+    res.send('Please provide route name');
+    return;
+  }
+
+  try {
+    const recommendations = await getRecommendationsByRouteFromDB(routeName);
+
+    if (!recommendations || recommendations.length === 0) {
+      res.status(404);
+      res.send('No recommendations found');
+      return;
+    }
+
+    const dataArray = Object.values(recommendations).map(
+      (item) =>
+        new Recommendation(
+          item.id,
+          item.rate,
+          item.description,
+          item.reporterName,
+          item.routeName,
+        ),
+    );
+    res.status(200);
+    res.send(dataArray);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
 }
 
-async function addRecommendation(recommendation) {
-  await firebase.database
-    .ref(
-      'recommendations/' + recommendation.routeName + '/' + recommendation.id,
-    )
-    .set(recommendation);
+async function createRecommendation(req, res) {
+  const { id, rate, description, reporterName, routeName } = req.body;
+
+  if (!id) {
+    res.status(401);
+    res.send('Please provide id');
+    return;
+  }
+
+  if (!rate || isNaN(rate)) {
+    res.status(401);
+    res.send('Please provide rate');
+    return;
+  }
+
+  if (!description) {
+    res.status(401);
+    res.send('Please provide description');
+    return;
+  }
+
+  if (!reporterName) {
+    res.status(401);
+    res.send('Please provide reporterName');
+    return;
+  }
+
+  if (!routeName) {
+    res.status(401);
+    res.send('Please provide routeName');
+    return;
+  }
+
+  const recommendation = new Recommendation(
+    id,
+    rate,
+    description,
+    reporterName,
+    routeName,
+  );
+
+  try {
+    await addRecommendation(recommendation);
+    res.status(200);
+    res.send(recommendation);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
 }
 
 module.exports = {
   getRecommendationsByRoute,
-  addRecommendation,
+  createRecommendation,
 };

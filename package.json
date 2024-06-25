@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prettier": "prettier --check '**/**/*.{js,jsx,ts,tsx,css}'",
     "prettier:fix": "prettier --write '**/**/*.{js,jsx,ts,tsx,css}'"
   },
@@ -23,6 +23,7 @@
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "prettier": "^3.2.5"
   }
 }

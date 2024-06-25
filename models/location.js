@@ -1,7 +1,7 @@
 class Location {
-  constructor(lat, lng, date) {
-    this.latitude = lat;
-    this.longitude = lng;
+  constructor(latitude, longitude, date) {
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.date = date;
   }
 
