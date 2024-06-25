@@ -67,7 +67,7 @@ describe('getTripsByUser', () => {
     jest.clearAllMocks();
   });
 
-  it('should send status code of 400 when no userId provided', async () => {
+  it('should send status code of 401 when no userId provided', async () => {
     const request = {
       params: {
         userId: null,
@@ -76,7 +76,7 @@ describe('getTripsByUser', () => {
 
     await getTripsByUser(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
@@ -145,7 +145,7 @@ describe('createTrip', () => {
     fake_trip.userId = 'fake_userId1';
   });
 
-  it('should send status code of 400 when no id provided', async () => {
+  it('should send status code of 401 when no id provided', async () => {
     fake_trip.id = null;
     const request = {
       body: fake_trip,
@@ -153,12 +153,12 @@ describe('createTrip', () => {
 
     await createTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide id');
   });
 
-  it('should send status code of 400 when no name provided', async () => {
+  it('should send status code of 401 when no name provided', async () => {
     fake_trip.name = null;
     const request = {
       body: fake_trip,
@@ -166,12 +166,12 @@ describe('createTrip', () => {
 
     await createTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide name');
   });
 
-  it('should send status code of 400 when no startDate provided', async () => {
+  it('should send status code of 401 when no startDate provided', async () => {
     fake_trip.startDate = null;
     const request = {
       body: fake_trip,
@@ -179,12 +179,12 @@ describe('createTrip', () => {
 
     await createTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide startDate');
   });
 
-  it('should send status code of 400 when no endDate provided', async () => {
+  it('should send status code of 401 when no endDate provided', async () => {
     fake_trip.endDate = null;
     const request = {
       body: fake_trip,
@@ -192,12 +192,12 @@ describe('createTrip', () => {
 
     await createTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide endDate');
   });
 
-  it('should send status code of 400 when no description provided', async () => {
+  it('should send status code of 401 when no description provided', async () => {
     fake_trip.description = null;
     const request = {
       body: fake_trip,
@@ -205,12 +205,12 @@ describe('createTrip', () => {
 
     await createTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide description');
   });
 
-  it('should send status code of 400 when no userId provided', async () => {
+  it('should send status code of 401 when no userId provided', async () => {
     fake_trip.userId = null;
     const request = {
       body: fake_trip,
@@ -218,7 +218,7 @@ describe('createTrip', () => {
 
     await createTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
@@ -263,7 +263,7 @@ describe('updateTrip', () => {
     fake_trip.userId = 'fake_userId1';
   });
 
-  it('should send status code of 400 when no id provided', async () => {
+  it('should send status code of 401 when no id provided', async () => {
     fake_trip.id = null;
     const request = {
       body: fake_trip,
@@ -271,12 +271,12 @@ describe('updateTrip', () => {
 
     await updateTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide id');
   });
 
-  it('should send status code of 400 when no name provided', async () => {
+  it('should send status code of 401 when no name provided', async () => {
     fake_trip.name = null;
     const request = {
       body: fake_trip,
@@ -284,12 +284,12 @@ describe('updateTrip', () => {
 
     await updateTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide name');
   });
 
-  it('should send status code of 400 when no startDate provided', async () => {
+  it('should send status code of 401 when no startDate provided', async () => {
     fake_trip.startDate = null;
     const request = {
       body: fake_trip,
@@ -297,12 +297,12 @@ describe('updateTrip', () => {
 
     await updateTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide startDate');
   });
 
-  it('should send status code of 400 when no endDate provided', async () => {
+  it('should send status code of 401 when no endDate provided', async () => {
     fake_trip.endDate = null;
     const request = {
       body: fake_trip,
@@ -310,12 +310,12 @@ describe('updateTrip', () => {
 
     await updateTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide endDate');
   });
 
-  it('should send status code of 400 when no description provided', async () => {
+  it('should send status code of 401 when no description provided', async () => {
     fake_trip.description = null;
     const request = {
       body: fake_trip,
@@ -323,12 +323,12 @@ describe('updateTrip', () => {
 
     await updateTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide description');
   });
 
-  it('should send status code of 400 when no userId provided', async () => {
+  it('should send status code of 401 when no userId provided', async () => {
     fake_trip.userId = null;
     const request = {
       body: fake_trip,
@@ -336,7 +336,7 @@ describe('updateTrip', () => {
 
     await updateTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
@@ -368,7 +368,7 @@ describe('deleteTrip', () => {
     fake_information.tripId = 'fake_tripId';
   });
 
-  it('should send status code of 400 when no userId provided', async () => {
+  it('should send status code of 401 when no userId provided', async () => {
     fake_information.userId = null;
     const request = {
       params: fake_information,
@@ -376,12 +376,12 @@ describe('deleteTrip', () => {
 
     await deleteTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
 
-  it('should send status code of 400 when no tripId provided', async () => {
+  it('should send status code of 401 when no tripId provided', async () => {
     fake_information.tripId = null;
     const request = {
       params: fake_information,
@@ -389,7 +389,7 @@ describe('deleteTrip', () => {
 
     await deleteTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide tripId');
   });
@@ -431,19 +431,19 @@ describe('uploadImages', () => {
     fake_information.tripName = 'fake_tripName';
   });
 
-  it('should send status code of 400 when no images provided', async () => {
+  it('should send status code of 401 when no images provided', async () => {
     const request = {
       files: null,
     };
 
     await uploadImages(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide images');
   });
 
-  it('should send status code of 400 when no userName provided', async () => {
+  it('should send status code of 401 when no userName provided', async () => {
     fake_information.userName = null;
     const request = {
       files: fake_files,
@@ -452,12 +452,12 @@ describe('uploadImages', () => {
 
     await uploadImages(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userName');
   });
 
-  it('should send status code of 400 when no tripName provided', async () => {
+  it('should send status code of 401 when no tripName provided', async () => {
     fake_information.tripName = null;
     const request = {
       files: fake_files,
@@ -466,7 +466,7 @@ describe('uploadImages', () => {
 
     await uploadImages(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide tripName');
   });
@@ -509,7 +509,7 @@ describe('getAllUserImagesByTrip', () => {
     fake_information.tripName = 'fake_tripName';
   });
 
-  it('should send status code of 400 when no userName provided', async () => {
+  it('should send status code of 401 when no userName provided', async () => {
     fake_information.userName = null;
     const request = {
       params: fake_information,
@@ -517,12 +517,12 @@ describe('getAllUserImagesByTrip', () => {
 
     await getAllUserImagesByTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userName');
   });
 
-  it('should send status code of 400 when no tripName provided', async () => {
+  it('should send status code of 401 when no tripName provided', async () => {
     fake_information.tripName = null;
     const request = {
       params: fake_information,
@@ -530,7 +530,7 @@ describe('getAllUserImagesByTrip', () => {
 
     await getAllUserImagesByTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide tripName');
   });
@@ -578,7 +578,7 @@ describe('removeImageFromTrip', () => {
     fake_information.imageName = 'fake_imageName';
   });
 
-  it('should send status code of 400 when no userName provided', async () => {
+  it('should send status code of 401 when no userName provided', async () => {
     fake_information.userName = null;
     const request = {
       params: fake_information,
@@ -586,12 +586,12 @@ describe('removeImageFromTrip', () => {
 
     await removeImageFromTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide userName');
   });
 
-  it('should send status code of 400 when no tripName provided', async () => {
+  it('should send status code of 401 when no tripName provided', async () => {
     fake_information.tripName = null;
     const request = {
       params: fake_information,
@@ -599,12 +599,12 @@ describe('removeImageFromTrip', () => {
 
     await removeImageFromTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide tripName');
   });
 
-  it('should send status code of 400 when no imageName provided', async () => {
+  it('should send status code of 401 when no imageName provided', async () => {
     fake_information.imageName = null;
     const request = {
       params: fake_information,
@@ -612,7 +612,7 @@ describe('removeImageFromTrip', () => {
 
     await removeImageFromTrip(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith('Please provide imageName');
   });

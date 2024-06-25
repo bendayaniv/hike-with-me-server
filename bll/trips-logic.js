@@ -13,7 +13,7 @@ async function getTripsByUser(req, res) {
   const { userId } = req.params;
 
   if (!userId) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
@@ -61,25 +61,25 @@ async function createTrip(req, res) {
   } = req.body;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide id');
     return;
   }
 
   if (!name) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide name');
     return;
   }
 
   if (!startDate) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide startDate');
     return;
   }
 
   if (!endDate) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide endDate');
     return;
   }
@@ -89,7 +89,7 @@ async function createTrip(req, res) {
   }
 
   if (!description) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide description');
     return;
   }
@@ -99,7 +99,7 @@ async function createTrip(req, res) {
   }
 
   if (!userId) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
@@ -138,25 +138,25 @@ async function updateTrip(req, res) {
   } = req.body;
 
   if (!id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide id');
     return;
   }
 
   if (!name) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide name');
     return;
   }
 
   if (!startDate) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide startDate');
     return;
   }
 
   if (!endDate) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide endDate');
     return;
   }
@@ -166,7 +166,7 @@ async function updateTrip(req, res) {
   }
 
   if (!description) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide description');
     return;
   }
@@ -176,7 +176,7 @@ async function updateTrip(req, res) {
   }
 
   if (!userId) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
@@ -206,13 +206,13 @@ async function deleteTrip(req, res) {
   const { userId, tripId } = req.params;
 
   if (!userId) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userId');
     return;
   }
 
   if (!tripId) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide tripId');
     return;
   }
@@ -232,7 +232,7 @@ async function uploadImages(req, res) {
     const files = req.files;
 
     if (!files || files.length === 0) {
-      res.status(400);
+      res.status(401);
       res.send('Please provide images');
       return;
     }
@@ -240,13 +240,13 @@ async function uploadImages(req, res) {
     const { userName, tripName } = req.body;
 
     if (!userName) {
-      res.status(400);
+      res.status(401);
       res.send('Please provide userName');
       return;
     }
 
     if (!tripName) {
-      res.status(400);
+      res.status(401);
       res.send('Please provide tripName');
       return;
     }
@@ -264,13 +264,13 @@ async function getAllUserImagesByTrip(req, res) {
   const { userName, tripName } = req.params;
 
   if (!userName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userName');
     return;
   }
 
   if (!tripName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide tripName');
     return;
   }
@@ -295,22 +295,20 @@ async function getAllUserImagesByTrip(req, res) {
 async function removeImageFromTrip(req, res) {
   const { userName, tripName, imageName } = req.params;
 
-  console.log(userName, tripName, imageName);
-
   if (!userName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide userName');
     return;
   }
 
   if (!tripName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide tripName');
     return;
   }
 
   if (!imageName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide imageName');
     return;
   }
