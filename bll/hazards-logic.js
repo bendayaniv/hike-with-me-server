@@ -28,7 +28,7 @@ async function getAllHazardsByRoute(req, res) {
   const { routeName } = req.params;
 
   if (!routeName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide route name');
     return;
   }
@@ -77,43 +77,43 @@ async function addHazard(req, res) {
   } = req.body;
 
   if (!_location.latitude || !_location.longitude) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide latitude and longitude');
     return;
   }
 
   if (!_hazardType) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide hazard type');
     return;
   }
 
   if (!_id) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide id');
     return;
   }
 
   if (!_description) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide description');
     return;
   }
 
   if (!_severity) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide severity');
     return;
   }
 
   if (!_reporterName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide reporter name');
     return;
   }
 
   if (!_routeName) {
-    res.status(400);
+    res.status(401);
     res.send('Please provide route name');
     return;
   }
