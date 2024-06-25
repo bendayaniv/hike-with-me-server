@@ -11,6 +11,10 @@ const {
 } = require('../dal/user.js');
 const User = require('../models/user.js');
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+const phoneRegex = /^\d{10}$/;
+
 async function getAllActiveUsers(req, res) {
   const { userId } = req.params;
 
@@ -144,6 +148,101 @@ async function addUser(req, res) {
     return;
   }
 
+  if (!emailRegex.test(email)) {
+    res.status(400);
+    res.send('Please provide correct email');
+    return;
+  }
+
+  if (!password) {
+    res.status(400);
+    res.send('Please provide password');
+    return;
+  }
+
+  if (!(password.length >= 6)) {
+    res.status(400);
+    res.send('Please provide correct password');
+    return;
+  }
+
+  const allUsers = await getAllUsersDB();
+
+  const user = Object.values(allUsers).find(
+    (item) => item.email === email || item.password === password,
+  );
+
+  if (user) {
+    res.status(400);
+    res.send('User already exist with this email or password');
+    return;
+  }
+
+  if (!phoneNumber) {
+    res.status(400);
+    res.send('Please provide phoneNumber');
+    return;
+  }
+
+  if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
+    res.status(400);
+    res.send('Please provide correct phoneNumber');
+    return;
+  }
+
+  if (!hometown) {
+    res.status(400);
+    res.send('Please provide hometown');
+    return;
+  }
+
+  if (!location) {
+    location = [];
+  }
+
+  const newUser = new User(
+    id,
+    name,
+    email,
+    password,
+    phoneNumber,
+    hometown,
+    active,
+    location,
+  );
+
+  try {
+    await addUserDB(newUser);
+    res.status(200);
+    res.send(newUser);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
+}
+
+async function updateUser(req, res) {
+  const { id, name, email, password, phoneNumber, hometown, active, location } =
+    req.body;
+
+  if (!id) {
+    res.status(400);
+    res.send('Please provide id');
+    return;
+  }
+
+  if (!name) {
+    res.status(400);
+    res.send('Please provide name');
+    return;
+  }
+
+  if (!email) {
+    res.status(400);
+    res.send('Please provide email');
+    return;
+  }
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!emailRegex.test(email)) {
@@ -170,7 +269,6 @@ async function addUser(req, res) {
     return;
   }
 
-  const phoneRegex = /^\d{10}$/;
   if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
     res.status(400);
     res.send('Please provide correct phoneNumber');
@@ -199,12 +297,35 @@ async function addUser(req, res) {
   );
 
   try {
-    await addUserDB(user);
-    res.status(200);
-    res.send(user);
+    await updateUserDB(user);
+    res.status(200).send(user);
   } catch (err) {
-    res.status(500);
-    res.json(err);
+    res.status(500).json(err);
+  }
+}
+
+async function deleteUser(req, res) {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(400);
+    res.send('Please provide userId');
+    return;
+  }
+
+  try {
+    const user = await getUserByIdDB(id);
+
+    if (!user) {
+      res.status(404);
+      res.send('User not found');
+      return;
+    }
+
+    await deleteUserDB(id);
+    res.status(200).send('User deleted');
+  } catch (err) {
+    res.status(500).json(err);
   }
 }
 
@@ -212,4 +333,6 @@ module.exports = {
   getAllActiveUsers,
   getUserById,
   addUser,
+  updateUser,
+  deleteUser,
 };

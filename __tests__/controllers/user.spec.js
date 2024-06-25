@@ -1,7 +1,10 @@
+const { get } = require('mongoose');
 const {
   getAllActiveUsers,
   getUserById,
   addUser,
+  updateUser,
+  deleteUser,
 } = require('../../bll/users-logic.js');
 
 const {
@@ -11,9 +14,6 @@ const {
   updateUserDB,
   deleteUserDB,
   haversineDistance,
-  checkingEmail,
-  checkingPassword,
-  checkingPhoneNumber,
 } = require('../../dal/user.js');
 
 const User = require('../../models/user.js');
@@ -240,7 +240,7 @@ describe('addUser', () => {
 
   it('should send code 400 if email is not valid', async () => {
     fakeUser.email = 'email';
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
+
     const request = { body: fakeUser };
 
     await addUser(request, response);
@@ -252,7 +252,7 @@ describe('addUser', () => {
 
   it('should send code 400 if no password provided', async () => {
     fakeUser.password = null;
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
+
     const request = { body: fakeUser };
 
     await addUser(request, response);
@@ -264,8 +264,6 @@ describe('addUser', () => {
 
   it('should send code 400 if password is not valid', async () => {
     fakeUser.password = 'pa';
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
-    checkingPassword.mockResolvedValueOnce(fakeUser.password);
 
     const request = { body: fakeUser };
 
@@ -278,10 +276,23 @@ describe('addUser', () => {
     );
   });
 
+  it('should send code 400 if there is exisitng user with the same email or password', async () => {
+    getAllUsersDB.mockResolvedValueOnce([fakeUser]);
+
+    const request = { body: fakeUser };
+
+    await addUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(
+      'User already exist with this email or password',
+    );
+  });
+
   it('should send code 400 if no phoneNumber provided', async () => {
     fakeUser.phoneNumber = null;
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
-    checkingPassword.mockResolvedValueOnce(fakeUser.password);
+    getAllUsersDB.mockResolvedValueOnce([]);
 
     const request = { body: fakeUser };
 
@@ -294,9 +305,7 @@ describe('addUser', () => {
 
   it('should send code 400 if phoneNumber is not valid', async () => {
     fakeUser.phoneNumber = '123';
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
-    checkingPassword.mockResolvedValueOnce(fakeUser.password);
-    checkingPhoneNumber.mockResolvedValueOnce(fakeUser.phoneNumber);
+    getAllUsersDB.mockResolvedValueOnce([]);
 
     const request = { body: fakeUser };
 
@@ -311,9 +320,7 @@ describe('addUser', () => {
 
   it('should send code 400 if no hometown provided', async () => {
     fakeUser.hometown = null;
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
-    checkingPassword.mockResolvedValueOnce(fakeUser.password);
-    checkingPhoneNumber.mockResolvedValueOnce(fakeUser.phoneNumber);
+    getAllUsersDB.mockResolvedValueOnce([]);
 
     const request = { body: fakeUser };
 
@@ -325,9 +332,7 @@ describe('addUser', () => {
   });
 
   it('should send status code of 200 when user added', async () => {
-    checkingEmail.mockResolvedValueOnce(fakeUser.email);
-    checkingPassword.mockResolvedValueOnce(fakeUser.password);
-    checkingPhoneNumber.mockResolvedValueOnce(fakeUser.phoneNumber);
+    getAllUsersDB.mockResolvedValueOnce([]);
     addUserDB.mockResolvedValueOnce(fakeUser);
 
     const request = { body: fakeUser };
@@ -339,3 +344,193 @@ describe('addUser', () => {
     expect(response.send).toHaveBeenCalledWith(fakeUser);
   });
 });
+
+describe('updateUser', () => {
+  const fakeUser = new User(
+    '1',
+    'John Doe',
+    'email@email.com',
+    'password',
+    '1234567890',
+    'Hometown',
+    true,
+    { latitude: 37.4219983, longitude: -122.084 },
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fakeUser.id = '1';
+    fakeUser.name = 'John Doe';
+    fakeUser.email = 'email@email.com';
+    fakeUser.password = 'password';
+    fakeUser.phoneNumber = '1234567890';
+    fakeUser.hometown = 'Hometown';
+    fakeUser.active = true;
+    fakeUser.location = { latitude: 37.4219983, longitude: -122.084 };
+  });
+
+  it('should send code 400 if no id provided', async () => {
+    fakeUser.id = null;
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide id');
+  });
+
+  it('should send code 400 if no name provided', async () => {
+    fakeUser.name = null;
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide name');
+  });
+
+  it('should send code 400 if no email provided', async () => {
+    fakeUser.email = null;
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide email');
+  });
+
+  it('should send code 400 if email is not valid', async () => {
+    fakeUser.email = 'email';
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide correct email');
+  });
+
+  it('should send code 400 if no password provided', async () => {
+    fakeUser.password = null;
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide password');
+  });
+
+  it('should send code 400 if password is not valid', async () => {
+    fakeUser.password = 'pa';
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(
+      'Please provide correct password',
+    );
+  });
+
+  it('should send code 400 if no phoneNumber provided', async () => {
+    fakeUser.phoneNumber = null;
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide phoneNumber');
+  });
+
+  it('should send code 400 if phoneNumber is not valid', async () => {
+    fakeUser.phoneNumber = '123';
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(
+      'Please provide correct phoneNumber',
+    );
+  });
+
+  it('should send code 400 if no hometown provided', async () => {
+    fakeUser.hometown = null;
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide hometown');
+  });
+
+  it('should send status code of 200 when user updated', async () => {
+    updateUserDB.mockResolvedValueOnce(fakeUser);
+
+    const request = { body: fakeUser };
+
+    await updateUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith(fakeUser);
+  });
+});
+
+describe('deleteUser', () => {
+  const fakeUserId = '1';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should send code 400 if no userId provided', async () => {
+    const request = { params: {} };
+
+    await deleteUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
+  });
+
+  it('should send code 404 if no user found', async () => {
+    getUserByIdDB.mockResolvedValueOnce(null);
+
+    const request = { params: { id: fakeUserId } };
+
+    await deleteUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('User not found');
+  });
+
+  it('should send status code of 200 when user deleted', async () => {
+    getUserByIdDB.mockResolvedValueOnce({ id: fakeUserId });
+    deleteUserDB.mockResolvedValueOnce();
+
+    const request = { params: { id: fakeUserId } };
+
+    await deleteUser(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('User deleted');
+  });
+});
+
