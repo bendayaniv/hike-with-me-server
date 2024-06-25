@@ -1,5 +1,9 @@
 const express = require('express');
-const { getAllActiveUsers, getUserById } = require('../bll/users-logic.js');
+const {
+  getAllActiveUsers,
+  getUserById,
+  addUser,
+} = require('../bll/users-logic.js');
 const User = require('../models/user.js');
 
 const router = express.Router();
@@ -8,33 +12,7 @@ router.get('/getAllActiveUsers/:userId', getAllActiveUsers);
 
 router.get('/:id', getUserById);
 
-router.post('/addUser', async (req, res) => {
-  const { id, name, email, password, phoneNumber, hometown, active, location } =
-    req.body;
-
-  if (!name || !email || !password || !phoneNumber) {
-    res.status(400).send('All fields are required');
-    return;
-  }
-
-  const user = new User(
-    id,
-    name,
-    email,
-    password,
-    phoneNumber,
-    hometown,
-    active,
-    location,
-  );
-
-  try {
-    await usersLogic.addUser(user);
-    res.status(200).send(user);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+router.post('/addUser', addUser);
 
 router.put('/', async (req, res) => {
   const { id, name, email, password, phoneNumber, hometown, active, location } =

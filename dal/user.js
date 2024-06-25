@@ -58,7 +58,7 @@ function checkingPassword(password) {
 
 function checkingPhoneNumber(phoneNumber) {
   const phoneRegex = /^\d{10}$/;
-  return phoneRegex.test(phoneNumber);
+  return phoneRegex.test(phoneNumber) && phoneNumber.length === 10;
 }
 
 module.exports = {

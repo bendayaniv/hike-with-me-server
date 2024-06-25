@@ -122,7 +122,94 @@ async function getUserById(req, res) {
   }
 }
 
+async function addUser(req, res) {
+  const { id, name, email, password, phoneNumber, hometown, active, location } =
+    req.body;
+
+  if (!id) {
+    res.status(400);
+    res.send('Please provide id');
+    return;
+  }
+
+  if (!name) {
+    res.status(400);
+    res.send('Please provide name');
+    return;
+  }
+
+  if (!email) {
+    res.status(400);
+    res.send('Please provide email');
+    return;
+  }
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!emailRegex.test(email)) {
+    res.status(400);
+    res.send('Please provide correct email');
+    return;
+  }
+
+  if (!password) {
+    res.status(400);
+    res.send('Please provide password');
+    return;
+  }
+
+  if (!(password.length >= 6)) {
+    res.status(400);
+    res.send('Please provide correct password');
+    return;
+  }
+
+  if (!phoneNumber) {
+    res.status(400);
+    res.send('Please provide phoneNumber');
+    return;
+  }
+
+  const phoneRegex = /^\d{10}$/;
+  if (!phoneRegex.test(phoneNumber) || phoneNumber.length !== 10) {
+    res.status(400);
+    res.send('Please provide correct phoneNumber');
+    return;
+  }
+
+  if (!hometown) {
+    res.status(400);
+    res.send('Please provide hometown');
+    return;
+  }
+
+  if (!location) {
+    location = [];
+  }
+
+  const user = new User(
+    id,
+    name,
+    email,
+    password,
+    phoneNumber,
+    hometown,
+    active,
+    location,
+  );
+
+  try {
+    await addUserDB(user);
+    res.status(200);
+    res.send(user);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
+}
+
 module.exports = {
   getAllActiveUsers,
   getUserById,
+  addUser,
 };
