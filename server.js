@@ -13,11 +13,11 @@ const tripControllers = require('./controllers/trip-controllers.js');
 app.use(express.json());
 app.use(cors());
 
-app.use('/users', userControllers);
-app.use('/recommendations', recommendationControllers);
-app.use('/hazards', hazardControllers);
-app.use('/routes', routeControllers);
-app.use('/trips', tripControllers);
+app.use('/hike-with-me/users', userControllers);
+app.use('/hike-with-me/recommendations', recommendationControllers);
+app.use('/hike-with-me/hazards', hazardControllers);
+app.use('/hike-with-me/routes', routeControllers);
+app.use('/hike-with-me/trips', tripControllers);
 
 app.listen(PORT, () => {
   console.log(`Express server running at http://localhost:${PORT}/`);
