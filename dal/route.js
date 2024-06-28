@@ -48,7 +48,11 @@ async function getRouteCoordinatesDB(placeName) {
 
     if (data.status === 'OK') {
       const location = data.candidates[0].geometry.location;
-      return location;
+      const newLocation = {
+        latitude: location.lat,
+        longitude: location.lng,
+      };
+      return newLocation;
     } else {
       console.log('Failed to retrieve coordinates.');
       return null;

@@ -51,6 +51,9 @@ async function getAllRoutes(req, res) {
       dataArray.push(route);
     }
 
+    // sort by location from north to south
+    dataArray.sort((a, b) => b._location.latitude - a._location.latitude);
+
     res.status(200);
     res.send(dataArray);
   } catch (err) {
@@ -69,13 +72,15 @@ async function getAllRotuesNames(req, res) {
       return;
     }
 
-    const names = routes.map((route) => route.name);
+    const names = routes.map((route) => route._name);
 
     if (!names || names.length === 0) {
       res.status(404);
       res.send('No names found');
       return;
     }
+
+    names.sort((a, b) => a.localeCompare(b));
 
     res.status(200);
     res.send(names);

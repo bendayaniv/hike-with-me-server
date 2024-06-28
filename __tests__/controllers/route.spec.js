@@ -77,7 +77,7 @@ describe('getAllRoutes', () => {
 });
 
 describe('getAllRotuesNames', () => {
-  const fakeRoutesListNames = fakeRoutesList.map((route) => route.name);
+  const fakeRoutesListNames = fakeRoutesList.map((route) => route._name);
 
   beforeEach(() => {
     jest.clearAllMocks();

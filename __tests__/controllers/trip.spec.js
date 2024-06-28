@@ -110,8 +110,6 @@ describe('getTripsByUser', () => {
 
     await getTripsByUser(request, response);
 
-    console.log(response.send.mock.calls.toString());
-
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
     expect(response.send).toHaveBeenCalledWith(
