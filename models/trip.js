@@ -8,6 +8,7 @@ class Trip {
     description,
     routesNames,
     userId,
+    imagesUrls,
   ) {
     this.id = id;
     this.name = name;
@@ -17,6 +18,7 @@ class Trip {
     this.description = description;
     this.routesNames = routesNames;
     this.userId = userId;
+    this.imagesUrls = imagesUrls;
   }
 
   // getters and setters
@@ -85,6 +87,14 @@ class Trip {
     this.userId = userId;
   }
 
+  getImagesUrls() {
+    return this.imagesUrls;
+  }
+
+  setImagesUrls(imagesUrls) {
+    this.imagesUrls = imagesUrls;
+  }
+
   // toString method
 
   toString() {
@@ -95,7 +105,8 @@ class Trip {
     locations: ${this.locations}, 
     description: ${this.description},
     routesNames: ${this.routesNames},
-    userId: ${this.userId} }`;
+    userId: ${this.userId}, 
+    images: ${this.imagesUrls} }`;
   }
 }
 

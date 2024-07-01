@@ -18,9 +18,13 @@ const {
   removeImageFromTripDB,
 } = require('../../dal/trip.js');
 
+const { getUserByIdDB } = require('../../dal/user.js');
+
 const Trip = require('../../models/trip.js');
+const User = require('../../models/user.js');
 
 jest.mock('../../dal/trip.js');
+jest.mock('../../dal/user.js');
 
 const response = {
   status: jest.fn((x) => x),
@@ -38,30 +42,22 @@ describe('getTripsByUser', () => {
       'fake_description',
       'fake_routesNames',
       'fake_userId1',
-    ),
-    new Trip(
-      '2',
-      'fake_name',
-      'fake_startDate',
-      'fake_endDate',
-      'fake_locations',
-      'fake_description',
-      'fake_routesNames',
-      'fake_userId1',
-    ),
-    new Trip(
-      '3',
-      'fake_name',
-      'fake_startDate',
-      'fake_endDate',
-      'fake_locations',
-      'fake_description',
-      'fake_routesNames',
-      'fake_userId2',
+      null,
     ),
   ];
 
   const fakeUserId = 'fake_userId1';
+
+  const fakeUser = new User(
+    fakeUserId,
+    'John Doe',
+    'email@email.com',
+    'password',
+    '1234567890',
+    'Hometown',
+    true,
+    { latitude: 37.4219983, longitude: -122.084 },
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -102,6 +98,8 @@ describe('getTripsByUser', () => {
       fakeTripsList.filter((trip) => trip.userId === fakeUserId),
     );
 
+    getUserByIdDB.mockResolvedValueOnce(fakeUser);
+
     const request = {
       params: {
         userId: fakeUserId,
@@ -119,32 +117,34 @@ describe('getTripsByUser', () => {
 });
 
 describe('createTrip', () => {
-  const fake_trip = new Trip(
-    '1',
-    'fake_name',
-    'fake_startDate',
-    'fake_endDate',
-    'fake_locations',
-    'fake_description',
-    'fake_routesNames',
-    'fake_userId1',
-  );
+  const fake_trip = {
+    trip: new Trip(
+      '1',
+      'fake_name',
+      'fake_startDate',
+      'fake_endDate',
+      'fake_locations',
+      'fake_description',
+      'fake_routesNames',
+      'fake_userId1',
+    ),
+  };
 
   // should restart the mock and restart the fake_trip after each test
   beforeEach(() => {
     jest.clearAllMocks();
-    fake_trip.id = '1';
-    fake_trip.name = 'fake_name';
-    fake_trip.startDate = 'fake_startDate';
-    fake_trip.endDate = 'fake_endDate';
-    fake_trip.locations = 'fake_locations';
-    fake_trip.description = 'fake_description';
-    fake_trip.routesNames = 'fake_routesNames';
-    fake_trip.userId = 'fake_userId1';
+    fake_trip.trip.id = '1';
+    fake_trip.trip.name = 'fake_name';
+    fake_trip.trip.startDate = 'fake_startDate';
+    fake_trip.trip.endDate = 'fake_endDate';
+    fake_trip.trip.locations = 'fake_locations';
+    fake_trip.trip.description = 'fake_description';
+    fake_trip.trip.routesNames = 'fake_routesNames';
+    fake_trip.trip.userId = 'fake_userId1';
   });
 
   it('should send status code of 401 when no id provided', async () => {
-    fake_trip.id = null;
+    fake_trip.trip.id = null;
     const request = {
       body: fake_trip,
     };
@@ -157,7 +157,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no name provided', async () => {
-    fake_trip.name = null;
+    fake_trip.trip.name = null;
     const request = {
       body: fake_trip,
     };
@@ -170,7 +170,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no startDate provided', async () => {
-    fake_trip.startDate = null;
+    fake_trip.trip.startDate = null;
     const request = {
       body: fake_trip,
     };
@@ -183,7 +183,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no endDate provided', async () => {
-    fake_trip.endDate = null;
+    fake_trip.trip.endDate = null;
     const request = {
       body: fake_trip,
     };
@@ -196,7 +196,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no description provided', async () => {
-    fake_trip.description = null;
+    fake_trip.trip.description = null;
     const request = {
       body: fake_trip,
     };
@@ -209,7 +209,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no userId provided', async () => {
-    fake_trip.userId = null;
+    fake_trip.trip.userId = null;
     const request = {
       body: fake_trip,
     };
@@ -232,7 +232,7 @@ describe('createTrip', () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith(fake_trip);
+    expect(response.send).toHaveBeenCalledWith(fake_trip.trip);
   });
 });
 

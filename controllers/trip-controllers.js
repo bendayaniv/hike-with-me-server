@@ -6,7 +6,6 @@ const {
   updateTrip,
   deleteTrip,
   uploadImages,
-  getAllUserImagesByTrip,
   removeImageFromTrip,
 } = require('../bll/trips-logic.js');
 
@@ -23,8 +22,6 @@ router.put('/', updateTrip);
 router.delete('/:userId/:tripId', deleteTrip);
 
 router.post('/uploadImages', upload.array('image'), uploadImages);
-
-router.get('/:userName/:tripName', getAllUserImagesByTrip);
 
 router.delete('/:userName/:tripName/:imageName', removeImageFromTrip);
 
