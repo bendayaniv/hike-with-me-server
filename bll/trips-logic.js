@@ -7,6 +7,9 @@ const {
   getAllUserImagesByTripDB,
   removeImageFromTripDB,
 } = require('../dal/trip.js');
+
+const { getUserByIdDB } = require('../dal/user.js');
+
 const Trip = require('../models/trip.js');
 
 async function getTripsByUser(req, res) {
@@ -27,19 +30,47 @@ async function getTripsByUser(req, res) {
       return;
     }
 
-    const dataArray = Object.values(trips).map(
-      (item) =>
-        new Trip(
-          item.id,
-          item.name,
-          item.startDate,
-          item.endDate,
-          item.locations,
-          item.description,
-          item.routesNames,
-          item.userId,
-        ),
-    );
+    for (const trip in trips) {
+      const user = await getUserByIdDB(trips[trip].userId);
+
+      const imagesFiles = await getAllUserImagesByTripDB(
+        user.name,
+        trips[trip].name,
+      );
+
+      if (!imagesFiles || imagesFiles.length === 0) {
+        console.log('No images found');
+        trips[trip].imagesUrls = [];
+      } else {
+        console.log('Images found');
+        const urls = await Promise.all(
+          imagesFiles.map(async (file) => {
+            const [url] = await file.getSignedUrl({
+              action: 'read',
+              expires: '03-17-2025',
+            });
+            return url;
+          }),
+        );
+
+        trips[trip].imagesUrls = urls;
+      }
+    }
+
+    const dataArray = Object.values(trips).map((item) => {
+      return new Trip(
+        item.id,
+        item.name,
+        item.startDate,
+        item.endDate,
+        item.locations,
+        item.description,
+        item.routesNames,
+        item.userId,
+        item.imagesUrls,
+      );
+    });
+
     res.status(200);
     res.send(dataArray);
   } catch (err) {
@@ -49,74 +80,66 @@ async function getTripsByUser(req, res) {
 }
 
 async function createTrip(req, res) {
-  const {
-    id,
-    name,
-    startDate,
-    endDate,
-    locations,
-    description,
-    routesNames,
-    userId,
-  } = req.body;
+  const { trip } = req.body;
 
-  if (!id) {
+  if (!trip.id) {
     res.status(401);
     res.send('Please provide id');
     return;
   }
 
-  if (!name) {
+  if (!trip.name) {
     res.status(401);
     res.send('Please provide name');
     return;
   }
 
-  if (!startDate) {
+  if (!trip.startDate) {
     res.status(401);
     res.send('Please provide startDate');
     return;
   }
 
-  if (!endDate) {
+  if (!trip.endDate) {
     res.status(401);
     res.send('Please provide endDate');
     return;
   }
 
-  if (!locations) {
+  if (!trip.locations) {
     locations = [];
   }
 
-  if (!description) {
+  if (!trip.description) {
     res.status(401);
     res.send('Please provide description');
     return;
   }
 
-  if (!routesNames) {
+  if (!trip.routesNames) {
     routesNames = [];
   }
 
-  if (!userId) {
+  if (!trip.userId) {
     res.status(401);
     res.send('Please provide userId');
     return;
   }
 
-  const trip = new Trip(
-    id,
-    name,
-    startDate,
-    endDate,
-    locations,
-    description,
-    routesNames,
-    userId,
+  const newTrip = new Trip(
+    trip.id,
+    trip.name,
+    trip.startDate,
+    trip.endDate,
+    trip.locations,
+    trip.description,
+    trip.routesNames,
+    trip.userId,
+    [],
   );
 
   try {
-    await createTripDB(trip);
+    await createTripDB(newTrip);
     res.status(200);
     res.send(trip);
   } catch (err) {
