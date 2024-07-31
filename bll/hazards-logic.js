@@ -4,6 +4,8 @@ const {
   addHazardDB,
 } = require('../dal/hazard.js');
 
+const { getUserByIdDB, haversineDistance } = require('../dal/user.js');
+
 const Hazard = require('../models/hazard.js');
 
 async function getAllHazards(req, res) {
@@ -55,6 +57,74 @@ async function getAllHazardsByRoute(req, res) {
           item._routeName,
         ),
     );
+
+    res.status(200);
+    res.send(dataArray);
+  } catch (err) {
+    res.status(500);
+    res.json(err);
+  }
+}
+
+async function getNearHazards(req, res) {
+  const { userId } = req.params;
+
+  if (!userId) {
+    res.status(401);
+    res.send('Please provide user ID');
+    return;
+  }
+
+  try {
+    const hazards = await getAllHazardsDB();
+
+    if (!hazards || Object.keys(hazards).length === 0) {
+      res.status(404);
+      res.send('No hazards found');
+      return;
+    }
+
+    const hazardsArray = Object.values(hazards).flatMap((item) =>
+      Object.values(item).map(
+        (innerItem) =>
+          new Hazard(
+            innerItem._location,
+            innerItem._type,
+            innerItem._id,
+            innerItem._hazardType,
+            innerItem._description,
+            innerItem._severity,
+            innerItem._reporterName,
+            innerItem._routeName,
+          ),
+      ),
+    );
+
+    const user = await getUserByIdDB(userId);
+
+    if (!user) {
+      res.status(404);
+      res.send('User not found');
+      return;
+    }
+
+    const userLocation = user.location;
+
+    const userCoords = {
+      lat: parseFloat(userLocation.latitude),
+      lon: parseFloat(userLocation.longitude),
+    };
+
+    const dataArray = hazardsArray.filter((item) => {
+      const hazardCoords = {
+        lat: parseFloat(item._location.latitude),
+        lon: parseFloat(item._location.longitude),
+      };
+
+      const distance = haversineDistance(userCoords, hazardCoords);
+
+      return distance < 0.5;
+    });
 
     res.status(200);
     res.send(dataArray);
@@ -142,5 +212,6 @@ async function addHazard(req, res) {
 module.exports = {
   getAllHazards,
   getAllHazardsByRoute,
+  getNearHazards,
   addHazard,
 };
