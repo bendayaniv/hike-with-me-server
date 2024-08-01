@@ -1,3 +1,5 @@
+const Location = require('../models/location.js');
+
 const {
   getAllUsersDB,
   getUserByIdDB,
@@ -196,8 +198,13 @@ async function addUser(req, res) {
     return;
   }
 
+  let newLocation;
+
   if (!location) {
-    location = [];
+    // Default location in case of no location provided
+    newLocation = new Location(0, 0, null);
+  } else {
+    newLocation = location;
   }
 
   const newUser = new User(
@@ -208,7 +215,7 @@ async function addUser(req, res) {
     phoneNumber,
     hometown,
     active,
-    location,
+    newLocation,
   );
 
   try {
