@@ -21,32 +21,6 @@ async function deleteTripDB(userId, tripId) {
   await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
 }
 
-// async function uploadImagesDB(files, userName, tripName) {
-//   const bucket = firebase.storage.bucket();
-
-//   for (let i = 0; i < files.length; i++) {
-//     const file = files[i];
-//     const blob = bucket.file(
-//       userName + '/' + tripName + '/' + file.originalname,
-//     );
-//     const blobStream = blob.createWriteStream({
-//       metadata: {
-//         contentType: file.mimetype,
-//       },
-//     });
-
-//     blobStream.on('error', (err) => {
-//       console.error(err);
-//     });
-
-//     blobStream.on('finish', () => {
-//       console.log('Image uploaded successfully');
-//     });
-
-//     blobStream.end(file.buffer);
-//   }
-// }
-
 async function uploadImagesDB(files, userName, tripName) {
   const bucket = firebase.storage.bucket();
   const uploadPromises = files.map((file) => {

@@ -253,7 +253,6 @@ async function deleteTrip(req, res) {
 async function uploadImages(req, res) {
   try {
     const files = req.files;
-    console.log('Received files:', files);
 
     if (!files || files.length === 0) {
       res.status(401);
@@ -262,9 +261,6 @@ async function uploadImages(req, res) {
     }
 
     const { userName, tripName } = req.body;
-    console.log('Received userName:', userName, 'tripName:', tripName);
-
-    console.log('Received userName:', userName);
 
     if (!userName) {
       res.status(401);
@@ -272,19 +268,13 @@ async function uploadImages(req, res) {
       return;
     }
 
-    console.log('Received tripName:', tripName);
-
     if (!tripName) {
       res.status(401);
       res.send('Please provide tripName');
       return;
     }
 
-    console.log('Uploading images to DB');
-
     await uploadImagesDB(files, userName, tripName);
-
-    console.log('Images uploaded');
 
     res.status(200);
     res.send('Images uploaded');
@@ -294,52 +284,6 @@ async function uploadImages(req, res) {
     res.json({ error: err.message });
   }
 }
-
-// async function uploadImages(req, res) {
-//   try {
-//     const files = req.files;
-
-//     console.log('111111');
-
-//     if (!files || files.length === 0) {
-//       res.status(401);
-//       res.send('Please provide images');
-//       return;
-//     }
-
-//     console.log('222222');
-
-//     const { userName, tripName } = req.body;
-
-//     console.log('333333');
-
-//     if (!userName) {
-//       res.status(401);
-//       res.send('Please provide userName');
-//       return;
-//     }
-
-//     console.log('444444');
-
-//     if (!tripName) {
-//       res.status(401);
-//       res.send('Please provide tripName');
-//       return;
-//     }
-
-//     console.log('555555');
-
-//     await uploadImagesDB(files, userName, tripName);
-
-//     console.log('666666');
-
-//     res.status(200);
-//     res.send('Images uploaded');
-//   } catch (err) {
-//     res.status(500);
-//     res.json(err);
-//   }
-// }
 
 async function getAllUserImagesByTrip(req, res) {
   const { userName, tripName } = req.params;
