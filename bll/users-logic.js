@@ -202,7 +202,7 @@ async function addUser(req, res) {
 
   if (!location) {
     // Default location in case of no location provided
-    newLocation = new Location(0, 0, null);
+    newLocation = new Location(0.0, 0.0, null);
   } else {
     newLocation = location;
   }
@@ -286,8 +286,13 @@ async function updateUser(req, res) {
     return;
   }
 
+  let newLocation;
+
   if (!location) {
-    location = [];
+    // Default location in case of no location provided
+    newLocation = new Location(0.0, 0.0, null);
+  } else {
+    newLocation = location;
   }
 
   const user = new User(
@@ -298,7 +303,7 @@ async function updateUser(req, res) {
     phoneNumber,
     hometown,
     active,
-    location,
+    newLocation,
   );
 
   try {
