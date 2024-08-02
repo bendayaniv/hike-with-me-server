@@ -29,7 +29,7 @@ describe('getAllHazards', () => {
       'fake_hazardType',
       'fake_description',
       'fake_severity',
-      'fake_reporterName',
+      'fake_reporterId',
       'fake_routeName',
     ),
     new Hazard(
@@ -39,7 +39,7 @@ describe('getAllHazards', () => {
       'fake_hazardType',
       'fake_description',
       'fake_severity',
-      'fake_reporterName',
+      'fake_reporterId',
       'fake_routeName',
     ),
   ];
@@ -78,7 +78,7 @@ describe('getAllHazardsByRoute', () => {
       'fake_hazardType',
       'fake_description',
       'fake_severity',
-      'fake_reporterName',
+      'fake_reporterId',
       'fake_routeName',
     ),
     new Hazard(
@@ -88,7 +88,7 @@ describe('getAllHazardsByRoute', () => {
       'fake_hazardType',
       'fake_description',
       'fake_severity',
-      'fake_reporterName',
+      'fake_reporterId',
       'fake_routeName',
     ),
   ];
@@ -152,7 +152,7 @@ describe('addHazard', () => {
     'fake_hazardType',
     'fake_description',
     'fake_severity',
-    'fake_reporterName',
+    'fake_reporterId',
     'fake_routeName',
   );
 
@@ -164,7 +164,7 @@ describe('addHazard', () => {
     fake_hazard._hazardType = 'fake_hazardType';
     fake_hazard._description = 'fake_description';
     fake_hazard._severity = 'fake_severity';
-    fake_hazard._reporterName = 'fake_reporterName';
+    fake_hazard._reporterId = 'fake_reporterId';
     fake_hazard._routeName = 'fake_routeName';
   });
 
@@ -235,8 +235,8 @@ describe('addHazard', () => {
     expect(response.send).toHaveBeenCalledWith('Please provide severity');
   });
 
-  it('should send status code of 401 when no reporterName provided', async () => {
-    fake_hazard._reporterName = null;
+  it('should send status code of 401 when no reporterId provided', async () => {
+    fake_hazard._reporterId = null;
     const request = {
       body: fake_hazard,
     };
