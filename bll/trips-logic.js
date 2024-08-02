@@ -275,11 +275,13 @@ async function uploadImages(req, res) {
     }
 
     await uploadImagesDB(files, userName, tripName);
+
     res.status(200);
     res.send('Images uploaded');
   } catch (err) {
+    console.error('Error in uploadImages:', err);
     res.status(500);
-    res.json(err);
+    res.json({ error: err.message });
   }
 }
 
