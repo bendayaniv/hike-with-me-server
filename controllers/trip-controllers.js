@@ -21,7 +21,7 @@ router.put('/', updateTrip);
 
 router.delete('/:userId/:tripId', deleteTrip);
 
-router.post('/uploadImages', upload.array('image'), uploadImages);
+router.post('/uploadImages', upload.array('images'), uploadImages);
 
 router.delete('/:userName/:tripName/:imageName', removeImageFromTrip);
 

@@ -21,29 +21,60 @@ async function deleteTripDB(userId, tripId) {
   await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
 }
 
+// async function uploadImagesDB(files, userName, tripName) {
+//   const bucket = firebase.storage.bucket();
+
+//   for (let i = 0; i < files.length; i++) {
+//     const file = files[i];
+//     const blob = bucket.file(
+//       userName + '/' + tripName + '/' + file.originalname,
+//     );
+//     const blobStream = blob.createWriteStream({
+//       metadata: {
+//         contentType: file.mimetype,
+//       },
+//     });
+
+//     blobStream.on('error', (err) => {
+//       console.error(err);
+//     });
+
+//     blobStream.on('finish', () => {
+//       console.log('Image uploaded successfully');
+//     });
+
+//     blobStream.end(file.buffer);
+//   }
+// }
+
 async function uploadImagesDB(files, userName, tripName) {
   const bucket = firebase.storage.bucket();
-
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const blob = bucket.file(
-      userName + '/' + tripName + '/' + file.originalname,
-    );
-    const blobStream = blob.createWriteStream({
-      metadata: {
-        contentType: file.mimetype,
-      },
+  const uploadPromises = files.map((file) => {
+    return new Promise((resolve, reject) => {
+      const blob = bucket.file(`${userName}/${tripName}/${file.originalname}`);
+      const blobStream = blob.createWriteStream({
+        metadata: {
+          contentType: file.mimetype,
+        },
+      });
+      blobStream.on('error', (err) => {
+        console.error('Error uploading to Firebase:', err);
+        reject(err);
+      });
+      blobStream.on('finish', () => {
+        console.log(`Image ${file.originalname} uploaded successfully`);
+        resolve();
+      });
+      blobStream.end(file.buffer);
     });
+  });
 
-    blobStream.on('error', (err) => {
-      console.error(err);
-    });
-
-    blobStream.on('finish', () => {
-      console.log('Image uploaded successfully');
-    });
-
-    blobStream.end(file.buffer);
+  try {
+    await Promise.all(uploadPromises);
+    console.log('All images uploaded successfully');
+  } catch (err) {
+    console.error('Error uploading images:', err);
+    throw err;
   }
 }
 
