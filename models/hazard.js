@@ -8,7 +8,7 @@ class Hazard extends Point {
     hazardType,
     description,
     severity,
-    reporterName,
+    reporterId,
     routeName,
   ) {
     super(location, type);
@@ -16,7 +16,7 @@ class Hazard extends Point {
     this._hazardType = hazardType;
     this._description = description;
     this._severity = severity;
-    this._reporterName = reporterName;
+    this._reporterId = reporterId;
     this._routeName = routeName;
   }
 
@@ -54,12 +54,12 @@ class Hazard extends Point {
     this._severity = severity;
   }
 
-  getReporterName() {
-    return this._reporterName;
+  getReporterId() {
+    return this._reporterId;
   }
 
-  setReporterName(reporterName) {
-    this._reporterName = reporterName;
+  setReporterId(reporterId) {
+    this._reporterId = reporterId;
   }
 
   getRouteName() {
@@ -81,7 +81,7 @@ class Hazard extends Point {
     hazardType: ${this._hazardType},
     description: ${this._description}, 
     severity: ${this._severity}, 
-    reporterName: ${this._reporterName}, 
+    reporterId: ${this._reporterId}, 
     routeName: ${this._routeName}`;
   }
 }

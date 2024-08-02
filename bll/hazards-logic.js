@@ -53,7 +53,7 @@ async function getAllHazardsByRoute(req, res) {
           item._hazardType,
           item._description,
           item._severity,
-          item._reporterName,
+          item._reporterId,
           item._routeName,
         ),
     );
@@ -94,7 +94,7 @@ async function getNearHazards(req, res) {
             innerItem._hazardType,
             innerItem._description,
             innerItem._severity,
-            innerItem._reporterName,
+            innerItem._reporterId,
             innerItem._routeName,
           ),
       ),
@@ -142,7 +142,7 @@ async function addHazard(req, res) {
     _hazardType,
     _description,
     _severity,
-    _reporterName,
+    _reporterId,
     _routeName,
   } = req.body;
 
@@ -176,7 +176,7 @@ async function addHazard(req, res) {
     return;
   }
 
-  if (!_reporterName) {
+  if (!_reporterId) {
     res.status(401);
     res.send('Please provide reporter name');
     return;
@@ -195,7 +195,7 @@ async function addHazard(req, res) {
     _hazardType,
     _description,
     _severity,
-    _reporterName,
+    _reporterId,
     _routeName,
   );
 
