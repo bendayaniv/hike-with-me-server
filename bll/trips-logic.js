@@ -86,7 +86,7 @@ async function createTrip(req, res) {
     name,
     startDate,
     endDate,
-    location,
+    locations,
     description,
     routesNames,
     userId,
@@ -118,11 +118,11 @@ async function createTrip(req, res) {
 
   let newLocation;
 
-  if (!location) {
+  if (!locations) {
     // Default location in case of no location provided
     newLocation = new Location(0.0, 0.0, null);
   } else {
-    newLocation = location;
+    newLocation = locations;
   }
 
   if (!description) {
@@ -130,7 +130,6 @@ async function createTrip(req, res) {
     res.send('Please provide description');
     return;
   }
-
   let newRoutesNames;
 
   if (!routesNames) {
