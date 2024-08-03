@@ -145,6 +145,8 @@ async function createTrip(req, res) {
     return;
   }
 
+  console.log('');
+
   const newTrip = new Trip(
     id,
     name,
