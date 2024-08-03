@@ -118,33 +118,32 @@ describe('getTripsByUser', () => {
 
 describe('createTrip', () => {
   const fake_trip = {
-    trip: new Trip(
-      '1',
-      'fake_name',
-      'fake_startDate',
-      'fake_endDate',
-      'fake_locations',
-      'fake_description',
-      'fake_routesNames',
-      'fake_userId1',
-    ),
+    id: '1',
+    name: 'fake_name',
+    startDate: 'fake_startDate',
+    endDate: 'fake_endDate',
+    locations: 'fake_locations',
+    description: 'fake_description',
+    routesNames: 'fake_routesNames',
+    userId: 'fake_userId1',
+    imagesUrls: [],
   };
 
   // should restart the mock and restart the fake_trip after each test
   beforeEach(() => {
     jest.clearAllMocks();
-    fake_trip.trip.id = '1';
-    fake_trip.trip.name = 'fake_name';
-    fake_trip.trip.startDate = 'fake_startDate';
-    fake_trip.trip.endDate = 'fake_endDate';
-    fake_trip.trip.locations = 'fake_locations';
-    fake_trip.trip.description = 'fake_description';
-    fake_trip.trip.routesNames = 'fake_routesNames';
-    fake_trip.trip.userId = 'fake_userId1';
+    fake_trip.id = '1';
+    fake_trip.name = 'fake_name';
+    fake_trip.startDate = 'fake_startDate';
+    fake_trip.endDate = 'fake_endDate';
+    fake_trip.locations = 'fake_locations';
+    fake_trip.description = 'fake_description';
+    fake_trip.routesNames = 'fake_routesNames';
+    fake_trip.userId = 'fake_userId1';
   });
 
   it('should send status code of 401 when no id provided', async () => {
-    fake_trip.trip.id = null;
+    fake_trip.id = null;
     const request = {
       body: fake_trip,
     };
@@ -157,7 +156,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no name provided', async () => {
-    fake_trip.trip.name = null;
+    fake_trip.name = null;
     const request = {
       body: fake_trip,
     };
@@ -170,7 +169,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no startDate provided', async () => {
-    fake_trip.trip.startDate = null;
+    fake_trip.startDate = null;
     const request = {
       body: fake_trip,
     };
@@ -183,7 +182,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no endDate provided', async () => {
-    fake_trip.trip.endDate = null;
+    fake_trip.endDate = null;
     const request = {
       body: fake_trip,
     };
@@ -196,7 +195,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no description provided', async () => {
-    fake_trip.trip.description = null;
+    fake_trip.description = null;
     const request = {
       body: fake_trip,
     };
@@ -209,7 +208,7 @@ describe('createTrip', () => {
   });
 
   it('should send status code of 401 when no userId provided', async () => {
-    fake_trip.trip.userId = null;
+    fake_trip.userId = null;
     const request = {
       body: fake_trip,
     };
@@ -232,7 +231,7 @@ describe('createTrip', () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith(fake_trip.trip);
+    expect(response.send).toHaveBeenCalledWith(fake_trip);
   });
 });
 
