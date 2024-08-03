@@ -15,6 +15,7 @@ jest.mock('../../dal/recommendation.js');
 const response = {
   status: jest.fn((x) => x),
   send: jest.fn((x) => x),
+  json: jest.fn((x) => x),
 };
 
 describe('getRecommendationsByRoute', () => {

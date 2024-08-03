@@ -22,6 +22,7 @@ jest.mock('../../dal/user.js');
 const response = {
   status: jest.fn().mockReturnThis(),
   send: jest.fn(),
+  json: jest.fn((x) => x),
 };
 
 describe('getAllActiveUsers', () => {
