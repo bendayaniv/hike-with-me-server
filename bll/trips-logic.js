@@ -80,27 +80,36 @@ async function getTripsByUser(req, res) {
 }
 
 async function createTrip(req, res) {
-  const { trip } = req.body;
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    locations,
+    description,
+    routesNames,
+    userId,
+  } = req.body;
 
-  if (!trip.id) {
+  if (!id) {
     res.status(401);
     res.send('Please provide id');
     return;
   }
 
-  if (!trip.name) {
+  if (!name) {
     res.status(401);
     res.send('Please provide name');
     return;
   }
 
-  if (!trip.startDate) {
+  if (!startDate) {
     res.status(401);
     res.send('Please provide startDate');
     return;
   }
 
-  if (!trip.endDate) {
+  if (!endDate) {
     res.status(401);
     res.send('Please provide endDate');
     return;
@@ -108,45 +117,45 @@ async function createTrip(req, res) {
 
   let newLocation;
 
-  if (!location) {
+  if (!locations) {
     // Default location in case of no location provided
     newLocation = new Location(0.0, 0.0, null);
   } else {
-    newLocation = location;
+    newLocation = locations;
   }
 
-  if (!trip.description) {
+  if (!description) {
     res.status(401);
     res.send('Please provide description');
     return;
   }
 
-  if (!trip.routesNames) {
+  if (!routesNames) {
     routesNames = [];
   }
 
-  if (!trip.userId) {
+  if (!userId) {
     res.status(401);
     res.send('Please provide userId');
     return;
   }
 
   const newTrip = new Trip(
-    trip.id,
-    trip.name,
-    trip.startDate,
-    trip.endDate,
-    trip.locations,
-    trip.description,
-    trip.routesNames,
-    trip.userId,
+    id,
+    name,
+    startDate,
+    endDate,
+    newLocation,
+    description,
+    routesNames,
+    userId,
     [],
   );
 
   try {
     await createTripDB(newTrip);
     res.status(200);
-    res.send(trip);
+    res.send(newTrip);
   } catch (err) {
     res.status(500);
     res.json(err);
