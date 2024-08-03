@@ -4,7 +4,7 @@ const {
   addHazardDB,
 } = require('../dal/hazard.js');
 
-const { getUserByIdDB, haversineDistance } = require('../dal/user.js');
+const { getUserByIdDB, distanceMeasurement } = require('../dal/user.js');
 
 const Hazard = require('../models/hazard.js');
 
@@ -121,7 +121,7 @@ async function getNearHazards(req, res) {
         lon: parseFloat(item._location.longitude),
       };
 
-      const distance = haversineDistance(userCoords, hazardCoords);
+      const distance = distanceMeasurement(userCoords, hazardCoords);
 
       return distance < 0.5;
     });

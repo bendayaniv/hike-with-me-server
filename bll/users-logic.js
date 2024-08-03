@@ -6,7 +6,7 @@ const {
   addUserDB,
   updateUserDB,
   deleteUserDB,
-  haversineDistance,
+  distanceMeasurement,
 } = require('../dal/user.js');
 
 const User = require('../models/user.js');
@@ -79,7 +79,7 @@ async function getAllActiveUsers(req, res) {
           lon: parseFloat(user.getLocation().longitude),
         };
 
-        const distance = haversineDistance(coords1, coords2);
+        const distance = distanceMeasurement(coords1, coords2);
 
         acc.push({ user: user, distance: distance });
       }

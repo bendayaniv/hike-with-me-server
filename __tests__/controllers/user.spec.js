@@ -12,7 +12,7 @@ const {
   addUserDB,
   updateUserDB,
   deleteUserDB,
-  haversineDistance,
+  distanceMeasurement,
 } = require('../../dal/user.js');
 
 const User = require('../../models/user.js');
@@ -115,8 +115,8 @@ describe('getAllActiveUsers', () => {
   it('should send status code of 200 when users found', async () => {
     getAllUsersDB.mockResolvedValueOnce(fakeUsersList);
     getUserByIdDB.mockResolvedValueOnce(fakeUsersList[0]);
-    const mockHaversineDistance = jest.fn().mockReturnValue(fakeDistance);
-    haversineDistance.mockImplementationOnce(mockHaversineDistance);
+    const mockDistanceMeasurement = jest.fn().mockReturnValue(fakeDistance);
+    distanceMeasurement.mockImplementationOnce(mockDistanceMeasurement);
 
     const request = { params: { userId: fakeUserId } };
 
@@ -532,4 +532,3 @@ describe('deleteUser', () => {
     expect(response.send).toHaveBeenCalledWith('User deleted');
   });
 });
-

@@ -22,7 +22,7 @@ async function deleteUserDB(id) {
   await firebase.database.ref('users/' + id).remove();
 }
 
-function haversineDistance(coords1, coords2) {
+function distanceMeasurement(coords1, coords2) {
   const R = 6371; // Radius of Earth in kilometers
   const lat1 = coords1.lat;
   const lon1 = coords1.lon;
@@ -51,5 +51,5 @@ module.exports = {
   addUserDB,
   updateUserDB,
   deleteUserDB,
-  haversineDistance,
+  distanceMeasurement,
 };
