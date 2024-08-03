@@ -106,8 +106,13 @@ async function createTrip(req, res) {
     return;
   }
 
-  if (!trip.locations) {
-    locations = [];
+  let newLocation;
+
+  if (!location) {
+    // Default location in case of no location provided
+    newLocation = new Location(0.0, 0.0, null);
+  } else {
+    newLocation = location;
   }
 
   if (!trip.description) {
