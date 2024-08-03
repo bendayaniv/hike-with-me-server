@@ -11,6 +11,7 @@ const {
 const { getUserByIdDB } = require('../dal/user.js');
 
 const Trip = require('../models/trip.js');
+const Location = require('../models/location.js');
 
 async function getTripsByUser(req, res) {
   const { userId } = req.params;
@@ -80,27 +81,36 @@ async function getTripsByUser(req, res) {
 }
 
 async function createTrip(req, res) {
-  const { trip } = req.body;
+  const {
+    id,
+    name,
+    startDate,
+    endDate,
+    location,
+    description,
+    routesNames,
+    userId,
+  } = req.body;
 
-  if (!trip.id) {
+  if (!id) {
     res.status(401);
     res.send('Please provide id');
     return;
   }
 
-  if (!trip.name) {
+  if (!name) {
     res.status(401);
     res.send('Please provide name');
     return;
   }
 
-  if (!trip.startDate) {
+  if (!startDate) {
     res.status(401);
     res.send('Please provide startDate');
     return;
   }
 
-  if (!trip.endDate) {
+  if (!endDate) {
     res.status(401);
     res.send('Please provide endDate');
     return;
@@ -115,38 +125,42 @@ async function createTrip(req, res) {
     newLocation = location;
   }
 
-  if (!trip.description) {
+  if (!description) {
     res.status(401);
     res.send('Please provide description');
     return;
   }
 
-  if (!trip.routesNames) {
-    routesNames = [];
+  let newRoutesNames;
+
+  if (!routesNames) {
+    newRoutesNames = [];
+  } else {
+    newRoutesNames = routesNames;
   }
 
-  if (!trip.userId) {
+  if (!userId) {
     res.status(401);
     res.send('Please provide userId');
     return;
   }
 
   const newTrip = new Trip(
-    trip.id,
-    trip.name,
-    trip.startDate,
-    trip.endDate,
-    trip.locations,
-    trip.description,
-    trip.routesNames,
-    trip.userId,
+    id,
+    name,
+    startDate,
+    endDate,
+    newLocation,
+    description,
+    newRoutesNames,
+    userId,
     [],
   );
 
   try {
     await createTripDB(newTrip);
     res.status(200);
-    res.send(trip);
+    res.send(newTrip);
   } catch (err) {
     res.status(500);
     res.json(err);
