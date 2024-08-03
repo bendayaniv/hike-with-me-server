@@ -11,6 +11,7 @@ const {
 const { getUserByIdDB } = require('../dal/user.js');
 
 const Trip = require('../models/trip.js');
+const Location = require('../models/location.js');
 
 async function getTripsByUser(req, res) {
   const { userId } = req.params;
@@ -130,8 +131,12 @@ async function createTrip(req, res) {
     return;
   }
 
+  let newRoutesNames;
+
   if (!routesNames) {
-    routesNames = [];
+    newRoutesNames = [];
+  } else {
+    newRoutesNames = routesNames;
   }
 
   if (!userId) {
@@ -147,7 +152,7 @@ async function createTrip(req, res) {
     endDate,
     newLocation,
     description,
-    routesNames,
+    newRoutesNames,
     userId,
     [],
   );
