@@ -21,11 +21,14 @@ async function deleteTripDB(userId, tripId) {
   await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
 }
 
-async function uploadImagesDB(files, userName, tripName) {
+async function uploadImagesDB(files, userName, tripName, startingNumber) {
   const bucket = firebase.storage.bucket();
   const uploadPromises = files.map((file) => {
     return new Promise((resolve, reject) => {
-      const blob = bucket.file(`${userName}/${tripName}/${file.originalname}`);
+      const blob = bucket.file(
+        `${userName}/${tripName}/${startingNumber}.${file.originalname.split('.').pop()}`,
+      );
+      startingNumber++;
       const blobStream = blob.createWriteStream({
         metadata: {
           contentType: file.mimetype,
