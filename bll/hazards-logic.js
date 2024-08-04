@@ -116,14 +116,18 @@ async function getNearHazards(req, res) {
     };
 
     const dataArray = hazardsArray.filter((item) => {
-      const hazardCoords = {
-        lat: parseFloat(item._location.latitude),
-        lon: parseFloat(item._location.longitude),
-      };
+      if (item._reporterId !== userId) {
+        const hazardCoords = {
+          lat: parseFloat(item._location.latitude),
+          lon: parseFloat(item._location.longitude),
+        };
 
-      const distance = distanceMeasurement(userCoords, hazardCoords);
+        const distance = distanceMeasurement(userCoords, hazardCoords);
 
-      return distance < 0.5;
+        return distance < 0.5;
+      } else {
+        return false;
+      }
     });
 
     res.status(200);

@@ -231,10 +231,13 @@ describe('getNearHazards', () => {
     expect(response.send).toHaveBeenCalledTimes(1);
   });
 
-  it('should send status code 404 when there is no hazard to send to the user', async () => {
-    getAllHazardsDB.mockResolvedValueOnce(null);
+  it('should send status code 200 when there is no hazard to send to the user', async () => {
+    getAllHazardsDB.mockResolvedValueOnce(fakeHazardsList);
 
-    getUserByIdDB.mockResolvedValueOnce('fake_reporterId');
+    getUserByIdDB.mockResolvedValueOnce({
+      location: { latitude: 1, longitude: 1, date: 'fake_date' },
+      userId: 'fake_reporterId',
+    });
 
     const request = {
       params: {
@@ -244,7 +247,7 @@ describe('getNearHazards', () => {
 
     await getNearHazards(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(404);
+    expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
   });
 
