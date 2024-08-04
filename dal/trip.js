@@ -55,6 +55,17 @@ async function uploadImagesDB(files, userName, tripName, startingNumber) {
   }
 }
 
+async function checkingNumberOfImages(existingFiles) {
+  if (existingFiles.length > 0) {
+    const lastFile = existingFiles[existingFiles.length - 1];
+    const lastFileName = lastFile.name.split('/').pop(); // Get just the filename
+    const lastNumber = parseInt(lastFileName.split('_')[0]);
+    return isNaN(lastNumber) ? 0 : lastNumber + 1;
+  } else {
+    return 0;
+  }
+}
+
 async function getAllUserImagesByTripDB(userName, tripName) {
   const bucket = firebase.storage.bucket();
   const [files] = await bucket.getFiles({
@@ -83,6 +94,7 @@ module.exports = {
   updateTripDB,
   deleteTripDB,
   uploadImagesDB,
+  checkingNumberOfImages,
   getAllUserImagesByTripDB,
   removeImageFromTripDB,
 };
