@@ -21,11 +21,14 @@ async function deleteTripDB(userId, tripId) {
   await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
 }
 
-async function uploadImagesDB(files, userName, tripName) {
+async function uploadImagesDB(files, userName, tripName, startingNumber) {
   const bucket = firebase.storage.bucket();
   const uploadPromises = files.map((file) => {
     return new Promise((resolve, reject) => {
-      const blob = bucket.file(`${userName}/${tripName}/${file.originalname}`);
+      const blob = bucket.file(
+        `${userName}/${tripName}/${startingNumber}.${file.originalname.split('.').pop()}`,
+      );
+      startingNumber++;
       const blobStream = blob.createWriteStream({
         metadata: {
           contentType: file.mimetype,
@@ -49,6 +52,17 @@ async function uploadImagesDB(files, userName, tripName) {
   } catch (err) {
     console.error('Error uploading images:', err);
     throw err;
+  }
+}
+
+async function checkingNumberOfImages(existingFiles) {
+  if (existingFiles.length > 0) {
+    const lastFile = existingFiles[existingFiles.length - 1];
+    const lastFileName = lastFile.name.split('/').pop(); // Get just the filename
+    const lastNumber = parseInt(lastFileName.split('_')[0]);
+    return isNaN(lastNumber) ? 0 : lastNumber + 1;
+  } else {
+    return 0;
   }
 }
 
@@ -80,6 +94,7 @@ module.exports = {
   updateTripDB,
   deleteTripDB,
   uploadImagesDB,
+  checkingNumberOfImages,
   getAllUserImagesByTripDB,
   removeImageFromTripDB,
 };

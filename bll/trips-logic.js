@@ -4,6 +4,7 @@ const {
   updateTripDB,
   deleteTripDB,
   uploadImagesDB,
+  checkingNumberOfImages,
   getAllUserImagesByTripDB,
   removeImageFromTripDB,
 } = require('../dal/trip.js');
@@ -293,7 +294,13 @@ async function uploadImages(req, res) {
       return;
     }
 
-    await uploadImagesDB(files, userName, tripName);
+    // Get existing images from the database
+    const existingFiles = await getAllUserImagesByTripDB(userName, tripName);
+
+    // Determine the starting number for the new images
+    const startingNumber = await checkingNumberOfImages(existingFiles);
+
+    await uploadImagesDB(files, userName, tripName, startingNumber);
 
     res.status(200);
     res.send('Images uploaded');

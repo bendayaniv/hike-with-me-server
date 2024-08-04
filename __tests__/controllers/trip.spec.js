@@ -414,8 +414,8 @@ describe('uploadImages', () => {
   };
   const fake_files = [
     {
-      originalname: 'fake_originalname1',
-      location: 'fake_location1',
+      originalname: '0',
+      location: '1',
     },
     {
       originalname: 'fake_originalname2',
@@ -469,8 +469,25 @@ describe('uploadImages', () => {
     expect(response.send).toHaveBeenCalledWith('Please provide tripName');
   });
 
-  it('should send status code of 200 when uploading images', async () => {
+  it('should send status code of 200 when uploading images and there is no previous images', async () => {
     uploadImagesDB.mockResolvedValueOnce(fake_files);
+    getAllUserImagesByTripDB.mockResolvedValueOnce([]);
+
+    const request = {
+      files: fake_files,
+      body: fake_information,
+    };
+
+    await uploadImages(request, response);
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledTimes(1);
+    expect(response.send).toHaveBeenCalledWith('Images uploaded');
+  });
+
+  it('should send status code of 200 when uploading images and there are previous images', async () => {
+    uploadImagesDB.mockResolvedValueOnce(fake_files);
+    getAllUserImagesByTripDB.mockResolvedValueOnce(fake_files);
 
     const request = {
       files: fake_files,
