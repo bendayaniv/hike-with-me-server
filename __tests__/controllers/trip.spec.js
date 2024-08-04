@@ -246,6 +246,7 @@ describe('updateTrip', () => {
     'fake_description',
     'fake_routesNames',
     'fake_userId1',
+    null,
   );
 
   // should restart the mock and restart the fake_trip after each test
@@ -255,13 +256,17 @@ describe('updateTrip', () => {
     fake_trip.name = 'fake_name';
     fake_trip.startDate = 'fake_startDate';
     fake_trip.endDate = 'fake_endDate';
-    fake_trip.locations = 'fake_locations';
+    fake_trip.locations = [
+      { latitude: 37.4219983, longitude: -122.084, date: '2021-07-01' },
+    ];
     fake_trip.description = 'fake_description';
-    fake_trip.routesNames = 'fake_routesNames';
+    fake_trip.routesNames = ['fake_routesNames'];
     fake_trip.userId = 'fake_userId1';
   });
 
   it('should send status code of 401 when no id provided', async () => {
+    getTripsByUserDB.mockResolvedValueOnce([fake_trip]);
+
     fake_trip.id = null;
     const request = {
       body: fake_trip,
@@ -275,6 +280,8 @@ describe('updateTrip', () => {
   });
 
   it('should send status code of 401 when no name provided', async () => {
+    getTripsByUserDB.mockResolvedValueOnce([fake_trip]);
+
     fake_trip.name = null;
     const request = {
       body: fake_trip,
@@ -288,6 +295,8 @@ describe('updateTrip', () => {
   });
 
   it('should send status code of 401 when no startDate provided', async () => {
+    getTripsByUserDB.mockResolvedValueOnce([fake_trip]);
+
     fake_trip.startDate = null;
     const request = {
       body: fake_trip,
@@ -301,6 +310,8 @@ describe('updateTrip', () => {
   });
 
   it('should send status code of 401 when no endDate provided', async () => {
+    getTripsByUserDB.mockResolvedValueOnce([fake_trip]);
+
     fake_trip.endDate = null;
     const request = {
       body: fake_trip,
@@ -314,6 +325,13 @@ describe('updateTrip', () => {
   });
 
   it('should send status code of 401 when no description provided', async () => {
+    getTripsByUserDB.mockResolvedValueOnce({
+      1: {
+        locations: fake_trip.locations,
+        routesNames: fake_trip.routesNames,
+      },
+    });
+
     fake_trip.description = null;
     const request = {
       body: fake_trip,
@@ -327,6 +345,14 @@ describe('updateTrip', () => {
   });
 
   it('should send status code of 401 when no userId provided', async () => {
+    // getTripsByUserDB.mockResolvedValueOnce([fake_trip]);
+    getTripsByUserDB.mockResolvedValueOnce({
+      1: {
+        locations: fake_trip.locations,
+        routesNames: fake_trip.routesNames,
+      },
+    });
+
     fake_trip.userId = null;
     const request = {
       body: fake_trip,
@@ -340,7 +366,13 @@ describe('updateTrip', () => {
   });
 
   it('should send status code of 200 when updating trip', async () => {
-    updateTripDB.mockResolvedValueOnce(fake_trip);
+    // updateTripDB.mockResolvedValueOnce(fake_trip);
+    getTripsByUserDB.mockResolvedValueOnce({
+      1: {
+        locations: fake_trip.locations,
+        routesNames: fake_trip.routesNames,
+      },
+    });
 
     const request = {
       body: fake_trip,

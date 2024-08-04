@@ -180,6 +180,19 @@ async function updateTrip(req, res) {
     userId,
   } = req.body;
 
+  const trips = await getTripsByUserDB(userId);
+
+  if (!trips || trips.length === 0) {
+    res.status(404);
+    res.send('No trips found');
+    return;
+  }
+
+  // finding the specific trip
+  let existingTrip;
+
+  existingTrip = trips[id];
+
   if (!id) {
     res.status(401);
     res.send('Please provide id');
@@ -204,8 +217,13 @@ async function updateTrip(req, res) {
     return;
   }
 
-  if (!locations) {
-    locations = [];
+  if (existingTrip.locations && locations) {
+    // adding locations to existingTrip locations
+    locations.forEach((location) => {
+      existingTrip.locations.push(location);
+    });
+  } else if (locations) {
+    existingTrip.locations = locations;
   }
 
   if (!description) {
@@ -214,8 +232,13 @@ async function updateTrip(req, res) {
     return;
   }
 
-  if (!routesNames) {
-    routesNames = [];
+  if (existingTrip.routesNames && routesNames) {
+    // adding routesNames to existingTrip routesNames
+    routesNames.forEach((routeName) => {
+      existingTrip.routesNames.push(routeName);
+    });
+  } else if (routesNames) {
+    existingTrip.routesNames = routesNames;
   }
 
   if (!userId) {
@@ -229,14 +252,16 @@ async function updateTrip(req, res) {
     name,
     startDate,
     endDate,
-    locations,
+    existingTrip.locations,
     description,
-    routesNames,
+    existingTrip.routesNames,
     userId,
+    null,
   );
 
   try {
     await updateTripDB(trip);
+
     res.status(200);
     res.send(trip);
   } catch (err) {
