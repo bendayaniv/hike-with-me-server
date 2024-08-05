@@ -18,8 +18,24 @@ async function getAllHazards(req, res) {
       return;
     }
 
+    const hazardsArray = Object.values(hazards).flatMap((item) =>
+      Object.values(item).map(
+        (innerItem) =>
+          new Hazard(
+            innerItem._location,
+            innerItem._type,
+            innerItem._id,
+            innerItem._hazardType,
+            innerItem._description,
+            innerItem._severity,
+            innerItem._reporterId,
+            innerItem._routeName,
+          ),
+      ),
+    );
+
     res.status(200);
-    res.send(hazards);
+    res.send(hazardsArray);
   } catch (err) {
     res.status(500);
     res.json(err);

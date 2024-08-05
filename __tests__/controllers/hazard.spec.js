@@ -25,28 +25,63 @@ const response = {
   json: jest.fn((x) => x),
 };
 
-describe('getAllHazards', () => {
-  const fakeHazardsList = [
-    new Hazard(
-      new Location(1, 1, 'fake_date'),
-      'fake_type',
-      'fake_id',
-      'fake_hazardType',
-      'fake_description',
-      'fake_severity',
-      'fake_reporterId',
-      'fake_routeName',
-    ),
-    new Hazard(
-      new Location(2, 2, 'fake_date'),
-      'fake_type',
-      'fake_id',
-      'fake_hazardType',
-      'fake_description',
-      'fake_severity',
-      'fake_reporterId',
-      'fake_routeName',
-    ),
+describe.only('getAllHazards', () => {
+  const fakeHazardsList = {
+    routeName1: {
+      fake_id1: {
+        _location: {
+          latitude: '1',
+          longitude: '1',
+          date: 'fake_date',
+        },
+        _type: 'fake_type',
+        _id: 'fake_id1',
+        _hazardType: 'fake_hazardType',
+        _description: 'fake_description',
+        _severity: 'fake_severity',
+        _reporterId: 'fake_reporterId',
+        _routeName: 'fake_routeName',
+      },
+    },
+    fake_id2: {
+      hazard2: {
+        _location: {
+          latitude: '2',
+          longitude: '2',
+          date: 'fake_date',
+        },
+        _type: 'fake_type',
+        _id: 'fake_id2',
+        _hazardType: 'fake_hazardType',
+        _description: 'fake_description',
+        _severity: 'fake_severity',
+        _reporterId: 'fake_reporterId',
+        _routeName: 'fake_routeName',
+      },
+    },
+  };
+
+  const resultFakeHazardList = [
+    {
+      _description: 'fake_description',
+      _hazardType: 'fake_hazardType',
+      _id: 'fake_id1',
+      _location: { date: 'fake_date', latitude: '1', longitude: '1' },
+      _reporterId: 'fake_reporterId',
+      _routeName: 'fake_routeName',
+      _severity: 'fake_severity',
+      _type: 'fake_type',
+    },
+    {
+      _description: 'fake_description',
+      _hazardType: 'fake_hazardType',
+      _id: 'fake_id2',
+      _location: { date: 'fake_date', latitude: '2', longitude: '2' },
+      _reporterId: 'fake_reporterId',
+      _routeName: 'fake_routeName',
+      _severity: 'fake_severity',
+      _type: 'fake_type',
+    },
   ];
 
   beforeEach(() => {
@@ -70,7 +105,7 @@ describe('getAllHazards', () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith(fakeHazardsList);
+    expect(response.send).toHaveBeenCalledWith(resultFakeHazardList);
   });
 });
 
