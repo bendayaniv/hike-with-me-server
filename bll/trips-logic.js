@@ -300,7 +300,7 @@ async function uploadImages(req, res) {
     const files = req.files;
 
     if (!files || files.length === 0) {
-      res.status(401);
+      res.status(200);
       res.send('Please provide images');
       return;
     }
