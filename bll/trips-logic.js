@@ -36,7 +36,7 @@ async function getTripsByUser(req, res) {
       const user = await getUserByIdDB(trips[trip].userId);
 
       const imagesFiles = await getAllUserImagesByTripDB(
-        user.name,
+        user.id,
         trips[trip].name,
       );
 
@@ -217,13 +217,12 @@ async function updateTrip(req, res) {
     return;
   }
 
-  if (existingTrip.locations && locations) {
-    // adding locations to existingTrip locations
-    locations.forEach((location) => {
-      existingTrip.locations.push(location);
-    });
-  } else if (locations) {
-    existingTrip.locations = locations;
+  let tempLocations = [];
+
+  if ((existingTrip.locations && locations) || locations) {
+    tempLocations = locations;
+  } else if (existingTrip.locations) {
+    tempLocations = existingTrip.locations;
   }
 
   if (!description) {
@@ -232,13 +231,12 @@ async function updateTrip(req, res) {
     return;
   }
 
-  if (existingTrip.routesNames && routesNames) {
-    // adding routesNames to existingTrip routesNames
-    routesNames.forEach((routeName) => {
-      existingTrip.routesNames.push(routeName);
-    });
-  } else if (routesNames) {
-    existingTrip.routesNames = routesNames;
+  let tempRoutesNames = [];
+
+  if ((existingTrip.routesNames && routesNames) || routesNames) {
+    tempRoutesNames = routesNames;
+  } else if (existingTrip.routesNames) {
+    tempRoutesNames = existingTrip.routesNames;
   }
 
   if (!userId) {
@@ -252,11 +250,11 @@ async function updateTrip(req, res) {
     name,
     startDate,
     endDate,
-    existingTrip.locations,
+    tempLocations,
     description,
-    existingTrip.routesNames,
+    tempRoutesNames,
     userId,
-    null,
+    [],
   );
 
   try {
@@ -301,15 +299,15 @@ async function uploadImages(req, res) {
 
     if (!files || files.length === 0) {
       res.status(200);
-      res.send('Please provide images');
+      res.send('No images provided');
       return;
     }
 
-    const { userName, tripName } = req.body;
+    const { userId, tripName } = req.body;
 
-    if (!userName) {
+    if (!userId) {
       res.status(401);
-      res.send('Please provide userName');
+      res.send('Please provide userId');
       return;
     }
 
@@ -320,12 +318,12 @@ async function uploadImages(req, res) {
     }
 
     // Get existing images from the database
-    const existingFiles = await getAllUserImagesByTripDB(userName, tripName);
+    const existingFiles = await getAllUserImagesByTripDB(userId, tripName);
 
     // Determine the starting number for the new images
     const startingNumber = await checkingNumberOfImages(existingFiles);
 
-    await uploadImagesDB(files, userName, tripName, startingNumber);
+    await uploadImagesDB(files, userId, tripName, startingNumber);
 
     res.status(200);
     res.send('Images uploaded');
@@ -337,11 +335,11 @@ async function uploadImages(req, res) {
 }
 
 async function getAllUserImagesByTrip(req, res) {
-  const { userName, tripName } = req.params;
+  const { userId, tripName } = req.params;
 
-  if (!userName) {
+  if (!userId) {
     res.status(401);
-    res.send('Please provide userName');
+    res.send('Please provide userId');
     return;
   }
 
@@ -352,7 +350,7 @@ async function getAllUserImagesByTrip(req, res) {
   }
 
   try {
-    const files = await getAllUserImagesByTripDB(userName, tripName);
+    const files = await getAllUserImagesByTripDB(userId, tripName);
 
     if (!files || files.length === 0) {
       res.status(404);

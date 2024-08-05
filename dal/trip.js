@@ -13,7 +13,7 @@ async function createTripDB(trip) {
 
 async function updateTripDB(trip) {
   await firebase.database
-    .ref('trips/' + trip.getUserId() + '/' + trip.getId())
+    .ref('trips/' + trip.userId + '/' + trip.id)
     .update(trip);
 }
 
@@ -21,12 +21,12 @@ async function deleteTripDB(userId, tripId) {
   await firebase.database.ref('trips/' + userId + '/' + tripId).remove();
 }
 
-async function uploadImagesDB(files, userName, tripName, startingNumber) {
+async function uploadImagesDB(files, userId, tripName, startingNumber) {
   const bucket = firebase.storage.bucket();
   const uploadPromises = files.map((file) => {
     return new Promise((resolve, reject) => {
       const blob = bucket.file(
-        `${userName}/${tripName}/${startingNumber}.${file.originalname.split('.').pop()}`,
+        `${userId}/${tripName}/${startingNumber}.${file.originalname.split('.').pop()}`,
       );
       startingNumber++;
       const blobStream = blob.createWriteStream({
@@ -66,10 +66,10 @@ async function checkingNumberOfImages(existingFiles) {
   }
 }
 
-async function getAllUserImagesByTripDB(userName, tripName) {
+async function getAllUserImagesByTripDB(userId, tripName) {
   const bucket = firebase.storage.bucket();
   const [files] = await bucket.getFiles({
-    prefix: userName + '/' + tripName,
+    prefix: userId + '/' + tripName,
   });
 
   return files;
