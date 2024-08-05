@@ -246,7 +246,7 @@ describe('updateTrip', () => {
     'fake_description',
     'fake_routesNames',
     'fake_userId1',
-    null,
+    [],
   );
 
   // should restart the mock and restart the fake_trip after each test
@@ -441,7 +441,7 @@ describe('deleteTrip', () => {
 
 describe('uploadImages', () => {
   const fake_information = {
-    userName: 'fake_userName',
+    userId: 'fake_userId',
     tripName: 'fake_tripName',
   };
   const fake_files = [
@@ -457,24 +457,24 @@ describe('uploadImages', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    fake_information.userName = 'fake_userName';
+    fake_information.userId = 'fake_userId';
     fake_information.tripName = 'fake_tripName';
   });
 
-  it('should send status code of 401 when no images provided', async () => {
+  it('should send status code of 200 when no images provided', async () => {
     const request = {
       files: null,
     };
 
     await uploadImages(request, response);
 
-    expect(response.status).toHaveBeenCalledWith(401);
+    expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith('Please provide images');
+    expect(response.send).toHaveBeenCalledWith('No images provided');
   });
 
-  it('should send status code of 401 when no userName provided', async () => {
-    fake_information.userName = null;
+  it('should send status code of 401 when no userId provided', async () => {
+    fake_information.userId = null;
     const request = {
       files: fake_files,
       body: fake_information,
@@ -484,7 +484,7 @@ describe('uploadImages', () => {
 
     expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith('Please provide userName');
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
 
   it('should send status code of 401 when no tripName provided', async () => {
@@ -536,7 +536,7 @@ describe('uploadImages', () => {
 
 describe('getAllUserImagesByTrip', () => {
   const fake_information = {
-    userName: 'fake_userName',
+    userId: 'fake_userId',
     tripName: 'fake_tripName',
   };
   const fake_files = [
@@ -552,12 +552,12 @@ describe('getAllUserImagesByTrip', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    fake_information.userName = 'fake_userName';
+    fake_information.userId = 'fake_userId';
     fake_information.tripName = 'fake_tripName';
   });
 
-  it('should send status code of 401 when no userName provided', async () => {
-    fake_information.userName = null;
+  it('should send status code of 401 when no userId provided', async () => {
+    fake_information.userId = null;
     const request = {
       params: fake_information,
     };
@@ -566,7 +566,7 @@ describe('getAllUserImagesByTrip', () => {
 
     expect(response.status).toHaveBeenCalledWith(401);
     expect(response.send).toHaveBeenCalledTimes(1);
-    expect(response.send).toHaveBeenCalledWith('Please provide userName');
+    expect(response.send).toHaveBeenCalledWith('Please provide userId');
   });
 
   it('should send status code of 401 when no tripName provided', async () => {
