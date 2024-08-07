@@ -98,7 +98,6 @@ async function getAllActiveUsers(req, res) {
     res.send(dataArray);
   } catch (err) {
     res.status(500);
-    console.log('err: ', err);
     res.send(err);
   }
 }

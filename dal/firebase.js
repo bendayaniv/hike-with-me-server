@@ -6,12 +6,7 @@ const serviceAccount = require('../creds.json');
 
 // Realtime Database
 const { getDatabase } = require('firebase-admin/database');
-const {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadByteResumble,
-} = require('firebase-admin/storage');
+const { getStorage } = require('firebase-admin/storage');
 
 // const firebaseConfig = {
 //   apiKey: 'AIzaSyBr1wztWdXPiVGA2OYG_4oQKezywnCxL3U',
