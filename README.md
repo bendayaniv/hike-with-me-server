@@ -1,115 +1,41 @@
-# Content
+# Server-Side Application Overview
 
-- [Make sure you have](#make-sure-you-have)
-- [How to clone](#how-to-clone)
-- [How to use git in VSCode](#how-to-use-git-in-vscode)
-- [Creating new branch](#creating-new-branch)
-- [Moving to another branch](#moving-to-another-branch)
-- [How to Push in terminal](#how-to-push-in-terminal)
-- [How to Merge the changes in the branch to origin main](#how-to-merge-the-changes-in-the-branch-to-origin-main)
-- [How to Merge new changes into local main from origin main](#how-to-merge-new-changes-into-local-main-from-origin-main)
-- [How to Merge main into existing branch](#how-to-merge-main-into-existing-branch)
-- [Start Work Routine](#start-work-routine)
-- [How to activate the server](#how-to-activate-the-server)
-- [Tests](#tests)
-- [How to activate nodemon](#how-to-activate-nodemon)
-- [How to undo commits](#how-to-undo-commits)
-- [Handle the README](#handle-the-readme)
-- [.gitignore](#.gitignore)
+Welcome to our server-side application! This README provides an overview of what our server does and how it supports the overall functionality of our system.
 
-## Make sure you have
+## What This Server Does
 
-- [Node.js](https://nodejs.org/en/download)
-- [git](https://git-scm.com/downloads)
-- [prettier](https://www.humankode.com/javascript/set-up-prettier-and-vs-code-to-format-your-code/)
+Our server acts as a crucial intermediary between the Android app and our backend services. Here's what it does:
 
-## How to clone
+1. **Database and Storage Connection**: 
+   - Connects the Android app to our Firebase Realtime Database and Firebase Storage.
+   - Manages data transfer between the app and the database.
+   - Handles image uploads and downloads with Firebase Storage.
+   - Performs data validation and integrity checks.
 
-- Create directory.
-- Open the directory in VSCode.
-- Go to the repository in GitHub.
-- Go to `Code`.
-- Under the `HTTPS` - copy the URL.
-- Open terminal in your open VSCode.
-- Enter `git clone [the URL]`.
-- Go over the directory the was created (`cd hike-with-me-server`).
-- Run `npm i`.
-- For checking - [activate the server](#how-to-activate-the-server) and see if it returns `Express server running at http://localhost:3000/`
+2. **Google Places API Integration**:
+   - Interfaces with Google Places API to fetch location data.
+   - Provides rich, up-to-date information about places to our users.
 
-## How to use git in VSCode
+3. **Distance Calculation**:
+   - Computes distances between two locations.
+   - Helps users understand spatial relationships between different places.
 
-- https://code.visualstudio.com/docs/sourcecontrol/overview
-- https://www.youtube.com/watch?v=z5jZ9lrSpqk&ab_channel=MaxonTech
+## How It Benefits You
 
-## Creating new branch
+- **Real-time Data**: Ensures that you always have the latest information at your fingertips.
+- **Image Management**: Allows for seamless handling of images through Firebase Storage.
+- **Reliable Information**: By connecting to trusted sources like Google Places, we provide accurate and current data.
+- **Enhanced Functionality**: Features like distance calculation add value to your user experience.
+- **Secure Data Handling**: Your data and images are safely managed and transferred between the app and our secure database and storage.
 
-`git checkout -b [branch_name]`
+## Technical Stack
 
-## Moving to another branch
+For those interested, our server is built using:
+- Node.js with Express framework
+- Firebase Realtime Database for data management
+- Firebase Storage for image storage
+- Google Places API for location data
 
-`git checkout [branch_name]`
+## For Developers
 
-## How to Push in terminal
-
-After making a change -
-
-- `git status` - need to see all the files with the changes in red.
-- `git add --all` - for adding all the changes to the commit (instead of `--all` - can specify the files you want).
-- `git status` - need to see all the files with the changes that you want to push in green.
-- `git commit -am "[the_commit_message]"` - creating the commit.
-- `git push --set-upstream origin [branch_name]` or `git push --set-upstream` and click on the available blue button in the Source Control tab - doing push (after the first push in branch that is not main, you can simply do `git push` in the nexts pushes).
-
-## How to Merge the changes in the branch to origin main
-
-- Getting into the repo in GitHub.
-- Going to `Pull requests`.
-- Entering for the PR and creating him.
-- Clicking on the green Merge button when available.
-
-## How to Merge new changes into local main from origin main
-
-- Checkout to main - `git checkout main`.
-- Pulling from origin main - `git pull origin main`.
-- In the Source Control tab in VSCode - clicking on the Synchronize blue button.
-- `npm i`.
-
-## How to Merge main into existing branch
-
-- If you made changes on the branch - `git stash`.
-- [Merge new changes into local main](#how-to-merge-new-changes-into-local-main-from-origin-main).
-- [Go to your branch](#moving-to-another-branch).
-- `git merge main`.
-- If you had changes before the merge - `git stash pop`.
-- Deal with conflicts if any.
-
-## Start Work Routine
-
-- Two situations:
-  - If you don't have existing branch - [merge new changes into your local main](#how-to-merge-new-changes-into-local-main-from-origin-main).
-  - If you have existing branch with changes - [merge main into existing branch](#how-to-merge-main-into-existing-branch).
-
-## How to activate the server
-
-In terminal - `node server.js` or [`nodemon server.js`](#how-to-activate-nodemon) (if activated nodemon).
-
-## Tests
-
-In terminal, in the main root - `npm test`.
-If you want to run a specific test script - `npm test -- [test_script]`. example - `npm test -- user.spec.js`.
-
-## How to activate nodemon
-
-https://www.youtube.com/watch?v=ZIbAtxPq5_I&ab_channel=SherlockZz
-
-## How to undo commits
-
-- `git reset HEAD~[number_of_commits] --soft` - for undoing the commits.
-- `git reset HEAD~[number_of_commits] --hard` - for undoing the commits and the changes (deleting it all).
-
-## Handle the README
-
-https://github.com/fefong/markdown_readme
-
-## .gitignore
-
-Last Update - 30/5/24, 19:55
+If you're a developer looking for technical details about this server application, please refer to our [Technical Documentation](TECHNICAL.md).

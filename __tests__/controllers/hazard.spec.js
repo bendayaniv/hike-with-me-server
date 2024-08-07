@@ -25,7 +25,7 @@ const response = {
   json: jest.fn((x) => x),
 };
 
-describe.only('getAllHazards', () => {
+describe('getAllHazards', () => {
   const fakeHazardsList = {
     routeName1: {
       fake_id1: {
