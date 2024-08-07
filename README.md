@@ -36,12 +36,6 @@ For those interested, our server is built using:
 - Firebase Storage for image storage
 - Google Places API for location data
 
----
-
-We hope this overview helps you understand how our server supports your experience with the Android app. If you have any questions or need support, please don't hesitate to contact our support team.
-
----
-
 ## For Developers
 
 If you're a developer looking for technical details about this server application, please refer to our [Technical Documentation](TECHNICAL.md).
